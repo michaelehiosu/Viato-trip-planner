@@ -1,4 +1,6 @@
 package com.michael.viatoapp.activities
 
-class LoginActivity {
+import androidx.appcompat.app.AppCompatActivity
+
+class LoginActivity : AppCompatActivity() {
 }

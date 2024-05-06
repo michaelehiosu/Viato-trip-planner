@@ -1,4 +1,6 @@
 package com.michael.viatoapp.activities
 
-class NearbyActivity {
+import androidx.appcompat.app.AppCompatActivity
+
+class NearbyActivity : AppCompatActivity() {
 }
