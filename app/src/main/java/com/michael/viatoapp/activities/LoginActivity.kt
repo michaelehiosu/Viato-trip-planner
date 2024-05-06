@@ -1,5 +1,6 @@
 package com.michael.viatoapp.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Button
@@ -32,13 +33,16 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show()
             }
+
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 
     private fun isValidCredentials(email: String, password: String): Boolean {
         // This for me to be able to check if login works, this will be deleted later
-        val validEmail = "example@school.com"
-        val validPassword = "password123"
+        val validEmail = "jameslennox95@gmai.com"
+        val validPassword = "123"
 
         return email == validEmail && password == validPassword
     }
