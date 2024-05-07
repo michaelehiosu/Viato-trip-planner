@@ -36,6 +36,11 @@ class RegisterActivity : AppCompatActivity() {
              val intent = Intent(this, LoginActivity::class.java)
              startActivity(intent)
         }
+
+        binding.loginTextView.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
     private fun validateInputData(firstName: String, lastName: String, email: String, password: String): Boolean {
         return firstName.isNotEmpty() && lastName.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()
