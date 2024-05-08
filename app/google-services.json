@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "824212192072",
+    "project_id": "viato-app",
+    "storage_bucket": "viato-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824212192072:android:f4c9fca456d2fc3b8ed17d",
+        "android_client_info": {
+          "package_name": "com.michael.viatoapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSk-iIikCE7S8gHXeHIUFglvUL4bT-NF0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
