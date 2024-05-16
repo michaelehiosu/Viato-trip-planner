@@ -12,7 +12,7 @@ import com.michael.viatoapp.fragments.ProfileFragment
 import com.michael.viatoapp.fragments.TripsFragment
 
 class MainNavigationActivity : AppCompatActivity(), OnItemSelectedListener {
-    private lateinit var binding : ActivityMainNavigationBinding
+    private lateinit var binding : ActivityMainNavigationBinding;
     override fun onCreate(savedInstanceState: Bundle?) {0
         super.onCreate(savedInstanceState)
         binding = ActivityMainNavigationBinding.inflate(layoutInflater)

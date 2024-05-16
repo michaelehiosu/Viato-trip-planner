@@ -5,6 +5,9 @@
       <entry key="LoginActivity">
         <State />
       </entry>
+      <entry key="RegisterActivity">
+        <State />
+      </entry>
       <entry key="ResetPasswordActivity">
         <State />
       </entry>

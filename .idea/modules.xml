@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Viato_App.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Viato_App.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Viato_App.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Viato_App.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Viato_App.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Viato_App.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.Viato_App.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.Viato_App.app.androidTest.iml" />
     </modules>
   </component>
 </project>

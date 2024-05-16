@@ -1,15 +1,15 @@
 <component name="libraryTable">
-  <library name="Gradle: com.google.firebase:firebase-appcheck:18.0.0@aar">
+  <library name="Gradle: com.google.firebase:firebase-appcheck:18.0.0@aar" external-system-id="GRADLE">
     <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/082c9039e87ec471fc9253a01f51e2af/transformed/firebase-appcheck-18.0.0/annotations.zip!/" />
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-3/ed5aa4b25487b75bd66aa479be6d5a5d/transformed/firebase-appcheck-18.0.0/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/082c9039e87ec471fc9253a01f51e2af/transformed/firebase-appcheck-18.0.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/082c9039e87ec471fc9253a01f51e2af/transformed/firebase-appcheck-18.0.0/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-3/ed5aa4b25487b75bd66aa479be6d5a5d/transformed/firebase-appcheck-18.0.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-3/ed5aa4b25487b75bd66aa479be6d5a5d/transformed/firebase-appcheck-18.0.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-appcheck/18.0.0/3ff7d7c0d5743953a7204c785c78b8e9ea1cab34/firebase-appcheck-18.0.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-appcheck/18.0.0/3ff7d7c0d5743953a7204c785c78b8e9ea1cab34/firebase-appcheck-18.0.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
