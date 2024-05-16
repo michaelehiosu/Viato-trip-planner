@@ -9,7 +9,8 @@
         android:id="@+id/temp_img_view"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/map"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -55,10 +56,12 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="Address"
+                      android:textColor="#2E1F08"
                       android:layout_weight="1"/>
 
                   <TextView
                       android:gravity="end"
+                      android:textColor="#2E1F08"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="Tijuca Forest National Park"/>
@@ -71,12 +74,14 @@
                   android:padding="10dp">
 
                   <TextView
+                      android:textColor="#2E1F08"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="Price"
                       android:layout_weight="1"/>
 
                   <TextView
+                      android:textColor="#2E1F08"
                       android:gravity="end"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
@@ -90,12 +95,14 @@
                   android:padding="10dp">
 
                   <TextView
+                      android:textColor="#2E1F08"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="Open Hours"
                       android:layout_weight="1"/>
 
                   <TextView
+                      android:textColor="#2E1F08"
                       android:gravity="end"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
@@ -109,12 +116,14 @@
                   android:padding="10dp">
 
                   <TextView
+                      android:textColor="#2E1F08"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="More Information"
                       android:layout_weight="1"/>
 
                   <TextView
+                      android:textColor="#2E1F08"
                       android:gravity="end"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
