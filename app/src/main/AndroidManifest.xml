@@ -26,13 +26,13 @@
             android:exported="false" />
         <activity
             android:name=".activities.ResetPasswordActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activities.RegisterActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".activities.SplashScreenActivity"
             android:exported="true">
@@ -47,13 +47,13 @@
             android:exported="false" />
         <activity
             android:name=".fragments.ProfileFragment"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".fragments.NearbyFragment"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".fragments.TripsFragment"
-            android:exported="true" />
+            android:exported="false" />
     </application>
 
 </manifest>

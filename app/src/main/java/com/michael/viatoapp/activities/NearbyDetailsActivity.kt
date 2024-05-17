@@ -34,11 +34,11 @@ class NearbyDetailsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+        mMap.uiSettings.isZoomControlsEnabled = true
 
         val targetLocation = LatLng(-22.9068, -43.1729)
         val anotherLocation = LatLng(-22.9707, -43.1824) // Another location
 
-//        val zoomLevel = 15f
         mMap.addMarker(MarkerOptions().position(targetLocation).title("Rio de Janiero"))
         mMap.addMarker(MarkerOptions().position(anotherLocation).title("Another Location").icon(
             BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)))
