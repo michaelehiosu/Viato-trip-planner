@@ -3,4 +3,19 @@
     <string name="trips">Trips</string>
     <string name="profile">Profile</string>
     <string name="near_me">Near me</string>
+    <string-array name="currency_options">
+        <item>Euro</item>
+        <item>USD</item>
+    </string-array>
+    <string-array name="continents_array">
+        <item>Africa</item>
+        <item>Antarctica</item>
+        <item>Asia</item>
+        <item>Europe</item>
+        <item>North America</item>
+        <item>Australia</item>
+        <item>South America</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

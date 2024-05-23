@@ -67,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:fontFamily="@font/athitimedium"
                 android:textSize="17sp"
+                android:textColor="#2E1F08"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Email: "/>
@@ -75,6 +76,7 @@
                 android:id="@+id/tv_email"
                 android:fontFamily="@font/athitimedium"
                 android:textSize="17sp"
+                android:textColor="#2E1F08"
                 android:textAlignment="textStart"
                 android:layout_weight="2"
                 android:layout_width="wrap_content"
@@ -97,6 +99,7 @@
                 android:fontFamily="@font/athitimedium"
                 android:textSize="17sp"
                 android:layout_weight="1"
+                android:textColor="#2E1F08"
                 android:text="Password: "/>
 
             <TextView
@@ -106,6 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="........"
+                android:textColor="#2E1F08"
                 android:layout_weight="2"/>
         </LinearLayout>
     </LinearLayout>
@@ -149,6 +153,7 @@
                 android:layout_width="wrap_content"
                 android:textSize="17sp"
                 android:layout_weight="1"
+                android:textColor="#2E1F08"
                 android:fontFamily="@font/athitimedium"
                 android:layout_height="wrap_content"
                 android:text="Currency" />
@@ -156,6 +161,7 @@
             <TextView
                 android:id="@+id/tv_currency"
                 android:textSize="17sp"
+                android:textColor="#2E1F08"
                 android:fontFamily="@font/athitimedium"
                 android:layout_weight="2"
                 android:layout_width="wrap_content"
@@ -178,6 +184,7 @@
                 android:layout_width="wrap_content"
                 android:textSize="17sp"
                 android:layout_weight="1"
+                android:textColor="#2E1F08"
                 android:fontFamily="@font/athitimedium"
                 android:layout_height="wrap_content"
                 android:text="Departure Airport" />
@@ -188,6 +195,7 @@
                 android:textSize="17sp"
                 android:fontFamily="@font/athitimedium"
                 android:layout_width="wrap_content"
+                android:textColor="#2E1F08"
                 android:layout_height="wrap_content"
                 android:text="Los Angeles Intern..." />
         </LinearLayout>
@@ -204,6 +212,7 @@
                 android:textSize="17sp"
                 android:fontFamily="@font/athitimedium"
                 android:layout_weight="1"
+                android:textColor="#2E1F08"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Favourite Destination" />
@@ -214,12 +223,14 @@
                 android:layout_weight="2"
                 android:fontFamily="@font/athitimedium"
                 android:textSize="17sp"
+                android:textColor="#2E1F08"
                 android:layout_height="wrap_content"
                 android:text="Asia" />
         </LinearLayout>
     </LinearLayout>
 
     <Button
+        android:id="@+id/button_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"

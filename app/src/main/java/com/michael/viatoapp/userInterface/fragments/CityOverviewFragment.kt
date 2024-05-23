@@ -13,21 +13,19 @@ import com.michael.viatoapp.userInterface.adapter.FlightAdapter
 import com.michael.viatoapp.model.response.Hotel
 import com.michael.viatoapp.userInterface.adapter.HotelAdapter
 import com.michael.viatoapp.R
+import com.michael.viatoapp.databinding.ActivityCityOverviewBinding
+import com.michael.viatoapp.databinding.ActivityMoreInfoBinding
+import com.michael.viatoapp.userInterface.activities.MainNavigationActivity
 
 class CityOverviewFragment : Fragment() {
-
-    private lateinit var flightRecyclerView: RecyclerView
-    private lateinit var hotelRecyclerView: RecyclerView
-
+private lateinit var binding: ActivityCityOverviewBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_city_overview, container, false)
-
-        Log.d("CityOverviewFragment", "onCreateView called")
-        return view
+        binding = ActivityCityOverviewBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,14 +45,25 @@ class CityOverviewFragment : Fragment() {
         )
 
         // Initialize RecyclerViews
-        flightRecyclerView = view.findViewById(R.id.recycler_view_flights)
-        flightRecyclerView.layoutManager = LinearLayoutManager(context)
-        flightRecyclerView.adapter = FlightAdapter(flights)
-        Log.d("CityOverviewFragment", "Flight adapter set with ${flights.size} items: ${flightRecyclerView.adapter != null}")
+        binding.recyclerViewFlights.layoutManager = LinearLayoutManager(context)
+        binding.recyclerViewFlights.adapter = FlightAdapter(flights)
 
-        hotelRecyclerView = view.findViewById(R.id.recycler_view_hotels)
-        hotelRecyclerView.layoutManager = LinearLayoutManager(context)
-        hotelRecyclerView.adapter = HotelAdapter(hotels)
-        Log.d("CityOverviewFragment", "Hotel adapter set with ${hotels.size} items: ${hotelRecyclerView.adapter != null}")
+        binding.recyclerViewHotels.layoutManager = LinearLayoutManager(context)
+        binding.recyclerViewHotels.adapter = HotelAdapter(hotels)
+
+
+        binding.buttonGo.setOnClickListener {
+            val context = activity
+            if (context is MainNavigationActivity) {
+                context.navigateToMoreInfoFragment()
+            }
+        }
+
+        binding.buttonGoTo.setOnClickListener {
+            val context = activity
+            if (context is MainNavigationActivity) {
+                context.navigateToMoreInfoFragment()
+            }
+        }
     }
 }

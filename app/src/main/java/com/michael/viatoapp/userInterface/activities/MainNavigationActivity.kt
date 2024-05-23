@@ -7,6 +7,9 @@ import androidx.fragment.app.commit
 import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
 import com.michael.viatoapp.R
 import com.michael.viatoapp.databinding.ActivityMainNavigationBinding
+import com.michael.viatoapp.fragments.CityOverviewFragment
+import com.michael.viatoapp.userInterface.fragments.CountryOverviewFragment
+import com.michael.viatoapp.userInterface.fragments.MoreInfoFragment
 import com.michael.viatoapp.userInterface.fragments.NearbyFragment
 import com.michael.viatoapp.userInterface.fragments.ProfileFragment
 import com.michael.viatoapp.userInterface.fragments.TripsFragment
@@ -53,5 +56,26 @@ class MainNavigationActivity : AppCompatActivity(), OnItemSelectedListener {
             replace(R.id.fragment_content, NearbyFragment())
         }
         return true
+    }
+
+    fun navigateToCityOverviewFragment() {
+        supportFragmentManager.commit {
+            replace(R.id.fragment_content, CityOverviewFragment())
+            addToBackStack(null)
+        }
+    }
+
+    fun navigateToCountryOverviewFragment() {
+        supportFragmentManager.commit {
+            replace(R.id.fragment_content, CountryOverviewFragment())
+            addToBackStack(null)
+        }
+    }
+
+    fun navigateToMoreInfoFragment() {
+        supportFragmentManager.commit {
+            replace(R.id.fragment_content, MoreInfoFragment())
+            addToBackStack(null)
+        }
     }
 }

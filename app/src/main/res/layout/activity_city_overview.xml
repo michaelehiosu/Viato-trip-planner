@@ -79,7 +79,7 @@
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/arr_airport"
-                android:textSize="35dp"
+                android:textSize="35sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
@@ -170,7 +170,7 @@
                 <TextView
                     android:textColor="@color/black"
                     android:id="@+id/grade_number"
-                    android:textSize="20dp"
+                    android:textSize="15sp"
                     android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -194,7 +194,7 @@
                 <TextView
                     android:textColor="@color/black"
                     android:id="@+id/grade_word"
-                    android:textSize="15dp"
+                    android:textSize="15sp"
                     android:layout_marginTop="30dp"
                     android:layout_marginLeft="80dp"
                     android:layout_width="wrap_content"
@@ -211,7 +211,7 @@
             android:text="$600.00"
             android:textColor="@color/orange"
             android:textSize="20dp"
-            android:layout_marginLeft="250dp"/>
+            android:layout_marginLeft="245dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -244,6 +244,74 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_content" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/button_go_to"
+        android:layout_margin="20dp">
+
+        <TextView
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/alternative_flights"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="Alternative Flights"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/black"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_flights"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alternative_flights" />
+
+        <TextView
+            android:id="@+id/alternative_hotels"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="Alternative Hotels"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/recycler_view_flights" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_hotels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alternative_hotels" />
+
+        <Button
+            android:id="@+id/button_go"
+            android:layout_width="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/recycler_view_hotels"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:text="Go to"
+            android:fontFamily="@font/athitimedium"
+            android:textSize="20sp"
+            android:backgroundTint="#E5A13A"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
