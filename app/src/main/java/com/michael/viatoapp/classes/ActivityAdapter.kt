@@ -38,8 +38,6 @@ class ActivityAdapter(private var activities: MutableList<Activities>) :
             val intent = Intent(context, NearbyDetailsActivity::class.java)
             context.startActivity(intent)
         }
-
-
     }
 
     class viewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
