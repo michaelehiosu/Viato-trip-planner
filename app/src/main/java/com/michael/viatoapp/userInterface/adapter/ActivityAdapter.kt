@@ -1,4 +1,4 @@
-package com.michael.viatoapp.classes
+package com.michael.viatoapp.userInterface.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -9,7 +9,8 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.michael.viatoapp.R
-import com.michael.viatoapp.activities.NearbyDetailsActivity
+import com.michael.viatoapp.model.response.Activities
+import com.michael.viatoapp.userInterface.activities.NearbyDetailsActivity
 
 class ActivityAdapter(private var activities: MutableList<Activities>) :
     RecyclerView.Adapter<ActivityAdapter.viewHolder>() {

@@ -1,4 +1,4 @@
-package com.michael.viatoapp.activities
+package com.michael.viatoapp.userInterface.activities
 
 import android.content.Intent
 import android.os.Bundle

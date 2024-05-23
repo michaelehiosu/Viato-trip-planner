@@ -1,17 +1,17 @@
-package com.michael.viatoapp.fragments
+package com.michael.viatoapp.userInterface.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.michael.viatoapp.databinding.ActivityProfileBinding
+import com.michael.viatoapp.databinding.ActivityTripsBinding
 
-class ProfileFragment : Fragment() {
-    private lateinit var binding : ActivityProfileBinding
+class TripsFragment : Fragment() {
+    private lateinit var binding : ActivityTripsBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = ActivityProfileBinding.inflate(layoutInflater, container, false)
+        binding = ActivityTripsBinding.inflate(inflater, container, false)
         return binding.root
     }
 }

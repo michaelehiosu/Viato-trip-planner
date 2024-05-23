@@ -1,4 +1,4 @@
-package com.michael.viatoapp.fragments
+package com.michael.viatoapp.userInterface.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,12 +10,11 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.MarkerOptions
 import com.michael.viatoapp.R
-import com.michael.viatoapp.classes.Activities
-import com.michael.viatoapp.classes.ActivityAdapter
+import com.michael.viatoapp.model.response.Activities
+import com.michael.viatoapp.userInterface.adapter.ActivityAdapter
 import com.michael.viatoapp.databinding.ActivityNearbyBinding
 
 class NearbyFragment : Fragment(), OnMapReadyCallback {
@@ -42,7 +41,8 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
             Activities(R.drawable.redeemer, "Christ the Redeemer", "Type: Monuments and Memorials"),
             Activities(R.drawable.redeemer, "Christ the Redeemer", "Type: Monuments and Memorials"),
             Activities(R.drawable.redeemer, "Christ the Redeemer", "Type: Monuments and Memorials"),
-            Activities(R.drawable.redeemer, "Christ the Redeemer", "Type: Monuments and Memorials"))
+            Activities(R.drawable.redeemer, "Christ the Redeemer", "Type: Monuments and Memorials")
+        )
 
         bind(activities);
     }

@@ -1,4 +1,4 @@
-package com.michael.viatoapp.activities
+package com.michael.viatoapp.userInterface.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,9 +7,9 @@ import androidx.fragment.app.commit
 import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
 import com.michael.viatoapp.R
 import com.michael.viatoapp.databinding.ActivityMainNavigationBinding
-import com.michael.viatoapp.fragments.NearbyFragment
-import com.michael.viatoapp.fragments.ProfileFragment
-import com.michael.viatoapp.fragments.TripsFragment
+import com.michael.viatoapp.userInterface.fragments.NearbyFragment
+import com.michael.viatoapp.userInterface.fragments.ProfileFragment
+import com.michael.viatoapp.userInterface.fragments.TripsFragment
 
 class MainNavigationActivity : AppCompatActivity(), OnItemSelectedListener {
     private lateinit var binding : ActivityMainNavigationBinding;

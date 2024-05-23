@@ -1,4 +1,4 @@
-package com.michael.viatoapp.classes
+package com.michael.viatoapp.model.response
 
 class Activities(
 //var imageUrl: String,
