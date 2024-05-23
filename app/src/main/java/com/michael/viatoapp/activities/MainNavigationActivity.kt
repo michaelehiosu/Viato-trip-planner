@@ -1,10 +1,13 @@
 package com.michael.viatoapp.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Button
 import androidx.fragment.app.commit
 import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
+import com.michael.viatoapp.fragments.CityOverviewFragment
 import com.michael.viatoapp.R
 import com.michael.viatoapp.databinding.ActivityMainNavigationBinding
 import com.michael.viatoapp.fragments.NearbyFragment
@@ -17,6 +20,7 @@ class MainNavigationActivity : AppCompatActivity(), OnItemSelectedListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainNavigationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setContentView(R.layout.activity_trips)
 
         binding.bottomNav.setOnItemSelectedListener(this)
     }

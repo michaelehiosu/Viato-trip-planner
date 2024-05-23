@@ -19,8 +19,9 @@
         <TextView
             android:textColor="@color/black"
             android:id="@+id/hotel_name"
-            android:textSize="23dp"
-            android:layout_marginRight="20dp"
+            android:textSize="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hotel Atlantico Prime"/>
@@ -29,7 +30,7 @@
             android:textColor="@color/black"
             android:id="@+id/grade_number"
             android:textSize="20dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="7/10"/>
@@ -38,6 +39,7 @@
             android:textColor="@color/black"
             android:id="@+id/price"
             android:textSize="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,7 +58,7 @@
             android:textColor="@color/dark_gray"
             android:id="@+id/address"
             android:textSize="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="25dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Avenida Delfim Moreira 696, Rio de Janeiro"/>
@@ -66,7 +68,7 @@
             android:id="@+id/grade_word"
             android:textSize="15dp"
             android:layout_marginTop="30dp"
-            android:layout_marginLeft="65dp"
+            android:layout_marginLeft="32dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Good"/>
