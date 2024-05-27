@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,25 +16,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ViatoApp"
         tools:targetApi="31">
+        <activity
+            android:name=".userInterface.fragments.CountryOverviewFragment"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCxX5FOxmBzVVqpNWK_xbg8hosePghZ5LY" />
 
         <activity
-            android:name=".activities.NearbyDetailsActivity"
+            android:name=".userInterface.activities.NearbyDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ResetPasswordActivity"
+            android:name=".userInterface.activities.ResetPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.RegisterActivity"
+            android:name=".userInterface.activities.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".userInterface.activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.SplashScreenActivity"
+            android:name=".userInterface.activities.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,16 +46,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MainNavigationActivity"
+            android:name=".userInterface.activities.MainNavigationActivity"
             android:exported="false" />
         <activity
-            android:name=".fragments.ProfileFragment"
+            android:name=".userInterface.fragments.ProfileFragment"
             android:exported="false" />
         <activity
-            android:name=".fragments.NearbyFragment"
+            android:name=".userInterface.fragments.NearbyFragment"
             android:exported="false" />
         <activity
-            android:name=".fragments.TripsFragment"
+            android:name=".userInterface.fragments.TripsFragment"
             android:exported="false" />
     </application>
 
