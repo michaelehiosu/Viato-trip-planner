@@ -8,16 +8,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.michael.viatoapp.R
+import com.michael.viatoapp.model.data.flights.Country
 import com.michael.viatoapp.userInterface.fragments.CountryOverviewFragment
 import com.michael.viatoapp.model.response.Activities
 import com.michael.viatoapp.userInterface.activities.MainNavigationActivity
 
-class CountryAdapter(private var activities: MutableList<Activities>) :
+class CountryAdapter(private var countries: List<Country>) :
     RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
-        return activities.size
+        return countries.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,17 +28,21 @@ class CountryAdapter(private var activities: MutableList<Activities>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val activity = activities[position]
+        val country = countries[position]
 
-        holder.image.setImageResource(activity.imageUrl)
-        holder.description.text = activity.description
-        holder.title.text = activity.name
+//        holder.image.setImageResource(activity.imageUrl)
+        holder.description.text = country.cheapestPrice
+        holder.title.text = country.name
         holder.cardView.setOnClickListener {
             val context = holder.itemView.context
             if (context is MainNavigationActivity) {
                 context.navigateToCountryOverviewFragment()
             }
         }
+        Glide.with(holder.itemView)
+            .load(country.imageUrl) // Load image URL using Glide
+            .into(holder.image)
+
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

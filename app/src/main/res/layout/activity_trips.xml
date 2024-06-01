@@ -27,6 +27,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
       <EditText
+          android:id="@+id/budget"
           android:layout_width="0dp"
           android:layout_weight="2"
           android:layout_height="30dp"
@@ -34,10 +35,10 @@
           android:background="@drawable/home_overview"
           android:backgroundTint="#FAF2E6"
           android:hint="Budget"
+          android:textColorHint="#D3D3D3"
           android:inputType="number"
           android:layout_marginRight="10dp"
           android:paddingLeft="10dp"
-          android:textColorHint="#000000"
           android:textColor="#000000"
           app:flow_verticalAlign="center"
           app:boxStrokeColor="@color/orange"
@@ -46,7 +47,7 @@
 
       <Spinner
           android:id="@+id/spinner"
-
+          android:textColorHint="@color/white"
           android:layout_width="0dp"
           android:layout_weight="1"
           android:layout_height="30dp"
@@ -142,23 +143,22 @@
           app:layout_constraintTop_toBottomOf="@id/airplane" />
     </LinearLayout>
 
-    <Spinner
-        android:id="@+id/airportLayout"
+    <AutoCompleteTextView
+        android:id="@+id/airportAutoCompleteTextView"
+        android:layout_height="wrap_content"
+        android:hint="Enter Departure Airport Name"
+        android:textColorHint="@color/white"
+        android:inputType="text"
+        android:textColor="@color/black"
         android:layout_width="0dp"
-        android:layout_height="30dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/home_overview"
-        android:backgroundTint="#FAF2E6"
-        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
-        android:hint="Original Airport"
         android:paddingLeft="10dp"
-        android:textColorHint="#000000"
-        app:flow_verticalAlign="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/date_layout"/>
 
     <Button
+        android:id="@+id/search"
         android:layout_width="0dp"
         android:layout_height="37dp"
         android:layout_marginTop="5dp"
@@ -168,7 +168,7 @@
         android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/airportLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/airportAutoCompleteTextView" />
 
 
   </androidx.constraintlayout.widget.ConstraintLayout>

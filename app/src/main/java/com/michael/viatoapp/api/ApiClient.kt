@@ -49,12 +49,12 @@ class ApiClient {
                     if (retrievedData != null) {
                         val airports = retrievedData.data.map { airport: Airport ->
                             Airport(
-                                airport.iata,
-                                airport.name,
-                                airport.location,
-                                airport.skyId,
-                                airport.timezone,
-                                airport.id
+                                iata = airport.iata,
+                                name = airport.name,
+                                location = airport.location,
+                                skyId = airport.skyId,
+                                time = airport.time,
+                                id = airport.id
                             )
                         }
                         return@withContext airports
@@ -64,13 +64,12 @@ class ApiClient {
                 // Handle any exceptions, e.g., network errors
                 Log.e("getAirportsFromAPI", "Error: $e")
             }
-
             return@withContext emptyList()
         }
     }
 
 
-    suspend fun getAllCountries(flightCountriesSearch : FlighCountriesSearch) : List<Country> {
+    suspend fun getAllCountries(flightCountriesSearch: FlighCountriesSearch): List<Country> {
         return withContext(Dispatchers.IO) {
             try {
                 val call: Call<CountriesResponse> = apiService.getAllCountries(flightCountriesSearch)
@@ -79,25 +78,35 @@ class ApiClient {
                 if (response.isSuccessful) {
                     val retrievedData = response.body()
                     if (retrievedData != null) {
-                        val countries = retrievedData.data.everywhereDestination.results.map { result : Result ->
-                            Country(
-                                entityId = result.entityId,
-                                skyId = result.skyId,
-                                name = result.content.location.name,
-                                cheapestPrice = result.content.flightQuotes.cheapest.price,
-                                imageUrl = result.content.image.url
-                            )
+                        val countries = retrievedData.data.everywhereDestination.results.mapNotNull { result: Result ->
+                            val flightQuotes = result.content.flightQuotes
+                            val cheapest = flightQuotes?.cheapest
+                            val rawPrice = cheapest?.rawPrice
+                            val imageUrl = result.content.image?.url
+                            if (flightQuotes != null && cheapest != null && rawPrice != null && imageUrl != null) {
+                                Country(
+                                    entityId = result.entityId,
+                                    skyId = result.skyId,
+                                    name = result.content.location.name,
+                                    cheapestPrice = rawPrice,
+                                    imageUrl = imageUrl
+                                )
+                            } else {
+                                // Skip this result if any of the required fields are null
+                                null
+                            }
                         }
-                            return@withContext countries
+                        return@withContext countries
                     }
                 }
             } catch (e: Exception) {
                 Log.e("Error Retrieving data", "Error: $e")
             }
 
-            return@withContext emptyList();
+            return@withContext emptyList()
         }
     }
+
 
     suspend fun getAllCities(flightCitiesSearch: FlightCitiesSearch) : List<City> {
         return withContext(Dispatchers.IO) {

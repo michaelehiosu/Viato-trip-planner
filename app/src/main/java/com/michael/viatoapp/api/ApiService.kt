@@ -31,7 +31,7 @@ interface ApiService {
     @POST("flight")
     fun getFlightDetails(@Body() flightDetailsResponse: FlightDetailsSearch): Call<FlightDetailsResponse>
 
-    @GET("device/read.php")
+    @GET("airports")
     fun getAllAirports(): Call<AirportResponse>
 }
 

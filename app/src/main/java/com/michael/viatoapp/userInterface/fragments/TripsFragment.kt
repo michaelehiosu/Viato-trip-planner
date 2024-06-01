@@ -10,17 +10,20 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
-import com.michael.viatoapp.model.response.Activities
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.michael.viatoapp.R
 import com.michael.viatoapp.api.ApiClient
 import com.michael.viatoapp.databinding.ActivityTripsBinding
+import com.michael.viatoapp.model.response.Activities
+import com.michael.viatoapp.model.data.flights.Airport
+import com.michael.viatoapp.model.data.flights.Country
+import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
 import com.michael.viatoapp.userInterface.adapter.CountryAdapter
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
@@ -28,8 +31,12 @@ import java.util.Locale
 
 class TripsFragment : Fragment() {
     private lateinit var binding: ActivityTripsBinding
-    private val calendar = Calendar.getInstance()
+    private var calendar = Calendar.getInstance()
     private lateinit var apiClient: ApiClient
+    private var selectedStartDate: String? = null
+    private var selectedEndDate: String? = null
+    private lateinit var allAirports : List<Airport>
+    private lateinit var allCountries : List<Country>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,21 +49,56 @@ class TripsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        apiClient = ApiClient()
 
         binding.recyclerViewActivities.layoutManager = LinearLayoutManager(requireContext())
 
         // Start Date Picker
         binding.startDatePickerButton.setOnClickListener {
-            showDatePicker(binding.startDatePickerButton)
+            showDatePicker(binding.startDatePickerButton, true)
         }
 
         // End Date Picker
         binding.endDatePickerButton.setOnClickListener {
-            showDatePicker(binding.endDatePickerButton)
+            showDatePicker(binding.endDatePickerButton, false)
         }
 
+        binding.search.setOnClickListener {
+            val airportName = binding.airportAutoCompleteTextView.text.toString() ?: return@setOnClickListener
+            var entityId: String? = null
+
+            for (airport in allAirports) {
+                if (airport.name == airportName) {
+                    entityId = airport.iata
+                    break
+                }
+            }
+            if (entityId != null &&
+                binding.budget.text != null &&
+                binding.spinner.selectedItem.toString() != "Currency" &&
+                binding.secondSpinner.selectedItem != "Continent" &&
+                selectedStartDate != null &&
+                selectedEndDate != null) {
+
+                val countrySearch = FlighCountriesSearch(
+                    fromEntityId = entityId,
+                    departDate = selectedStartDate.toString(),
+                    returnDate = selectedEndDate.toString(),
+                    currency = binding.spinner.selectedItem.toString(),
+                    dummy = true
+                )
+                fetchCountries(countrySearch)
+
+                // Proceed with the countrySearch object (e.g., send a network request, update UI, etc.)
+            } else {
+                // Handle the case where entityId is null or other conditions are not met
+                Toast.makeText(requireContext(), "Please ensure all fields are filled correctly", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
         // Spinner
-        val filterItems = arrayOf("$", "USD", "EURO")
+        val filterItems = arrayOf("Currency", "USD", "EUR")
         val filterAdapter = ArrayAdapter(
             requireContext(), android.R.layout.simple_spinner_dropdown_item, filterItems
         )
@@ -76,7 +118,6 @@ class TripsFragment : Fragment() {
                 // Do nothing
             }
         }
-
 
         val continentItems = arrayOf("Continent", "Africa", "Asia")
         val continentAdapter = ArrayAdapter(
@@ -98,33 +139,35 @@ class TripsFragment : Fragment() {
             }
         }
 
-        val airportItem = arrayOf("Airport", "Schiphol", "Abuja", "Istanbul")
-        val airportAdapter = ArrayAdapter(
-            requireContext(), android.R.layout.simple_spinner_dropdown_item, airportItem
-        )
-        binding.airportLayout.adapter = continentAdapter
+        fetchAirports()
 
-        val activities = mutableListOf(
-            Activities(R.drawable.usa, "United States", "From $500"),
-            Activities(R.drawable.usa, "United States", "From $500"),
-            Activities(R.drawable.usa, "United States", "From $500"),
-            Activities(R.drawable.usa, "United States", "From $500")
-        )
+//        val activities = mutableListOf(
+//            Activities(R.drawable.usa, "United States", "From $500"),
+//            Activities(R.drawable.usa, "United States", "From $500"),
+//            Activities(R.drawable.usa, "United States", "From $500"),
+//            Activities(R.drawable.usa, "United States", "From $500")
+//        )
 
-        binding.recyclerViewActivities.adapter = CountryAdapter(activities)
+
     }
 
-
-    private fun showDatePicker(targetTextView: TextView) {
+    private fun showDatePicker(targetTextView: TextView, isStartDate : Boolean) {
         val datePickerDialog = DatePickerDialog(
             requireContext(),
             { _: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
                 val selectedDate = Calendar.getInstance().apply {
                     set(year, monthOfYear, dayOfMonth)
                 }
-                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 val formattedDate = dateFormat.format(selectedDate.time)
-                targetTextView.text = "Selected Date: $formattedDate"
+
+                if (isStartDate) {
+                    selectedStartDate = formattedDate
+                    targetTextView.text = "Start Date: $formattedDate"
+                } else {
+                    selectedEndDate = formattedDate
+                    targetTextView.text = "End Date: $formattedDate"
+                }
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
@@ -137,10 +180,10 @@ class TripsFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val airports = apiClient.getAllAirport()
-                Log.d("fetchAirports", "Airports: $airports")
 
                 withContext(Dispatchers.Main) {
-//                    updateSpinnerWithAirports(airports)
+                    allAirports = airports
+                    updateAutoCompleteTextViewWithAirports(airports)
                 }
             } catch (e: Exception) {
                 // Handle any exceptions, e.g., network errors
@@ -148,9 +191,36 @@ class TripsFragment : Fragment() {
             }
         }
     }
+
+    private fun fetchCountries(countriesSearch: FlighCountriesSearch) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val countries = apiClient.getAllCountries(countriesSearch)
+                Log.d("Countries", "$countries")
+
+                withContext(Dispatchers.Main) {
+                    allCountries = countries
+                    updateCountriesRecyclerView(countries)
+                }
+            } catch (e: Exception) {
+                // Handle any exceptions, e.g., network errors
+                Log.e("fetchAirport", "Error: $e")
+            }
+        }
+    }
+
+    private fun updateAutoCompleteTextViewWithAirports(airports: List<Airport>) {
+        val airportNames = airports.map { it.name ?: "Unknown Airport" }
+        val airportAdapter = ArrayAdapter(
+            requireContext(), android.R.layout.simple_dropdown_item_1line, airportNames
+        )
+        binding.airportAutoCompleteTextView.setAdapter(airportAdapter)
+        Log.d("updateAutoCompleteTextViewWithAirports", "AutoCompleteTextView updated with airports: $airportNames")
+    }
+
+    private fun updateCountriesRecyclerView(countries: List<Country>) {
+       countries.map {
+           binding.recyclerViewActivities.adapter = CountryAdapter(countries)
+       }
+    }
 }
-
-//    private fun updateSpinnerWithAirports(airports: List<Airport>) {
-//
-//    }
-
