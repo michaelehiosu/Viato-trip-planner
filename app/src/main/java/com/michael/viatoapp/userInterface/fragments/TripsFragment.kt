@@ -78,7 +78,7 @@ class TripsFragment : Fragment() {
         val airportAdapter = ArrayAdapter(
             requireContext(), android.R.layout.simple_spinner_dropdown_item, airportItem
         )
-        binding.airportLayout.adapter = continentAdapter
+        binding.airportLayout.adapter = airportAdapter
 
         val activities = mutableListOf(
             Activities(R.drawable.usa, "United States", "From $500"),
