@@ -3,6 +3,7 @@ package com.michael.viatoapp.userInterface.fragments
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,18 +13,29 @@ import android.widget.DatePicker
 import com.michael.viatoapp.model.response.Activities
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.michael.viatoapp.R
+import com.michael.viatoapp.api.ApiClient
 import com.michael.viatoapp.databinding.ActivityTripsBinding
 import com.michael.viatoapp.userInterface.adapter.CountryAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class TripsFragment : Fragment() {
     private lateinit var binding: ActivityTripsBinding
     private val calendar = Calendar.getInstance()
+    private lateinit var apiClient: ApiClient
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = ActivityTripsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -51,9 +63,15 @@ class TripsFragment : Fragment() {
         binding.spinner.adapter = filterAdapter
 
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 filterItems
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 // Do nothing
             }
@@ -66,9 +84,15 @@ class TripsFragment : Fragment() {
         )
         binding.secondSpinner.adapter = continentAdapter
         binding.secondSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 continentItems
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 // Do nothing
             }
@@ -108,4 +132,25 @@ class TripsFragment : Fragment() {
         )
         datePickerDialog.show()
     }
+
+    private fun fetchAirports() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val airports = apiClient.getAllAirport()
+                Log.d("fetchAirports", "Airports: $airports")
+
+                withContext(Dispatchers.Main) {
+//                    updateSpinnerWithAirports(airports)
+                }
+            } catch (e: Exception) {
+                // Handle any exceptions, e.g., network errors
+                Log.e("fetchAirport", "Error: $e")
+            }
+        }
+    }
 }
+
+//    private fun updateSpinnerWithAirports(airports: List<Airport>) {
+//
+//    }
+
