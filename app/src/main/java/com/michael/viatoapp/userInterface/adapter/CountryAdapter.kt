@@ -29,9 +29,7 @@ class CountryAdapter(private var countries: List<Country>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val country = countries[position]
-
-//        holder.image.setImageResource(activity.imageUrl)
-        holder.description.text = country.cheapestPrice
+        holder.description.text = country.cheapestPrice ?: "Click to see cities"
         holder.title.text = country.name
         holder.cardView.setOnClickListener {
             val context = holder.itemView.context

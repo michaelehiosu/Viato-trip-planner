@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.michael.viatoapp.R
 import com.michael.viatoapp.api.ApiClient
+import com.michael.viatoapp.api.ApiHelper
 import com.michael.viatoapp.databinding.ActivityTripsBinding
 import com.michael.viatoapp.model.response.Activities
 import com.michael.viatoapp.model.data.flights.Airport
@@ -33,6 +34,7 @@ class TripsFragment : Fragment() {
     private lateinit var binding: ActivityTripsBinding
     private var calendar = Calendar.getInstance()
     private lateinit var apiClient: ApiClient
+    private lateinit var apiHelper: ApiHelper
     private var selectedStartDate: String? = null
     private var selectedEndDate: String? = null
     private lateinit var allAirports : List<Airport>
@@ -50,6 +52,7 @@ class TripsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         apiClient = ApiClient()
+        apiHelper = ApiHelper()
 
         binding.recyclerViewActivities.layoutManager = LinearLayoutManager(requireContext())
 
@@ -218,7 +221,8 @@ class TripsFragment : Fragment() {
         Log.d("updateAutoCompleteTextViewWithAirports", "AutoCompleteTextView updated with airports: $airportNames")
     }
 
-    private fun updateCountriesRecyclerView(countries: List<Country>) {
+    private fun updateCountriesRecyclerView(countries: MutableList<Country>) {
+//        var displayedCountries = apiHelper.filterCountry(countries)
        countries.map {
            binding.recyclerViewActivities.adapter = CountryAdapter(countries)
        }

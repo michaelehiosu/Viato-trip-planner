@@ -69,7 +69,7 @@ class ApiClient {
     }
 
 
-    suspend fun getAllCountries(flightCountriesSearch: FlighCountriesSearch): List<Country> {
+    suspend fun getAllCountries(flightCountriesSearch: FlighCountriesSearch): MutableList<Country> {
         return withContext(Dispatchers.IO) {
             try {
                 val call: Call<CountriesResponse> = apiService.getAllCountries(flightCountriesSearch)
@@ -80,21 +80,15 @@ class ApiClient {
                     if (retrievedData != null) {
                         val countries = retrievedData.data.everywhereDestination.results.mapNotNull { result: Result ->
                             val flightQuotes = result.content.flightQuotes
-                            val cheapest = flightQuotes?.cheapest
-                            val rawPrice = cheapest?.rawPrice
                             val imageUrl = result.content.image?.url
-                            if (flightQuotes != null && cheapest != null && rawPrice != null && imageUrl != null) {
+                            val cheapestPrice = flightQuotes?.cheapest?.rawPrice
                                 Country(
                                     entityId = result.entityId,
                                     skyId = result.skyId,
                                     name = result.content.location.name,
-                                    cheapestPrice = rawPrice,
+                                    cheapestPrice = cheapestPrice,
                                     imageUrl = imageUrl
                                 )
-                            } else {
-                                // Skip this result if any of the required fields are null
-                                null
-                            }
                         }
                         return@withContext countries
                     }
@@ -104,7 +98,7 @@ class ApiClient {
             }
 
             return@withContext emptyList()
-        }
+        }.toMutableList()
     }
 
 
