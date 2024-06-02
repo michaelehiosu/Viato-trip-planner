@@ -26,3 +26,4 @@ replay_pid*
 # local sdk
 local.properties
 local.properties
+*.properties
