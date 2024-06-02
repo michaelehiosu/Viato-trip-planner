@@ -38,7 +38,7 @@
           android:layout_marginRight="10dp"
           android:paddingLeft="10dp"
           android:textColorHint="#000000"
-          android:textColor="#000000"
+          android:textColor="@color/black"
           app:flow_verticalAlign="center"
           app:boxStrokeColor="@color/orange"
           app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +46,7 @@
 
       <Spinner
           android:id="@+id/spinner"
-
+          android:textColor="@color/black"
           android:layout_width="0dp"
           android:layout_weight="1"
           android:layout_height="30dp"
@@ -66,6 +66,7 @@
         android:layout_marginTop="5dp"
         android:background="@drawable/home_overview"
         android:backgroundTint="#FAF2E6"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/budgetLayout" />
 
@@ -125,7 +126,7 @@
           android:layout_height="40dp"
           android:backgroundTint="#FAF2E6"
           android:text="Select Start Date"
-          android:textColor="#000000"
+          android:textColor="@color/black"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@id/hotel" />
 
@@ -137,7 +138,7 @@
           android:layout_height="40dp"
           android:backgroundTint="#FAF2E6"
           android:text="Select End Date"
-          android:textColor="#000000"
+          android:textColor="@color/black"
           app:layout_constraintStart_toEndOf="@id/startDatePickerButton"
           app:layout_constraintTop_toBottomOf="@id/airplane" />
     </LinearLayout>
@@ -149,11 +150,11 @@
         android:layout_marginTop="5dp"
         android:background="@drawable/home_overview"
         android:backgroundTint="#FAF2E6"
-        android:textColor="#000000"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         android:hint="Original Airport"
         android:paddingLeft="10dp"
-        android:textColorHint="#000000"
+        android:textColorHint="@color/black"
         app:flow_verticalAlign="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date_layout" />
@@ -165,7 +166,7 @@
         android:layout_marginBottom="10dp"
         android:backgroundTint="#E5A13A"
         android:text="Search"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/airportLayout" />
