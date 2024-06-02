@@ -1,4 +1,6 @@
 package com.michael.viatoapp.model.request.stays
 
-class CitySearch {
-}
+data class CitySearch (
+    var query : String,
+    var dummy : Boolean
+)
