@@ -241,7 +241,7 @@ class TripsFragment : Fragment() {
                     val filterCountries = apiHelper.filterCountry(countries, budget, continent)
                     Log.d("FilteredCountries", "$filterCountries")
                     binding.tempText.visibility = View.GONE
-                    updateCountriesRecyclerView(filterCountries)
+                    updateCountriesRecyclerView(filterCountries, countriesSearch)
                 }
             } catch (e: Exception) {
                 // Handle any exceptions, e.g., network errors
@@ -259,9 +259,9 @@ class TripsFragment : Fragment() {
         Log.d("updateAutoCompleteTextViewWithAirports", "AutoCompleteTextView updated with airports: $airportNames")
     }
 
-    private fun updateCountriesRecyclerView(countries: MutableList<Country>) {
+    private fun updateCountriesRecyclerView(countries: MutableList<Country>, countriesSearch: FlighCountriesSearch) {
        countries.map {
-           binding.recyclerViewActivities.adapter = CountryAdapter(countries)
+           binding.recyclerViewActivities.adapter = CountryAdapter(countries, countriesSearch)
        }
     }
 

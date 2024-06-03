@@ -30,7 +30,7 @@ class CityAdapter(private var cities: List<City>) :
         Glide.with(holder.itemView)
             .load(city.imageUrl) // Load image URL using Glide
             .into(holder.image)
-        holder.description.text = city.name
+        holder.description.text = "See hotels and flights"
         holder.title.text = city.name
         holder.cardView.setOnClickListener {
             val context = holder.itemView.context

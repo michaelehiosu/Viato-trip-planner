@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-<<<<<<< HEAD
-    <bytecodeTargetLevel target="19">
-      <module name="Viato_App.app" target="17" />
-    </bytecodeTargetLevel>
-=======
     <bytecodeTargetLevel target="17" />
->>>>>>> development
   </component>
 </project>

@@ -11,20 +11,28 @@
         android:id="@+id/countryImage"
         android:layout_width="match_parent"
         android:layout_height="148dp"
-        android:background="@drawable/brazil"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="148dp"
+        android:alpha="0.5"
+        android:background="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
+        android:id="@+id/country_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="32dp"
-        android:hint="BRAZIL"
         android:textColorHint="#F4EEE6"
-        android:textSize="60dp"
+        android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/countryImage"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
