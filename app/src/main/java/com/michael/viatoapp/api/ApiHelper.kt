@@ -26,7 +26,7 @@ class ApiHelper {
         Log.d("FilteredContinent", "$continentFiltered")
 
         val budgetFiltered : MutableList<Country> = continentFiltered.filter { country ->
-            (country.cheapestPrice?.toIntOrNull() ?: Int.MAX_VALUE) >= flightbudget
+            country.cheapestPrice == null || country.cheapestPrice.toInt() <= flightbudget
         }.toMutableList()
 
         Log.d("budgetFiltered", "$budgetFiltered")

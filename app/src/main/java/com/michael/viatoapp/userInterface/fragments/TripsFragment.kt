@@ -1,13 +1,11 @@
 package com.michael.viatoapp.userInterface.fragments
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Context
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -15,7 +13,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.DatePicker
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -24,7 +21,6 @@ import com.michael.viatoapp.R
 import com.michael.viatoapp.api.ApiClient
 import com.michael.viatoapp.api.ApiHelper
 import com.michael.viatoapp.databinding.ActivityTripsBinding
-import com.michael.viatoapp.model.response.Activities
 import com.michael.viatoapp.model.data.flights.Airport
 import com.michael.viatoapp.model.data.flights.Country
 import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
