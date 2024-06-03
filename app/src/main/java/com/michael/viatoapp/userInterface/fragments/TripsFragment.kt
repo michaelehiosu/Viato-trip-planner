@@ -1,14 +1,19 @@
 package com.michael.viatoapp.userInterface.fragments
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Context
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.DatePicker
 import android.widget.TextView
 import android.widget.Toast
@@ -39,6 +44,8 @@ class TripsFragment : Fragment() {
     private var selectedEndDate: String? = null
     private lateinit var allAirports : List<Airport>
     private lateinit var allCountries : List<Country>
+    private var isFlightPressed = false
+    private var isHotelPressed = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,7 +73,22 @@ class TripsFragment : Fragment() {
             showDatePicker(binding.endDatePickerButton, false)
         }
 
+        binding.airplane.setOnClickListener {
+            val airplane = binding.airplane
+            toggleButtonPressed(isFlightPressed, airplane)
+            // Toggle the state
+            isFlightPressed = !isFlightPressed
+        }
+
+        binding.hotel.setOnClickListener {
+            val hotel = binding.hotel
+            toggleButtonPressed(isHotelPressed, hotel)
+            // Toggle the state
+            isHotelPressed = !isHotelPressed
+        }
+
         binding.search.setOnClickListener {
+            hideKeyboard()
             val airportName = binding.airportAutoCompleteTextView.text.toString() ?: return@setOnClickListener
             var entityId: String? = null
 
@@ -92,19 +114,18 @@ class TripsFragment : Fragment() {
                 )
                 fetchCountries(countrySearch)
 
-                // Proceed with the countrySearch object (e.g., send a network request, update UI, etc.)
             } else {
-                // Handle the case where entityId is null or other conditions are not met
                 Toast.makeText(requireContext(), "Please ensure all fields are filled correctly", Toast.LENGTH_SHORT).show()
             }
         }
 
 
         // Spinner
-        val filterItems = arrayOf("Currency", "USD", "EUR")
+        val filterItems = arrayOf("EUR", "USD")
         val filterAdapter = ArrayAdapter(
-            requireContext(), android.R.layout.simple_spinner_dropdown_item, filterItems
+            requireContext(), R.layout.spinner_item, filterItems
         )
+        filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinner.adapter = filterAdapter
 
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -122,10 +143,12 @@ class TripsFragment : Fragment() {
             }
         }
 
-        val continentItems = arrayOf("Continent", "Africa", "Asia")
+        val continentItems = arrayOf("Europe", "Africa", "Asia", "Oceania", "North America", "South America")
         val continentAdapter = ArrayAdapter(
-            requireContext(), android.R.layout.simple_spinner_dropdown_item, continentItems
+            requireContext(), R.layout.spinner_item, continentItems
         )
+        continentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
         binding.secondSpinner.adapter = continentAdapter
         binding.secondSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
@@ -144,17 +167,14 @@ class TripsFragment : Fragment() {
 
         fetchAirports()
 
-//        val activities = mutableListOf(
-//            Activities(R.drawable.usa, "United States", "From $500"),
-//            Activities(R.drawable.usa, "United States", "From $500"),
-//            Activities(R.drawable.usa, "United States", "From $500"),
-//            Activities(R.drawable.usa, "United States", "From $500")
-//        )
-
-
     }
 
-    private fun showDatePicker(targetTextView: TextView, isStartDate : Boolean) {
+    private fun hideKeyboard() {
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
+    }
+
+    private fun showDatePicker(targetTextView: Button, isStartDate : Boolean) {
         val datePickerDialog = DatePickerDialog(
             requireContext(),
             { _: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
@@ -166,16 +186,28 @@ class TripsFragment : Fragment() {
 
                 if (isStartDate) {
                     selectedStartDate = formattedDate
-                    targetTextView.text = "Start Date: $formattedDate"
+                    targetTextView.text = "From: $formattedDate"
+                    targetTextView.setBackgroundColor(resources.getColor(R.color.orange))
+                    targetTextView.setTextColor(resources.getColor(R.color.white))
                 } else {
-                    selectedEndDate = formattedDate
-                    targetTextView.text = "End Date: $formattedDate"
+                    val endDate = selectedDate.timeInMillis
+                    val startDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(selectedStartDate)?.time ?: 0
+                    if (endDate >= startDate) {
+                        selectedEndDate = formattedDate
+                        targetTextView.text = "To: $formattedDate"
+                        targetTextView.setBackgroundColor(resources.getColor(R.color.orange))
+                        targetTextView.setTextColor(resources.getColor(R.color.white))
+                    } else {
+                        Toast.makeText(requireContext(), "End date must be after start date", Toast.LENGTH_SHORT).show()
+                    }
+
                 }
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH)
         )
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
         datePickerDialog.show()
     }
 
@@ -196,6 +228,9 @@ class TripsFragment : Fragment() {
     }
 
     private fun fetchCountries(countriesSearch: FlighCountriesSearch) {
+        val budget = binding.budget.text.toString()
+        val continent = binding.secondSpinner.selectedItem.toString()
+
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val countries = apiClient.getAllCountries(countriesSearch)
@@ -203,7 +238,10 @@ class TripsFragment : Fragment() {
 
                 withContext(Dispatchers.Main) {
                     allCountries = countries
-                    updateCountriesRecyclerView(countries)
+                    val filterCountries = apiHelper.filterCountry(countries, budget, continent)
+                    Log.d("FilteredCountries", "$filterCountries")
+                    binding.tempText.visibility = View.GONE
+                    updateCountriesRecyclerView(filterCountries)
                 }
             } catch (e: Exception) {
                 // Handle any exceptions, e.g., network errors
@@ -222,9 +260,18 @@ class TripsFragment : Fragment() {
     }
 
     private fun updateCountriesRecyclerView(countries: MutableList<Country>) {
-//        var displayedCountries = apiHelper.filterCountry(countries)
        countries.map {
            binding.recyclerViewActivities.adapter = CountryAdapter(countries)
        }
+    }
+
+    private fun toggleButtonPressed(condition : Boolean, button : Button) {
+        if (condition) {
+            button.setBackgroundColor(resources.getColor(R.color.light_orange))
+            button.setTextColor(resources.getColor(R.color.black))
+        } else {
+            button.setBackgroundColor(resources.getColor(R.color.orange))
+            button.setTextColor(resources.getColor(R.color.white))
+        }
     }
 }

@@ -28,8 +28,9 @@ class CountryAdapter(private var countries: List<Country>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val currency = "€";
         val country = countries[position]
-        holder.description.text = country.cheapestPrice ?: "Click to see cities"
+        holder.description.text = country.cheapestPrice?.let { "From $it$currency " } ?: "Click to see cities"
         holder.title.text = country.name
         holder.cardView.setOnClickListener {
             val context = holder.itemView.context
