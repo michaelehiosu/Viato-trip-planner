@@ -10,6 +10,12 @@ import com.michael.viatoapp.model.response.flights.CitiesResponse
 import com.michael.viatoapp.model.response.flights.CountriesResponse
 import com.michael.viatoapp.model.response.flights.FlightDetailsResponse
 import com.michael.viatoapp.model.response.flights.FlightsResponse
+import com.michael.viatoapp.model.request.stays.CitySearch
+import com.michael.viatoapp.model.request.stays.HotelPricesSearch
+import com.michael.viatoapp.model.request.stays.HotelsSearch
+import com.michael.viatoapp.model.response.stays.CityResponse
+import com.michael.viatoapp.model.response.stays.HotelPricesResponse
+import com.michael.viatoapp.model.response.stays.HotelsResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -33,5 +39,13 @@ interface ApiService {
 
     @GET("airports")
     fun getAllAirports(): Call<AirportResponse>
-}
 
+    @POST("stays/city")
+    fun getCity(@Body() citySearch: CitySearch): Call<CityResponse>
+
+    @POST("stays/hotels")
+    fun getHotels(@Body() hotelsSearch: HotelsSearch): Call<HotelsResponse>
+
+    @POST("stays/hotels/prices")
+    fun getHotelPrices(@Body() hotelPricesSearch: HotelPricesSearch): Call<HotelPricesResponse>
+}
