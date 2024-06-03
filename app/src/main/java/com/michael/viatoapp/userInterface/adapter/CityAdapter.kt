@@ -7,15 +7,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.michael.viatoapp.R
-import com.michael.viatoapp.model.response.Activities
+import com.michael.viatoapp.model.data.flights.City
 import com.michael.viatoapp.userInterface.activities.MainNavigationActivity
 
-class CityAdapter(private var activities: MutableList<Activities>) :
+class CityAdapter(private var cities: List<City>) :
     RecyclerView.Adapter<CityAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
-        return activities.size
+        return cities.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,11 +25,13 @@ class CityAdapter(private var activities: MutableList<Activities>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val activity = activities[position]
+        val city = cities[position]
 
-        holder.image.setImageResource(activity.imageUrl)
-        holder.description.text = activity.description
-        holder.title.text = activity.name
+        Glide.with(holder.itemView)
+            .load(city.imageUrl) // Load image URL using Glide
+            .into(holder.image)
+        holder.description.text = city.name
+        holder.title.text = city.name
         holder.cardView.setOnClickListener {
             val context = holder.itemView.context
             if (context is MainNavigationActivity) {
