@@ -34,7 +34,7 @@ class CountryAdapter(private var countries: List<Country>) :
         holder.cardView.setOnClickListener {
             val context = holder.itemView.context
             if (context is MainNavigationActivity) {
-                context.navigateToCountryOverviewFragment()
+                context.navigateToCountryOverviewFragment(country)
             }
         }
         Glide.with(holder.itemView)
