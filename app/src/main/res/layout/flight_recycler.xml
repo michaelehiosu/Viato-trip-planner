@@ -43,8 +43,8 @@
             android:textColor="@color/black"
             android:id="@+id/price"
             android:textSize="20dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="7dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="$400"/>
@@ -61,7 +61,7 @@
         android:id="@+id/flight_lenght"
         android:textSize="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="110dp"
+        android:layout_marginLeft="105dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="13h 5m"/>
