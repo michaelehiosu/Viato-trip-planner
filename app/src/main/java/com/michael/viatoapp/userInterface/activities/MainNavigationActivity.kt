@@ -8,6 +8,7 @@ import com.google.android.material.navigation.NavigationBarView.OnItemSelectedLi
 import com.michael.viatoapp.R
 import com.michael.viatoapp.databinding.ActivityMainNavigationBinding
 import com.michael.viatoapp.fragments.CityOverviewFragment
+import com.michael.viatoapp.model.data.flights.City
 import com.michael.viatoapp.model.data.flights.Country
 import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
 import com.michael.viatoapp.userInterface.fragments.CountryOverviewFragment
@@ -60,7 +61,14 @@ class MainNavigationActivity : AppCompatActivity(), OnItemSelectedListener {
         return true
     }
 
-    fun navigateToCityOverviewFragment() {
+    fun navigateToCityOverviewFragment(city: City,countrySearch: FlighCountriesSearch) {
+        val bundle = Bundle().apply {
+            putSerializable("city", city)
+            putSerializable("countrySearch", countrySearch)
+        }
+        val countryOverviewFragement = CountryOverviewFragment().apply {
+            arguments = bundle
+        }
         supportFragmentManager.commit {
             replace(R.id.fragment_content, CityOverviewFragment())
             addToBackStack(null)
