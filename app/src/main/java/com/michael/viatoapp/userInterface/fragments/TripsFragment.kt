@@ -24,7 +24,11 @@ import com.michael.viatoapp.databinding.ActivityTripsBinding
 import com.michael.viatoapp.model.request.stays.HotelsSearch
 import com.michael.viatoapp.model.data.flights.Airport
 import com.michael.viatoapp.model.data.flights.Country
+import com.michael.viatoapp.model.data.stays.HotelCity
+import com.michael.viatoapp.model.data.stays.HotelPrice
 import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
+import com.michael.viatoapp.model.request.stays.CitySearch
+import com.michael.viatoapp.model.request.stays.HotelPricesSearch
 import com.michael.viatoapp.userInterface.adapter.CountryAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -62,16 +66,29 @@ class TripsFragment : Fragment() {
         apiHelper = ApiHelper()
         apiClient = ApiClient()
 
-//        val hotelSearch = HotelsSearch(
-//            "4363",
-//            "agha",
-//            "gsavhgvs",
-//            "vjga",
-//            dummy = true
-//        )
+        val hotelSearch = HotelsSearch(
+            "4363",
+            "agha",
+            "gsavhgvs",
+            1,
+            dummy = true
+        )
 
-//        val hotels = apiClient.getHotels(search)
-//        Log.d("hotel", "$hotels")
+        val citySearch = CitySearch(
+            query = "Frankfurt",
+            dummy = true
+        )
+
+        val hotelPrice = HotelPricesSearch(
+            hotelId = "asdasdad",
+            checkOut = "date",
+            checkIn = "date",
+            dummy = true,
+        )
+
+//        fetchHotels(hotelSearch)
+//        fetchHotelCity(citySearch)
+        fetchHotelPrices(hotelPrice)
 
         // Start Date Picker
         binding.startDatePickerButton.setOnClickListener {
@@ -282,6 +299,44 @@ class TripsFragment : Fragment() {
         } else {
             button.setBackgroundColor(resources.getColor(R.color.orange))
             button.setTextColor(resources.getColor(R.color.white))
+        }
+    }
+
+    private fun fetchHotels(hotelsSearch: HotelsSearch) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val hotels = apiClient.getHotels(hotelsSearch)
+                Log.d("Hotels", "$hotels")
+
+
+            } catch (e: Exception) {
+                // Handle any exceptions, e.g., network errors
+                Log.e("fetchHotel", "Error: $e")
+            }
+        }
+    }
+
+    private fun fetchHotelCity(citySearch: CitySearch) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val city = apiClient.getHotelCity(citySearch)
+                Log.d("City", "$city")
+            } catch (e: Exception) {
+                // Handle any exceptions, e.g., network errors
+                Log.e("fetchHotel", "Error: $e")
+            }
+        }
+    }
+
+    private fun fetchHotelPrices(hotelPricesSearch: HotelPricesSearch) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val prices = apiClient.getHotelPrices(hotelPricesSearch)
+                Log.d("Prices", "$prices")
+            } catch (e: Exception) {
+                // Handle any exceptions, e.g., network errors
+                Log.e("fetchHotel", "Error: $e")
+            }
         }
     }
 }

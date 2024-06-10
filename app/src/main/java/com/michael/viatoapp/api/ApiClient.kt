@@ -30,7 +30,7 @@ import com.michael.viatoapp.model.response.stays.FoundCity
 import com.michael.viatoapp.model.response.stays.HotelCard
 import com.michael.viatoapp.model.response.stays.HotelPricesResponse
 import com.michael.viatoapp.model.response.stays.HotelsResponse
-import com.michael.viatoapp.model.response.stays.Rates
+import com.michael.viatoapp.model.response.stays.Rate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call
@@ -214,10 +214,10 @@ class ApiClient {
 
     // Hotels functions
 
-    suspend fun getCity(citySearch: CitySearch): HotelCity {
+    suspend fun getHotelCity(citySearch: CitySearch): HotelCity {
         return withContext(Dispatchers.IO) {
             try {
-                val call: Call<CityResponse> = apiService.getCity(citySearch)
+                val call: Call<CityResponse> = apiService.getHotelCity(citySearch)
                 val response = call.execute()
 
                 if (response.isSuccessful) {
@@ -257,13 +257,14 @@ class ApiClient {
                 if (response.isSuccessful) {
                     val retrievedData = response.body()
                     if (retrievedData != null) {
-                        val hotels = retrievedData.data.hotelsCards.map { hotel: HotelCard ->
+                        val hotels = retrievedData.data.results.hotelCards.map { hotel: HotelCard ->
+                            Log.e("Error", "6")
                             Hotel(
                                 name = hotel.name,
                                 latitude = hotel.coordinates.latitude,
                                 longitude = hotel.coordinates.longitude,
-                                images = hotel.images,
-                                reviewScore = hotel.reviewSummary.reviewScore,
+                                images = hotel.images[0],
+                                reviewScore = hotel?.reviewSummary?.score,
                                 priceRaw = hotel.lowestPrice.rawPrice,
                                 hotelId = hotel.hotelId,
                             )
@@ -284,11 +285,10 @@ class ApiClient {
             try {
                 val call: Call<HotelPricesResponse> = apiService.getHotelPrices(hotelPricesSearch)
                 val response = call.execute()
-
                 if (response.isSuccessful) {
                     val retrievedData = response.body()
                     if (retrievedData != null) {
-                        val rates = retrievedData.data.rates.map { rate: Rates ->
+                        val rates = retrievedData.data.metaInfo.rates.map { rate: Rate ->
                             HotelPrice(
                                 partnerName = rate.partnerName,
                                 partnerLogo = rate.partnerLogo,

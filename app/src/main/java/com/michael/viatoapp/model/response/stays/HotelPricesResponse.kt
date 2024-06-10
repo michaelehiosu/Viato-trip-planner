@@ -1,18 +1,20 @@
 package com.michael.viatoapp.model.response.stays
 
-import com.michael.viatoapp.model.data.stays.HotelPrice
-
 data class HotelPricesResponse(
-    var data : HotelPrices,
+    var data : DataPrices,
     var status : Boolean,
     var message : String
 )
 
-data class HotelPrices(
-    var rates : ArrayList<Rates>,
+data class DataPrices(
+    val metaInfo: MetaInfo
 )
 
-data class Rates(
+data class MetaInfo(
+    val rates: ArrayList<Rate>
+)
+
+data class Rate(
     var partnerName : String,
     var partnerLogo : String,
     var roomType : String,
