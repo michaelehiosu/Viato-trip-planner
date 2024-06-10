@@ -5,5 +5,10 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.ViatoApp" parent="Base.Theme.ViatoApp" />
+    <style name="Theme.ViatoApp" parent="Base.Theme.ViatoApp">
+        <item name="android:colorPrimaryDark">@color/orange</item>
+        <item name="colorPrimaryDark">@color/orange</item>
+        <item name="colorPrimary">@color/light_orange</item>
+        <item name="colorAccent">@color/orange</item>
+    </style>
 </resources>

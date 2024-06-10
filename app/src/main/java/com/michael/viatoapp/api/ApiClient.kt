@@ -2,12 +2,29 @@ package com.michael.viatoapp.api
 
 import android.util.Log
 import com.google.gson.GsonBuilder
-import com.michael.viatoapp.model.data.stays.City
+import com.michael.viatoapp.model.data.flights.Airport
+import com.michael.viatoapp.model.data.flights.City
+import com.michael.viatoapp.model.data.flights.Country
+import com.michael.viatoapp.model.data.flights.Itinerary
+import com.michael.viatoapp.model.data.flights.ItineraryDetails
 import com.michael.viatoapp.model.data.stays.Hotel
+import com.michael.viatoapp.model.data.stays.HotelCity
 import com.michael.viatoapp.model.data.stays.HotelPrice
+import com.michael.viatoapp.model.request.flights.AllFlightsSearch
+import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
+import com.michael.viatoapp.model.request.flights.FlightCitiesSearch
+import com.michael.viatoapp.model.request.flights.FlightDetailsSearch
 import com.michael.viatoapp.model.request.stays.CitySearch
 import com.michael.viatoapp.model.request.stays.HotelPricesSearch
 import com.michael.viatoapp.model.request.stays.HotelsSearch
+import com.michael.viatoapp.model.response.flights.AirportResponse
+import com.michael.viatoapp.model.response.flights.CitiesResponse
+import com.michael.viatoapp.model.response.flights.CityResult
+import com.michael.viatoapp.model.response.flights.CountriesResponse
+import com.michael.viatoapp.model.response.flights.FlightDetailsResponse
+import com.michael.viatoapp.model.response.flights.FlightItinerary
+import com.michael.viatoapp.model.response.flights.FlightsResponse
+import com.michael.viatoapp.model.response.flights.Result
 import com.michael.viatoapp.model.response.stays.CityResponse
 import com.michael.viatoapp.model.response.stays.FoundCity
 import com.michael.viatoapp.model.response.stays.HotelCard
@@ -21,7 +38,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiClient {
-    private lateinit var city : City
+    private lateinit var city: HotelCity
     var gson = GsonBuilder()
         .setLenient()
         .create()
@@ -32,7 +49,172 @@ class ApiClient {
 
     private val apiService: ApiService = retrofit.create(ApiService::class.java)
 
-    suspend fun getCity(citySearch: CitySearch): City {
+    suspend fun getAllAirport(): List<Airport>{
+        return withContext(Dispatchers.IO) {
+            try {
+                val call: Call<AirportResponse> = apiService.getAllAirports()
+                val response = call.execute()
+
+                if (response.isSuccessful) {
+                    val retrievedData = response.body()
+                    if (retrievedData != null) {
+                        val airports = retrievedData.data.map { airport: Airport ->
+                            Airport(
+                                iata = airport.iata,
+                                name = airport.name,
+                                location = airport.location,
+                                skyId = airport.skyId,
+                                time = airport.time,
+                                id = airport.id
+                            )
+                        }
+                        return@withContext airports
+                    }
+                }
+            } catch (e: Exception) {
+                // Handle any exceptions, e.g., network errors
+                Log.e("getAirportsFromAPI", "Error: $e")
+            }
+            return@withContext emptyList()
+        }
+    }
+
+
+    suspend fun getAllCountries(flightCountriesSearch: FlighCountriesSearch): MutableList<Country> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val call: Call<CountriesResponse> = apiService.getAllCountries(flightCountriesSearch)
+                val response = call.execute()
+
+                if (response.isSuccessful) {
+                    val retrievedData = response.body()
+                    if (retrievedData != null) {
+                        val countries = retrievedData.data.everywhereDestination.results.mapNotNull { result: Result ->
+                            val flightQuotes = result.content.flightQuotes
+                            val imageUrl = result.content.image?.url
+                            val cheapestPrice = flightQuotes?.cheapest?.rawPrice
+                            Country(
+                                entityId = result.entityId,
+                                skyId = result.skyId,
+                                name = result.content.location.name,
+                                cheapestPrice = cheapestPrice,
+                                imageUrl = imageUrl
+                            )
+                        }
+                        return@withContext countries
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("Error Retrieving data", "Error: $e")
+            }
+
+            return@withContext emptyList()
+        }.toMutableList()
+    }
+
+
+    suspend fun getAllCities(flightCitiesSearch: FlightCitiesSearch) : List<City> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val call: Call<CitiesResponse> = apiService.getAllCities(flightCitiesSearch)
+                val response = call.execute()
+
+                if (response.isSuccessful) {
+                    val retrievedData = response.body()
+                    if (retrievedData != null) {
+                        var cities = retrievedData.data.countryDestination.results.map { cityResult : CityResult ->
+                            City(
+                                entityId = cityResult.entityId,
+                                skyId = cityResult.skyId,
+                                name = cityResult.content.location.name,
+                                imageUrl = cityResult.content.image.url
+                            )
+                        }
+                        return@withContext cities
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("Error Retrieving data", "Error: $e")
+            }
+
+            return@withContext emptyList();
+        }
+    }
+
+    suspend fun getAllFlights(flightsSearch: AllFlightsSearch) : List<Itinerary> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val call: Call<FlightsResponse> = apiService.getAllFlights(flightsSearch)
+                val response = call.execute()
+
+                if (response.isSuccessful) {
+                    val retrievedData = response.body()
+                    if (retrievedData != null) {
+                        var itineraries = retrievedData.data.itineraries.map { itinerary : FlightItinerary ->
+                            Itinerary(
+                                token = "",
+                                id = itinerary.id,
+                                rawPrice = itinerary.price.rawPrice,
+                                formattedPrice = itinerary.price.formattedPrice,
+                                originId = itinerary.legs[0].origin.id,
+                                originName = itinerary.legs[0].origin.name,
+                                destinationId = itinerary.legs[0].destination.id,
+                                destinationName = itinerary.legs[0].destination.name,
+                                marketingCarrierName = itinerary.legs[0].carrier.marketing.name,
+                                marketingCarrierLogo = itinerary.legs[0].carrier.marketing.logoUrl,
+                                operatingCarrier = itinerary.legs[0].carrier.operating.name,
+                                operatingCarrierLogo = itinerary.legs[0].carrier.operating.logoUrl,
+                                durationOutbound = itinerary.legs[0].durationInMinutes,
+                                durationInbound = itinerary.legs[1].durationInMinutes,
+                                stopCountOutbound = itinerary.legs[0].stopCount,
+                                stopCountInbound = itinerary.legs[1].stopCount,
+                                outboundDepartureTime = itinerary.legs[0].departure,
+                                outboundArrivalTime = itinerary.legs[0].arrival,
+                                inboundDepartureTime = itinerary.legs[1].departure,
+                                inboundArrivalTime = itinerary.legs[1].arrival
+                            )
+                        }
+                        return@withContext itineraries
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("Error Retrieving flight data", "Error: $e")
+            }
+
+            return@withContext emptyList();
+        }
+    }
+
+    suspend fun getFlightDetails(flightsDetailsSearch: FlightDetailsSearch): ItineraryDetails? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val call: Call<FlightDetailsResponse> = apiService.getFlightDetails(flightsDetailsSearch)
+                val response = call.execute()
+
+                if (response.isSuccessful) {
+                    val retrievedData = response.body()
+                    if (retrievedData != null) {
+                        val result = retrievedData.data.itinerary
+                        if (result.pricingOptions.isNotEmpty() && result.pricingOptions[0].agents.isNotEmpty()) {
+                            val itinerary = ItineraryDetails(
+                                id = result.id,
+                                bookingUrl = result.pricingOptions[0].agents[0].url
+                            )
+                            return@withContext itinerary
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("Error Retrieving flight data", "Error: $e")
+            }
+
+            return@withContext null
+        }
+    }
+
+    // Hotels functions
+
+    suspend fun getCity(citySearch: CitySearch): HotelCity {
         return withContext(Dispatchers.IO) {
             try {
                 val call: Call<CityResponse> = apiService.getCity(citySearch)
@@ -42,7 +224,7 @@ class ApiClient {
                     val retrievedData = response.body()
                     if (retrievedData != null) {
                         val cities = retrievedData.data.map { city: FoundCity ->
-                            City(
+                            HotelCity(
                                 location = city.location,
                                 entityName = city.entityName,
                                 entityId = city.entityId,
@@ -62,7 +244,7 @@ class ApiClient {
                 Log.e("Error Retrieving cities data", "Error: $e")
             }
 
-            return@withContext City("", "", "", "")
+            return@withContext HotelCity("", "", "", "")
         }
     }
 
@@ -75,8 +257,8 @@ class ApiClient {
                 if (response.isSuccessful) {
                     val retrievedData = response.body()
                     if (retrievedData != null) {
-                        val hotels = retrievedData.data.hotelsCards.map {hotel: HotelCard ->
-                            Hotel (
+                        val hotels = retrievedData.data.hotelsCards.map { hotel: HotelCard ->
+                            Hotel(
                                 name = hotel.name,
                                 latitude = hotel.coordinates.latitude,
                                 longitude = hotel.coordinates.longitude,
@@ -106,7 +288,7 @@ class ApiClient {
                 if (response.isSuccessful) {
                     val retrievedData = response.body()
                     if (retrievedData != null) {
-                        val rates = retrievedData.data.rates.map {rate: Rates ->
+                        val rates = retrievedData.data.rates.map { rate: Rates ->
                             HotelPrice(
                                 partnerName = rate.partnerName,
                                 partnerLogo = rate.partnerLogo,
