@@ -7,7 +7,7 @@ import androidx.fragment.app.commit
 import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
 import com.michael.viatoapp.R
 import com.michael.viatoapp.databinding.ActivityMainNavigationBinding
-import com.michael.viatoapp.fragments.CityOverviewFragment
+import com.michael.viatoapp.userInterface.fragments.CityOverviewFragment
 import com.michael.viatoapp.model.data.flights.Country
 import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
 import com.michael.viatoapp.userInterface.fragments.CountryOverviewFragment

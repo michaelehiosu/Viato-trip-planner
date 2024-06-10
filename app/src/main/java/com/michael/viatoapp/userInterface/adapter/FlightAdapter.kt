@@ -6,8 +6,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.michael.viatoapp.model.response.Flight
 import com.michael.viatoapp.R
+import com.michael.viatoapp.model.data.flights.Itinerary
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
-class FlightAdapter(private val flightList: MutableList<Flight>) : RecyclerView.Adapter<FlightAdapter.ViewHolder>() {
+class FlightAdapter(private val flightList: MutableList<Itinerary>) : RecyclerView.Adapter<FlightAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val depAirport: TextView = itemView.findViewById(R.id.dep_airport)
@@ -25,14 +30,22 @@ class FlightAdapter(private val flightList: MutableList<Flight>) : RecyclerView.
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         val currentItem = flightList[position]
-        holder.depAirport.text = currentItem.depAirport
-        holder.arrAirport.text = currentItem.arrAirport
-        holder.price.text = currentItem.price
-        holder.flightLength.text = currentItem.flightLength
-        holder.layovers.text = currentItem.layovers
-        holder.depDate.text = currentItem.depDate
-        holder.arrDate.text = currentItem.arrDate
+        holder.depAirport.text = currentItem.originId
+        holder.arrAirport.text = currentItem.destinationId
+        holder.price.text = currentItem.rawPrice.toString()
+        holder.flightLength.text = currentItem.durationOutbound.toString() + " min"
+
+        val stopCountOutbound = currentItem.stopCountOutbound
+        holder.layovers.text = if (stopCountOutbound == 0) "Direct" else stopCountOutbound.toString()
+
+        val outputFormat = SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault())
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+        val depDate = inputFormat.parse(currentItem.outboundDepartureTime)
+        holder.depDate.text = outputFormat.format(depDate)
+        val arrDate = inputFormat.parse(currentItem.outboundArrivalTime)
+        holder.arrDate.text = outputFormat.format(arrDate)
     }
 
     override fun getItemCount() : Int {

@@ -35,7 +35,7 @@ class ApiClient {
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
-    private val apiService: ApiService = retrofit.create(ApiService::class.java)
+    public val apiService: ApiService = retrofit.create(ApiService::class.java)
 
 
     suspend fun getAllAirport(): List<Airport>{
@@ -130,7 +130,7 @@ class ApiClient {
         }
     }
 
-    suspend fun getAllFlights(flightsSearch: AllFlightsSearch) : List<Itinerary> {
+    suspend fun getAllFlights(flightsSearch: AllFlightsSearch) : MutableList<Itinerary> {
         return withContext(Dispatchers.IO) {
             try {
                 val call: Call<FlightsResponse> = apiService.getAllFlights(flightsSearch)
@@ -149,10 +149,10 @@ class ApiClient {
                                 originName = itinerary.legs[0].origin.name,
                                 destinationId = itinerary.legs[0].destination.id,
                                 destinationName = itinerary.legs[0].destination.name,
-                                marketingCarrierName = itinerary.legs[0].carrier.marketing.name,
-                                marketingCarrierLogo = itinerary.legs[0].carrier.marketing.logoUrl,
-                                operatingCarrier = itinerary.legs[0].carrier.operating.name,
-                                operatingCarrierLogo = itinerary.legs[0].carrier.operating.logoUrl,
+                                marketingCarrierName = itinerary.legs[0].carrier?.marketing?.name,
+                                marketingCarrierLogo = itinerary.legs[0].carrier?.marketing?.logoUrl,
+                                operatingCarrier = itinerary.legs[0].carrier?.operating?.name,
+                                operatingCarrierLogo = itinerary.legs[0].carrier?.operating?.logoUrl,
                                 durationOutbound = itinerary.legs[0].durationInMinutes,
                                 durationInbound = itinerary.legs[1].durationInMinutes,
                                 stopCountOutbound = itinerary.legs[0].stopCount,
@@ -170,8 +170,8 @@ class ApiClient {
                 Log.e("Error Retrieving flight data", "Error: $e")
             }
 
-            return@withContext emptyList();
-        }
+            return@withContext emptyList()
+        }.toMutableList()
     }
 
     suspend fun getFlightDetails(flightsDetailsSearch: FlightDetailsSearch): ItineraryDetails? {

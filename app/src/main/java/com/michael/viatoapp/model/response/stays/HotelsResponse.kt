@@ -10,7 +10,7 @@ data class HotelsResponse(
 
 data class Hotels (
     var priceType : String,
-    var hotelsCards : ArrayList<Hotel>
+    var hotelsCards : List<Hotel>
 )
 
 data class Image (

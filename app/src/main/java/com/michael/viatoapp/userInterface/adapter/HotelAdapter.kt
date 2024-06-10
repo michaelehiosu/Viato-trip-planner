@@ -7,8 +7,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.michael.viatoapp.model.response.Hotel
 import com.michael.viatoapp.R
+import com.michael.viatoapp.model.response.Flight
 
-class HotelAdapter(private val hotelList: List<Hotel>) : RecyclerView.Adapter<HotelAdapter.HotelViewHolder>() {
+class HotelAdapter(private val hotelList: MutableList<Hotel>) : RecyclerView.Adapter<HotelAdapter.HotelViewHolder>() {
 
     class HotelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val hotelName: TextView = itemView.findViewById(R.id.hotel_name)
@@ -33,4 +34,10 @@ class HotelAdapter(private val hotelList: List<Hotel>) : RecyclerView.Adapter<Ho
     }
 
     override fun getItemCount() = hotelList.size
+
+    fun updateHotels(newHotels: List<Hotel>) {
+        hotelList.clear()
+        hotelList.addAll(newHotels)
+        notifyDataSetChanged()
+    }
 }
