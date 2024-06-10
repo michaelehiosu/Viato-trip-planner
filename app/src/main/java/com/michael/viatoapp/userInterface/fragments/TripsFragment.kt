@@ -3,6 +3,7 @@ package com.michael.viatoapp.userInterface.fragments
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.michael.viatoapp.R
+import com.michael.viatoapp.api.ApiClient
+import com.michael.viatoapp.api.ApiHelper
 import com.michael.viatoapp.databinding.ActivityTripsBinding
+import com.michael.viatoapp.model.request.stays.HotelsSearch
 import com.michael.viatoapp.userInterface.adapter.CountryAdapter
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -22,6 +26,8 @@ import java.util.Locale
 class TripsFragment : Fragment() {
     private lateinit var binding: ActivityTripsBinding
     private val calendar = Calendar.getInstance()
+    private lateinit var apiClient: ApiClient
+    private lateinit var apiHelper: ApiHelper
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = ActivityTripsBinding.inflate(inflater, container, false)
@@ -32,6 +38,19 @@ class TripsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerViewActivities.layoutManager = LinearLayoutManager(requireContext())
+        apiHelper = ApiHelper()
+        apiClient = ApiClient()
+
+//        val hotelSearch = HotelsSearch(
+//            "4363",
+//            "agha",
+//            "gsavhgvs",
+//            "vjga",
+//            dummy = true
+//        )
+
+//        val hotels = apiClient.getHotels(search)
+//        Log.d("hotel", "$hotels")
 
         // Start Date Picker
         binding.startDatePickerButton.setOnClickListener {

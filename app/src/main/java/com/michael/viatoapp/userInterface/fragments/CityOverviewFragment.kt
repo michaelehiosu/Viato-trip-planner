@@ -13,6 +13,7 @@ import com.michael.viatoapp.userInterface.adapter.FlightAdapter
 import com.michael.viatoapp.model.response.Hotel
 import com.michael.viatoapp.userInterface.adapter.HotelAdapter
 import com.michael.viatoapp.R
+import com.michael.viatoapp.api.ApiClient
 import com.michael.viatoapp.databinding.ActivityCityOverviewBinding
 import com.michael.viatoapp.databinding.ActivityMoreInfoBinding
 import com.michael.viatoapp.userInterface.activities.MainNavigationActivity

@@ -58,12 +58,13 @@
   <component name="ChangeListManager">
     <list default="true" id="f0ff5676-dffd-43d8-84cb-4dbd81abea4a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/request/stays/CitySearch.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/request/stays/CitySearch.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/request/stays/HotelPricesSearch.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/request/stays/HotelsSearch.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/api/ApiClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/api/ApiClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/data/stays/Hotel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/data/stays/Hotel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/stays/CityResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/stays/CityResponse.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/stays/HotelPricesResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/stays/HotelPricesResponse.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/stays/HotelsResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/stays/HotelsResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/CityOverviewFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/CityOverviewFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/TripsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/TripsFragment.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +74,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\marti\.android\avd\Pixel_3a_API_34.avd)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=PhysicalDevice, isTemplate=false, identifier=serial=R58N1364AKE)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -176,7 +177,7 @@
   </component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
-      <module name="Viato_App.app" />
+      <module name="Viato_App.app.main" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
       <option name="DEPLOY_AS_INSTANT" value="false" />

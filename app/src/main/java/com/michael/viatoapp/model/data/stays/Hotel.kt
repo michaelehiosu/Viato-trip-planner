@@ -1,15 +1,13 @@
 package com.michael.viatoapp.model.data.stays
 
-data class Hotel(
-    var name : String,
-    var latitude : Double,
-    var longitude : Double,
-    var images : ArrayList<Image>,
-    var reviewScore : Double,
-    var priceRaw : Int,
-    var hotelId : String
-)
+import com.michael.viatoapp.model.response.stays.Image
 
-data class Image (
-    var url : String
+data class Hotel(
+    var name: String,
+    var latitude: Double,
+    var longitude: Double,
+    var images: ArrayList<Image>,
+    var reviewScore: Double,
+    var priceRaw: Int,
+    var hotelId: String
 )
