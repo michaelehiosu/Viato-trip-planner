@@ -46,6 +46,10 @@ class RegisterActivity : AppCompatActivity() {
         val email = binding.emailEditText.text.toString().trim()
         val password = binding.passwordEditText.text.toString().trim()
         val confirmPassword = binding.confirmPasswordEditText.text.toString().trim()
+        val defaultCurrency = "EUR"
+        val defaultAirport = "Amsterdam Airport Schiphol"
+        val defaultDestination = "Europe"
+        val profileUrl = R.drawable.profile_pic.toString()
 
         if (validateInputData(firstName, lastName, email, password, confirmPassword)) {
             if (validateEmail(email)) {
@@ -63,6 +67,10 @@ class RegisterActivity : AppCompatActivity() {
                                     "firstName" to firstName,
                                     "lastName" to lastName,
                                     "email" to email,
+                                    "currency" to defaultCurrency,
+                                    "airport" to defaultAirport,
+                                    "destination" to defaultDestination,
+                                    "profileUrl" to profileUrl
                                 )
 
                                 userDocument.set(userData)
