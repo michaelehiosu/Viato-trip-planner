@@ -41,7 +41,7 @@ interface ApiService {
     fun getAllAirports(): Call<AirportResponse>
 
     @POST("stays/city")
-    fun getCity(@Body() citySearch: CitySearch): Call<CityResponse>
+    fun getHotelCity(@Body() citySearch: CitySearch): Call<CityResponse>
 
     @POST("stays/hotels")
     fun getHotels(@Body() hotelsSearch: HotelsSearch): Call<HotelsResponse>
