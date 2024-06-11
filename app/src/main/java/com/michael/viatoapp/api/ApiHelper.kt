@@ -2,8 +2,13 @@ package com.michael.viatoapp.api
 
 import android.util.Log
 import com.michael.viatoapp.model.data.flights.Country
+import com.michael.viatoapp.model.data.flights.Itinerary
+import com.michael.viatoapp.model.data.stays.Hotel
+import com.michael.viatoapp.model.response.Flight
 
 class ApiHelper {
+    private var leastPriceItinerary : Itinerary? = null
+    private var leastPriceHotel : Hotel? = null
     public fun filterCountry(countries : MutableList<Country>, budget : String, continent : String) : MutableList<Country> {
         var flightbudget = budget.toInt() * 60 / 100
         var selectedContinent : List<String>
@@ -32,6 +37,24 @@ class ApiHelper {
         Log.d("budgetFiltered", "$budgetFiltered")
 
         return budgetFiltered
+    }
+
+    fun getCheapestItinerary(itineraries : MutableList<Itinerary>) : Itinerary? {
+        for (itinerary in itineraries) {
+            if(leastPriceItinerary == null || itinerary.rawPrice!! < leastPriceItinerary?.rawPrice!!) {
+               leastPriceItinerary = itinerary
+            }
+        }
+        return leastPriceItinerary
+    }
+
+    fun getCheapestHotel(hotels : MutableList<Hotel>) : Hotel? {
+        for (hotel in hotels) {
+            if(leastPriceHotel == null || hotel.priceRaw!! < leastPriceHotel?.priceRaw!!) {
+                leastPriceHotel = hotel
+            }
+        }
+        return leastPriceHotel
     }
 
 

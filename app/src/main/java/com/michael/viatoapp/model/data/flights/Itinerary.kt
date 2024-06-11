@@ -3,7 +3,7 @@ package com.michael.viatoapp.model.data.flights
 data class Itinerary (
     var token : String?,
     var id : String?,
-    val rawPrice : Int?,
+    val rawPrice : Double?,
     val formattedPrice : String?,
     val originId : String?,
     val originName : String?,

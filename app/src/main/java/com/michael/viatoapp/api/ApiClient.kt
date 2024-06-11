@@ -154,8 +154,8 @@ class ApiClient {
                             Itinerary(
                                 token = "",
                                 id = itinerary.id,
-                                rawPrice = itinerary.price.rawPrice,
-                                formattedPrice = itinerary.price.formattedPrice,
+                                rawPrice = itinerary.price.raw,
+                                formattedPrice = itinerary.price.formatted,
                                 originId = itinerary.legs[0].origin.id,
                                 originName = itinerary.legs[0].origin.name,
                                 destinationId = itinerary.legs[0].destination.id,
@@ -248,7 +248,7 @@ class ApiClient {
         }
     }
 
-    suspend fun getHotels(hotelsSearch: HotelsSearch): List<Hotel> {
+    suspend fun getHotels(hotelsSearch: HotelsSearch): MutableList<Hotel> {
         return withContext(Dispatchers.IO) {
             try {
                 val call: Call<HotelsResponse> = apiService.getHotels(hotelsSearch)
@@ -257,16 +257,17 @@ class ApiClient {
                 if (response.isSuccessful) {
                     val retrievedData = response.body()
                     if (retrievedData != null) {
-                        val hotels = retrievedData.data.results.hotelCards.map { hotel: HotelCard ->
-                            Log.e("Error", "6")
+                        var hotels = retrievedData.data.results.hotelCards.map { hotel: HotelCard ->
                             Hotel(
                                 name = hotel.name,
                                 latitude = hotel.coordinates.latitude,
                                 longitude = hotel.coordinates.longitude,
                                 images = hotel.images[0],
-                                reviewScore = hotel?.reviewSummary?.score,
+                                reviewScore = hotel?.reviewsSummary?.score,
                                 priceRaw = hotel.lowestPrice.rawPrice,
                                 hotelId = hotel.hotelId,
+                                relevantPoi = hotel.relevantPoiDistance,
+                                scoreDesc = hotel?.reviewsSummary?.scoreDesc
                             )
                         }
                         return@withContext hotels
@@ -277,10 +278,10 @@ class ApiClient {
             }
 
             return@withContext emptyList()
-        }
+        }.toMutableList()
     }
 
-    suspend fun getHotelPrices(hotelPricesSearch: HotelPricesSearch): List<HotelPrice> {
+    suspend fun getHotelPrices(hotelPricesSearch: HotelPricesSearch): MutableList<HotelPrice> {
         return withContext(Dispatchers.IO) {
             try {
                 val call: Call<HotelPricesResponse> = apiService.getHotelPrices(hotelPricesSearch)
@@ -305,6 +306,6 @@ class ApiClient {
                 Log.e("Error Retrieving Hotel Prices", "Error: $e")
             }
             return@withContext emptyList()
-        }
+        }.toMutableList()
     }
 }

@@ -90,7 +90,7 @@ class CountryOverviewFragment : Fragment() {
 
     private fun bind(cities: List<City>) {
         if (cities.isNotEmpty()) {
-            val cityAdapter = CityAdapter(cities)
+            val cityAdapter = CityAdapter(cities, countrySearch!!)
             binding.recyclerViewActivities.adapter = cityAdapter
             binding.recyclerViewActivities.layoutManager = LinearLayoutManager(requireContext())
         } else {
