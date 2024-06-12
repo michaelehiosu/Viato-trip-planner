@@ -123,13 +123,11 @@ class CityOverviewFragment : Fragment() {
                 Log.d("itinerary", "$flightList")
 
                 val cheapestItinerary : Itinerary? = apiHelper.getCheapestItinerary(flightList)
-
                 val cheapestHotel : Hotel? = apiHelper.getCheapestHotel(hotelList)
-
 
                 updateCheapestFLightsAndHotel(cheapestItinerary, cheapestHotel)
                 updateFlightsRecyclerView(flightList)
-                //hotelAdapter.updateHotels(hotelList)
+                updateHotelsRecyclerView(hotelList)
             } catch (e: Exception) {
                 Log.e("CityOverviewFragment", "Error fetching data: ${e.message}")
             }
@@ -139,6 +137,12 @@ class CityOverviewFragment : Fragment() {
     private fun updateFlightsRecyclerView(flights: MutableList<Itinerary>) {
         flights.map {
             binding.recyclerViewFlights.adapter = FlightAdapter(flights)
+        }
+    }
+
+    private fun updateHotelsRecyclerView(hotels: MutableList<Hotel>) {
+        hotels.map {
+            binding.recyclerViewHotels.adapter = HotelAdapter(hotels)
         }
     }
 

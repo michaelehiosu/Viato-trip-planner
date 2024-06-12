@@ -26,7 +26,7 @@ data class HotelCard(
 )
 
 data class ReviewScore(
-    val score : Double,
+    val score : Double?,
     val scoreDesc : String,
 )
 
