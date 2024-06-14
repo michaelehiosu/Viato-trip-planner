@@ -20,8 +20,8 @@ data class FlightItinerary (
 )
 
 data class FlightPrice (
-    val rawPrice : Int,
-    val formattedPrice : String
+    val raw : Double,
+    val formatted : String
 )
 
 data class Leg (

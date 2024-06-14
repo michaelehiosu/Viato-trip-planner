@@ -11,95 +11,113 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp">
+        android:gravity="center">
 
-        <TextView
-            android:textColor="@color/black"
-            android:id="@+id/dep_airport"
-            android:textSize="25dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="15dp"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="LAX"/>
+            android:orientation="horizontal">
 
-        <View
-            android:layout_width="130dp"
-            android:layout_height="2dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/gray_line"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="10sp"
+                android:layout_gravity="center"
+                android:gravity="center">
 
-        <TextView
-            android:textColor="@color/black"
-            android:id="@+id/arr_airport"
-            android:textSize="25dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GIG"/>
+                <TextView
+                    android:textColor="@color/black"
+                    android:id="@+id/dep_airport"
+                    android:textSize="25sp"
+                    android:fontFamily="@font/athitisemibold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LAX"/>
 
-        <TextView
-            android:textColor="@color/black"
-            android:id="@+id/price"
-            android:textSize="20dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="7dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$400"/>
+                <TextView
+                    android:textColor="@color/dark_gray"
+                    android:id="@+id/dep_date"
+                    android:fontFamily="@font/athitimedium"
+                    android:textSize="10sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="9.30am - May 04"/>
+
+            </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               android:layout_gravity="center"
+               android:gravity="center">
+
+               <TextView
+                   android:textColor="@color/light_gray"
+                   android:id="@+id/flight_lenght"
+                   android:fontFamily="@font/athitimedium"
+                   android:textSize="10sp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="13h 5m"/>
+
+               <View
+                   android:layout_width="100dp"
+                   android:layout_height="2dp"
+                   android:background="@drawable/gray_line"/>
+
+               <TextView
+                   android:textColor="@color/light_gray"
+                   android:id="@+id/layovers"
+                   android:fontFamily="@font/athitimedium"
+                   android:textSize="10dp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Direct"/>
+
+           </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <TextView
+                    android:textColor="@color/black"
+                    android:id="@+id/arr_airport"
+                    android:fontFamily="@font/athitisemibold"
+                    android:textSize="25sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="GIG"/>
+
+                <TextView
+                    android:textColor="@color/dark_gray"
+                    android:id="@+id/arr_date"
+                    android:fontFamily="@font/athitimedium"
+                    android:textSize="10sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="11.30pm - May 04"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:id="@+id/price"
+                android:layout_marginStart="20dp"
+                android:textSize="20sp"
+                android:fontFamily="@font/athitisemibold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$400"/>
+        </LinearLayout>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp">
 
-    <TextView
-        android:textColor="@color/light_gray"
-        android:id="@+id/flight_lenght"
-        android:textSize="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="105dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="13h 5m"/>
-
-    <TextView
-        android:textColor="@color/light_gray"
-        android:id="@+id/layovers"
-        android:textSize="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="110dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Direct"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="20dp">
-
-        <TextView
-            android:textColor="@color/dark_gray"
-            android:id="@+id/dep_date"
-            android:textSize="10dp"
-            android:layout_marginTop="40dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="9.30am - May 04"/>
-
-        <TextView
-            android:textColor="@color/dark_gray"
-            android:id="@+id/arr_date"
-            android:textSize="10dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginLeft="110dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="11.30pm - May 04"/>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.cardview.widget.CardView>

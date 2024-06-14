@@ -16,16 +16,18 @@ data class Result(
 
 data class HotelCard(
     val name : String,
+    val relevantPoiDistance : String,
     val coordinates : Coordinates,
     val images : ArrayList<String>,
-    val reviewSummary : ReviewScore,
+    val reviewsSummary : ReviewScore,
     val lowestPrice : RawPrice,
     val hotelId : String
 
 )
 
 data class ReviewScore(
-    val score : Double,
+    val score : Double?,
+    val scoreDesc : String,
 )
 
 data class RawPrice(

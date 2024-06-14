@@ -62,9 +62,7 @@ class TripsFragment : Fragment() {
         apiClient = ApiClient()
         apiHelper = ApiHelper()
 
-        binding.recyclerViewActivities.layoutManager = LinearLayoutManager(requireContext())
-        apiHelper = ApiHelper()
-        apiClient = ApiClient()
+        binding.recyclerViewActivities.layoutManager = LinearLayoutManager(requireContext()) //this recycler flightd
 
         // Start Date Picker
         binding.startDatePickerButton.setOnClickListener {
