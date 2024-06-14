@@ -8,7 +8,7 @@ import com.michael.viatoapp.model.data.flights.Country
 import com.michael.viatoapp.model.data.flights.Itinerary
 import com.michael.viatoapp.model.data.flights.ItineraryDetails
 import com.michael.viatoapp.model.request.flights.AllFlightsSearch
-import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
+import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
 import com.michael.viatoapp.model.request.flights.FlightCitiesSearch
 import com.michael.viatoapp.model.request.flights.FlightDetailsSearch
 import com.michael.viatoapp.model.response.flights.AirportResponse
@@ -38,7 +38,7 @@ class ApiClient {
     private val apiService: ApiService = retrofit.create(ApiService::class.java)
 
 
-    suspend fun getAllAirport(): List<Airport>{
+    suspend fun getAllAirport(): List<Airport> {
         return withContext(Dispatchers.IO) {
             try {
                 val call: Call<AirportResponse> = apiService.getAllAirports()
@@ -68,8 +68,7 @@ class ApiClient {
         }
     }
 
-
-    suspend fun getAllCountries(flightCountriesSearch: FlighCountriesSearch): MutableList<Country> {
+    suspend fun getAllCountries(flightCountriesSearch: FlightCountriesSearch): MutableList<Country> {
         return withContext(Dispatchers.IO) {
             try {
                 val call: Call<CountriesResponse> = apiService.getAllCountries(flightCountriesSearch)
@@ -82,13 +81,14 @@ class ApiClient {
                             val flightQuotes = result.content.flightQuotes
                             val imageUrl = result.content.image?.url
                             val cheapestPrice = flightQuotes?.cheapest?.rawPrice
-                                Country(
-                                    entityId = result.entityId,
-                                    skyId = result.skyId,
-                                    name = result.content.location.name,
-                                    cheapestPrice = cheapestPrice,
-                                    imageUrl = imageUrl
-                                )
+                            Country(
+                                entityId = result.entityId,
+                                skyId = result.skyId,
+                                name = result.content.location.name,
+                                cheapestPrice = cheapestPrice,
+                                imageUrl = imageUrl,
+                                continent = result.content.location.continent // Adjust this line to match your API response
+                            )
                         }
                         return@withContext countries
                     }
@@ -101,8 +101,9 @@ class ApiClient {
         }.toMutableList()
     }
 
+    // Other methods remain unchanged
 
-    suspend fun getAllCities(flightCitiesSearch: FlightCitiesSearch) : List<City> {
+    suspend fun getAllCities(flightCitiesSearch: FlightCitiesSearch): List<City> {
         return withContext(Dispatchers.IO) {
             try {
                 val call: Call<CitiesResponse> = apiService.getAllCities(flightCitiesSearch)
@@ -111,7 +112,7 @@ class ApiClient {
                 if (response.isSuccessful) {
                     val retrievedData = response.body()
                     if (retrievedData != null) {
-                        var cities = retrievedData.data.countryDestination.results.map { cityResult : CityResult ->
+                        val cities = retrievedData.data.countryDestination.results.map { cityResult: CityResult ->
                             City(
                                 entityId = cityResult.entityId,
                                 skyId = cityResult.skyId,
@@ -126,11 +127,11 @@ class ApiClient {
                 Log.e("Error Retrieving data", "Error: $e")
             }
 
-            return@withContext emptyList();
+            return@withContext emptyList()
         }
     }
 
-    suspend fun getAllFlights(flightsSearch: AllFlightsSearch) : List<Itinerary> {
+    suspend fun getAllFlights(flightsSearch: AllFlightsSearch): List<Itinerary> {
         return withContext(Dispatchers.IO) {
             try {
                 val call: Call<FlightsResponse> = apiService.getAllFlights(flightsSearch)
@@ -139,7 +140,7 @@ class ApiClient {
                 if (response.isSuccessful) {
                     val retrievedData = response.body()
                     if (retrievedData != null) {
-                        var itineraries = retrievedData.data.itineraries.map { itinerary : FlightItinerary ->
+                        val itineraries = retrievedData.data.itineraries.map { itinerary: FlightItinerary ->
                             Itinerary(
                                 token = "",
                                 id = itinerary.id,
@@ -170,7 +171,7 @@ class ApiClient {
                 Log.e("Error Retrieving flight data", "Error: $e")
             }
 
-            return@withContext emptyList();
+            return@withContext emptyList()
         }
     }
 
@@ -200,7 +201,4 @@ class ApiClient {
             return@withContext null
         }
     }
-
-
-
 }

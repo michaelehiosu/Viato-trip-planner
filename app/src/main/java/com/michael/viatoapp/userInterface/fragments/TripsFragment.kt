@@ -2,6 +2,7 @@ package com.michael.viatoapp.userInterface.fragments
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.SharedPreferences
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
@@ -17,13 +18,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.michael.viatoapp.R
 import com.michael.viatoapp.api.ApiClient
 import com.michael.viatoapp.api.ApiHelper
 import com.michael.viatoapp.databinding.ActivityTripsBinding
 import com.michael.viatoapp.model.data.flights.Airport
 import com.michael.viatoapp.model.data.flights.Country
-import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
+import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
 import com.michael.viatoapp.userInterface.adapter.CountryAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,10 +41,15 @@ class TripsFragment : Fragment() {
     private lateinit var apiHelper: ApiHelper
     private var selectedStartDate: String? = null
     private var selectedEndDate: String? = null
-    private lateinit var allAirports : List<Airport>
-    private lateinit var allCountries : List<Country>
+    private lateinit var allAirports: List<Airport>
+    private lateinit var allCountries: List<Country>
     private var isFlightPressed = false
     private var isHotelPressed = false
+    private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
+    private val sharedPreferences: SharedPreferences by lazy {
+        requireContext().getSharedPreferences("myPref", Context.MODE_PRIVATE)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,7 +57,29 @@ class TripsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = ActivityTripsBinding.inflate(inflater, container, false)
+
+        // Initialize Firebase Auth and Firestore
+        auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+
         return binding.root
+    }
+
+    private fun fetchAirports(onAirportsFetched: () -> Unit) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val airports = apiClient.getAllAirport()
+
+                withContext(Dispatchers.Main) {
+                    allAirports = airports
+                    updateAutoCompleteTextViewWithAirports(airports)
+                    onAirportsFetched()  // Call the callback after fetching airports
+                }
+            } catch (e: Exception) {
+                // Handle any exceptions, e.g., network errors
+                Log.e("fetchAirport", "Error: $e")
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,6 +88,7 @@ class TripsFragment : Fragment() {
         apiHelper = ApiHelper()
 
         binding.recyclerViewActivities.layoutManager = LinearLayoutManager(requireContext())
+        binding.textActivity.text = "Suggested Countries"
 
         // Start Date Picker
         binding.startDatePickerButton.setOnClickListener {
@@ -101,7 +132,7 @@ class TripsFragment : Fragment() {
                 selectedStartDate != null &&
                 selectedEndDate != null) {
 
-                val countrySearch = FlighCountriesSearch(
+                val countrySearch = FlightCountriesSearch(
                     fromEntityId = entityId,
                     departDate = selectedStartDate.toString(),
                     returnDate = selectedEndDate.toString(),
@@ -109,12 +140,10 @@ class TripsFragment : Fragment() {
                     dummy = true
                 )
                 fetchCountries(countrySearch)
-
             } else {
                 Toast.makeText(requireContext(), "Please ensure all fields are filled correctly", Toast.LENGTH_SHORT).show()
             }
         }
-
 
         // Spinner
         val filterItems = arrayOf("EUR", "USD")
@@ -161,8 +190,9 @@ class TripsFragment : Fragment() {
             }
         }
 
-        fetchAirports()
-
+        fetchAirports {
+            fetchUserData()
+        }
     }
 
     private fun hideKeyboard() {
@@ -170,7 +200,7 @@ class TripsFragment : Fragment() {
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
-    private fun showDatePicker(targetTextView: Button, isStartDate : Boolean) {
+    private fun showDatePicker(targetTextView: Button, isStartDate: Boolean) {
         val datePickerDialog = DatePickerDialog(
             requireContext(),
             { _: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
@@ -207,23 +237,7 @@ class TripsFragment : Fragment() {
         datePickerDialog.show()
     }
 
-    private fun fetchAirports() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            try {
-                val airports = apiClient.getAllAirport()
-
-                withContext(Dispatchers.Main) {
-                    allAirports = airports
-                    updateAutoCompleteTextViewWithAirports(airports)
-                }
-            } catch (e: Exception) {
-                // Handle any exceptions, e.g., network errors
-                Log.e("fetchAirport", "Error: $e")
-            }
-        }
-    }
-
-    private fun fetchCountries(countriesSearch: FlighCountriesSearch) {
+    private fun fetchCountries(countriesSearch: FlightCountriesSearch) {
         val budget = binding.budget.text.toString()
         val continent = binding.secondSpinner.selectedItem.toString()
 
@@ -236,8 +250,9 @@ class TripsFragment : Fragment() {
                     allCountries = countries
                     val filterCountries = apiHelper.filterCountry(countries, budget, continent)
                     Log.d("FilteredCountries", "$filterCountries")
-                    binding.tempText.visibility = View.GONE
                     updateCountriesRecyclerView(filterCountries, countriesSearch)
+
+                    binding.textActivity.text = "Resulted Countries"
                 }
             } catch (e: Exception) {
                 // Handle any exceptions, e.g., network errors
@@ -255,19 +270,95 @@ class TripsFragment : Fragment() {
         Log.d("updateAutoCompleteTextViewWithAirports", "AutoCompleteTextView updated with airports: $airportNames")
     }
 
-    private fun updateCountriesRecyclerView(countries: MutableList<Country>, countriesSearch: FlighCountriesSearch) {
-       countries.map {
-           binding.recyclerViewActivities.adapter = CountryAdapter(countries, countriesSearch)
-       }
+    private fun updateCountriesRecyclerView(countries: MutableList<Country>, countriesSearch: FlightCountriesSearch) {
+        countries.map {
+            binding.recyclerViewActivities.adapter = CountryAdapter(countries, countriesSearch)
+        }
     }
 
-    private fun toggleButtonPressed(condition : Boolean, button : Button) {
-        if (condition) {
-            button.setBackgroundColor(resources.getColor(R.color.light_orange))
-            button.setTextColor(resources.getColor(R.color.black))
-        } else {
+    private fun toggleButtonPressed(isPressed: Boolean, button: View) {
+        if (!isPressed) {
             button.setBackgroundColor(resources.getColor(R.color.orange))
-            button.setTextColor(resources.getColor(R.color.white))
+        } else {
+            button.setBackgroundColor(resources.getColor(R.color.white))
         }
+    }
+
+    private fun fetchStoredCountries(destination: String, currency: String, airport: String) {
+        val budget = "1500"
+        val continent = destination
+
+        val airportName = airport
+        var entityId: String? = null
+
+        for (airport in allAirports) {
+            if (airport.name == airportName) {
+                entityId = airport.iata
+                break
+            }
+        }
+
+        // Calculate dates
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.WEEK_OF_YEAR, 2)
+        val departDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
+
+        calendar.add(Calendar.WEEK_OF_YEAR, 1)
+        val returnDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
+
+        val countrySearch = FlightCountriesSearch(
+            fromEntityId = entityId.toString(), // Provide default values
+            departDate = departDate,
+            returnDate = returnDate,
+            currency = currency,
+            dummy = true
+        )
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val countries = apiClient.getAllCountries(countrySearch)
+                Log.d("Countries", "$countries")
+
+                withContext(Dispatchers.Main) {
+                    allCountries = countries
+                    val filterCountries = apiHelper.filterCountry(countries, budget, continent)
+                    Log.d("FilteredCountries", "$filterCountries")
+                    updateCountriesRecyclerView(filterCountries, countrySearch)
+                }
+            } catch (e: Exception) {
+                // Handle any exceptions, e.g., network errors
+                Log.e("fetchAirport", "Error: $e")
+            }
+        }
+    }
+
+
+    private fun fetchUserData() {
+        val uid = sharedPreferences.getString("uid", null) ?: ""
+
+        val document = firestore.collection("users").document(uid)
+        document.get().addOnSuccessListener { documentSnapshot ->
+            if (documentSnapshot.exists()) {
+                val destination = documentSnapshot.getString("destination")
+                val currency = documentSnapshot.getString("currency")
+                val airport = documentSnapshot.getString("airport")
+                val name = documentSnapshot.getString("lastName")
+
+                Log.d("UserData", "Destination: $destination")
+                Log.d("UserData", "Currency: $currency")
+                Log.d("UserData", "Airport: $airport")
+                Log.d("UserData", "Name: $name")
+
+                // Fetch stored countries after user data has been fetched
+                if (destination != null && currency != null && airport !=null) {
+                    fetchStoredCountries(destination,currency,airport)
+                }
+            } else {
+                Log.d("UserData", "No such document")
+            }
+        }
+            .addOnFailureListener { exception ->
+                Log.d("UserData", "get failed with ", exception)
+            }
     }
 }

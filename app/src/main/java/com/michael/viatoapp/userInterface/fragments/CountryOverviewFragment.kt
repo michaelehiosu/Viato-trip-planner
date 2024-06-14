@@ -15,7 +15,7 @@ import com.michael.viatoapp.api.ApiHelper
 import com.michael.viatoapp.databinding.ActivityCountryOverviewBinding
 import com.michael.viatoapp.model.data.flights.City
 import com.michael.viatoapp.model.data.flights.Country
-import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
+import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
 import com.michael.viatoapp.model.request.flights.FlightCitiesSearch
 import com.michael.viatoapp.userInterface.adapter.CityAdapter
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +28,7 @@ class CountryOverviewFragment : Fragment() {
     private lateinit var apiHelper: ApiHelper
     private lateinit var allCities : List<City>
     private var country: Country? = null
-    private var countrySearch : FlighCountriesSearch? = null
+    private var countrySearch : FlightCountriesSearch? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,7 +36,7 @@ class CountryOverviewFragment : Fragment() {
     ): View? {
         arguments?.let {
             country = it.getSerializable("country") as Country?
-            countrySearch = it.getSerializable("countrySearch") as FlighCountriesSearch
+            countrySearch = it.getSerializable("countrySearch") as FlightCountriesSearch
         }
         binding = ActivityCountryOverviewBinding.inflate(inflater, container, false)
         return binding.root
