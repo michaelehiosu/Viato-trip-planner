@@ -4,12 +4,14 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -20,9 +22,15 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.MarkerOptions
 import com.michael.viatoapp.R
+import com.michael.viatoapp.api.ApiClient
+import com.michael.viatoapp.api.ApiHelper
 import com.michael.viatoapp.model.response.Activities
 import com.michael.viatoapp.userInterface.adapter.ActivityAdapter
 import com.michael.viatoapp.databinding.ActivityNearbyBinding
+import com.michael.viatoapp.model.request.attractions.AttractionsSearch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class NearbyFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: ActivityNearbyBinding
@@ -30,6 +38,8 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mapView: MapView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val requestLocationPermissionCode = 1
+    private lateinit var apiClient: ApiClient
+    private lateinit var apiHelper: ApiHelper
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = ActivityNearbyBinding.inflate(inflater, container, false)
@@ -38,6 +48,8 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        apiClient = ApiClient()
+        apiHelper = ApiHelper()
 
         binding.recyclerViewActivities.layoutManager = LinearLayoutManager(requireContext())
         mapView = binding.mapView
@@ -56,6 +68,30 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
         )
 
         bind(activities)
+
+        //This is only a dummy to be replaced by longitude and latitude retrieved from user location.
+        val attractionSearch = AttractionsSearch(
+            longitude = "6.909470",
+            latitude = "52.778910",
+            distance = "14",
+            currency = "EUR",
+            dummy = true
+        )
+        getAttractions(attractionSearch)
+    }
+
+    fun getAttractions(attractionsSearch: AttractionsSearch) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val allAttractions = apiClient.getAttractions(attractionsSearch)
+                withContext(Dispatchers.Main) {
+                    Log.d("attractions", "$allAttractions")
+                }
+
+            }catch (e: Exception) {
+                Log.e("fetchAirport", "Error: $e")
+            }
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
