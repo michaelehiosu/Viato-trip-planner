@@ -1,9 +1,19 @@
 package com.michael.viatoapp.api
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.michael.viatoapp.model.data.flights.Country
+import com.michael.viatoapp.model.data.flights.Itinerary
+import com.michael.viatoapp.model.data.stays.Hotel
+import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 class ApiHelper {
+    private var leastPriceItinerary : Itinerary? = null
+    private var leastPriceHotel : Hotel? = null
     public fun filterCountry(countries : MutableList<Country>, budget : String, continent : String) : MutableList<Country> {
         var flightbudget = budget.toInt() * 60 / 100
         var selectedContinent : List<String>
@@ -32,6 +42,58 @@ class ApiHelper {
         Log.d("budgetFiltered", "$budgetFiltered")
 
         return budgetFiltered
+    }
+
+    fun getCheapestItinerary(itineraries : MutableList<Itinerary>) : Itinerary? {
+        for (itinerary in itineraries) {
+            if(leastPriceItinerary == null || itinerary.rawPrice!! < leastPriceItinerary?.rawPrice!!) {
+               leastPriceItinerary = itinerary
+            }
+        }
+        return leastPriceItinerary
+    }
+
+    fun filterItinerary(itineraries : MutableList<Itinerary>, cheapestItinerary: Itinerary) : MutableList<Itinerary> {
+        var i = 0;
+        var newIntinerary = ArrayList<Itinerary>()
+        for (itinerary in itineraries) {
+            if(i < 10) {
+                newIntinerary.add(itinerary)
+                i++
+            }
+        }
+        return newIntinerary;
+    }
+
+    fun filterHotel(hotels: MutableList<Hotel>, countrySearch: FlighCountriesSearch) : MutableList<Hotel> {
+        var filteredHotel = hotels;
+
+        val numberOfDays = getNumberOfDays(countrySearch)
+
+        for (hotel in filteredHotel) {
+            hotel.priceRaw = hotel.priceRaw?.toInt()?.times(numberOfDays)
+        }
+
+        return filteredHotel
+    }
+
+    fun getCheapestHotel(hotels : MutableList<Hotel>) : Hotel? {
+        for (hotel in hotels) {
+            if(leastPriceHotel == null || hotel.priceRaw!! < leastPriceHotel?.priceRaw!!) {
+                leastPriceHotel = hotel
+            }
+        }
+        return leastPriceHotel
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getNumberOfDays(countrySearch: FlighCountriesSearch) : Int {
+        val formatter = DateTimeFormatter.ISO_DATE
+        val departLocalDate = LocalDate.parse(countrySearch.departDate, formatter)
+        val returnLocalDate = LocalDate.parse(countrySearch.returnDate, formatter)
+
+        val daysBetween = ChronoUnit.DAYS.between(departLocalDate, returnLocalDate)
+        return daysBetween.toInt()
     }
 
 

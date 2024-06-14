@@ -21,9 +21,14 @@ import com.michael.viatoapp.R
 import com.michael.viatoapp.api.ApiClient
 import com.michael.viatoapp.api.ApiHelper
 import com.michael.viatoapp.databinding.ActivityTripsBinding
+import com.michael.viatoapp.model.request.stays.HotelsSearch
 import com.michael.viatoapp.model.data.flights.Airport
 import com.michael.viatoapp.model.data.flights.Country
+import com.michael.viatoapp.model.data.stays.HotelCity
+import com.michael.viatoapp.model.data.stays.HotelPrice
 import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
+import com.michael.viatoapp.model.request.stays.CitySearch
+import com.michael.viatoapp.model.request.stays.HotelPricesSearch
 import com.michael.viatoapp.userInterface.adapter.CountryAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -57,7 +62,7 @@ class TripsFragment : Fragment() {
         apiClient = ApiClient()
         apiHelper = ApiHelper()
 
-        binding.recyclerViewActivities.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewActivities.layoutManager = LinearLayoutManager(requireContext()) //this recycler flightd
 
         // Start Date Picker
         binding.startDatePickerButton.setOnClickListener {

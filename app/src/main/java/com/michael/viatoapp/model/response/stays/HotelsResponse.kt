@@ -1,18 +1,40 @@
 package com.michael.viatoapp.model.response.stays
 
-import com.michael.viatoapp.model.data.stays.Hotel
-
 data class HotelsResponse(
-    var data : Hotels,
+    var data : Data,
     var status : Boolean,
     var message : String
 )
 
-data class Hotels (
-    var priceType : String,
-    var hotelsCards : ArrayList<Hotel>
+data class Data(
+    val results: Result
 )
 
-data class Image (
-    var url : String
+data class Result(
+    val hotelCards : ArrayList<HotelCard>
+)
+
+data class HotelCard(
+    val name : String,
+    val relevantPoiDistance : String,
+    val coordinates : Coordinates,
+    val images : ArrayList<String>,
+    val reviewsSummary : ReviewScore,
+    val lowestPrice : RawPrice,
+    val hotelId : String
+
+)
+
+data class ReviewScore(
+    val score : Double?,
+    val scoreDesc : String,
+)
+
+data class RawPrice(
+    val rawPrice : Int
+)
+
+data class Coordinates(
+    val latitude : Double,
+    val longitude : Double,
 )

@@ -10,9 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.michael.viatoapp.R
 import com.michael.viatoapp.model.data.flights.City
+import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
 import com.michael.viatoapp.userInterface.activities.MainNavigationActivity
 
-class CityAdapter(private var cities: List<City>) :
+class CityAdapter(private var cities: List<City>,private var countriesSearch: FlighCountriesSearch) :
     RecyclerView.Adapter<CityAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
@@ -35,7 +36,7 @@ class CityAdapter(private var cities: List<City>) :
         holder.cardView.setOnClickListener {
             val context = holder.itemView.context
             if (context is MainNavigationActivity) {
-                context.navigateToCityOverviewFragment()
+                context.navigateToCityOverviewFragment(city, countriesSearch)
             }
         }
     }
