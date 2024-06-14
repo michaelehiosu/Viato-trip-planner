@@ -6,5 +6,5 @@ data class AllFlightsSearch(
     var departDate : String,
     var returnDate : String,
     var currency : String,
-    var dummy : Boolean
+    var dummy : Boolean,
 )
