@@ -124,10 +124,12 @@ class CityOverviewFragment : Fragment() {
 
                 val cheapestItinerary : Itinerary? = apiHelper.getCheapestItinerary(flightList)
                 val cheapestHotel : Hotel? = apiHelper.getCheapestHotel(hotelList)
+                val filteredItinerary = apiHelper.filterItinerary(flightList, cheapestItinerary!!)
+                val filteredHotel = apiHelper.filterHotel(hotelList, countrySearch!!)
 
                 updateCheapestFLightsAndHotel(cheapestItinerary, cheapestHotel)
-                updateFlightsRecyclerView(flightList)
-                updateHotelsRecyclerView(hotelList)
+                updateFlightsRecyclerView(filteredItinerary)
+                updateHotelsRecyclerView(filteredHotel)
             } catch (e: Exception) {
                 Log.e("CityOverviewFragment", "Error fetching data: ${e.message}")
             }

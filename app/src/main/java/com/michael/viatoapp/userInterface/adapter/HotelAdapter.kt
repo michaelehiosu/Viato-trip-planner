@@ -42,7 +42,7 @@ class HotelAdapter(private val hotelList: MutableList<com.michael.viatoapp.model
         }
         holder.gradeWord.text = gradeWord
 
-        holder.price.text = currentItem.priceRaw.toString()
+        holder.price.text = "€ " + currentItem.priceRaw.toString()
 
         val latitude = currentItem.latitude
         val longitude = currentItem.longitude

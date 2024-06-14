@@ -10,30 +10,31 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="25dp"
-        android:paddingBottom="25dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_weight="4"
+            android:layout_marginStart="10dp">
 
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/hotel_name"
                 android:textSize="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="wrap_content"
+                android:fontFamily="@font/athitisemibold"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Hotel Atlantico Prime"/>
 
             <TextView
                 android:textColor="@color/dark_gray"
                 android:id="@+id/address"
+                android:fontFamily="@font/athitimedium"
                 android:textSize="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,12 +45,16 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
 
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/grade_number"
+                android:fontFamily="@font/athitisemibold"
                 android:textSize="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,8 +63,8 @@
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/grade_word"
+                android:fontFamily="@font/athitisemibold"
                 android:textSize="15dp"
-                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Good"/>
@@ -69,14 +74,16 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_marginEnd="10dp">
 
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/price"
+                android:fontFamily="@font/athitisemibold"
                 android:textSize="20dp"
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$400"/>

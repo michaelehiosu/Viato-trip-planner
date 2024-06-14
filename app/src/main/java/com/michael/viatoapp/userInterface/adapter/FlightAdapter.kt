@@ -34,7 +34,7 @@ class FlightAdapter(private val flightList: MutableList<Itinerary>) : RecyclerVi
         val currentItem = flightList[position]
         holder.depAirport.text = currentItem.originId
         holder.arrAirport.text = currentItem.destinationId
-        holder.price.text = currentItem.rawPrice.toString()
+        holder.price.text = "€" + currentItem.rawPrice?.toInt().toString()
         holder.flightLength.text = currentItem.durationOutbound.toString() + " min"
 
         val stopCountOutbound = currentItem.stopCountOutbound
