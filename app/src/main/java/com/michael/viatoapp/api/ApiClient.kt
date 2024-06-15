@@ -2,6 +2,7 @@ package com.michael.viatoapp.api
 
 import android.util.Log
 import com.google.gson.GsonBuilder
+import com.michael.viatoapp.model.data.attraction.Attraction
 import com.michael.viatoapp.model.data.flights.Airport
 import com.michael.viatoapp.model.data.flights.City
 import com.michael.viatoapp.model.data.flights.Country
@@ -10,6 +11,7 @@ import com.michael.viatoapp.model.data.flights.ItineraryDetails
 import com.michael.viatoapp.model.data.stays.Hotel
 import com.michael.viatoapp.model.data.stays.HotelCity
 import com.michael.viatoapp.model.data.stays.HotelPrice
+import com.michael.viatoapp.model.request.attractions.AttractionsSearch
 import com.michael.viatoapp.model.request.flights.AllFlightsSearch
 import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
 import com.michael.viatoapp.model.request.flights.FlightCitiesSearch
@@ -17,6 +19,8 @@ import com.michael.viatoapp.model.request.flights.FlightDetailsSearch
 import com.michael.viatoapp.model.request.stays.CitySearch
 import com.michael.viatoapp.model.request.stays.HotelPricesSearch
 import com.michael.viatoapp.model.request.stays.HotelsSearch
+import com.michael.viatoapp.model.response.attractions.Attractions
+import com.michael.viatoapp.model.response.attractions.AttractionsResponse
 import com.michael.viatoapp.model.response.flights.AirportResponse
 import com.michael.viatoapp.model.response.flights.CitiesResponse
 import com.michael.viatoapp.model.response.flights.CityResult
@@ -43,7 +47,7 @@ class ApiClient {
         .setLenient()
         .create()
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("https://us-central1-viato-app.cloudfunctions.net/app/trips/")
+        .baseUrl("https://us-central1-viato-app.cloudfunctions.net/app/")
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
@@ -305,6 +309,40 @@ class ApiClient {
             } catch (e: Exception) {
                 Log.e("Error Retrieving Hotel Prices", "Error: $e")
             }
+            return@withContext emptyList()
+        }.toMutableList()
+    }
+
+
+    suspend fun getAttractions(attractionsSearch: AttractionsSearch) : MutableList<Attraction> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val call: Call<AttractionsResponse> = apiService.getAllAttractions(attractionsSearch)
+                val response = call.execute()
+
+                if (response.isSuccessful) {
+                    val retrievedData = response.body()
+                    if (retrievedData != null) {
+                        var attractions = retrievedData.data.map { attraction : Attractions ->
+                            Attraction(
+                                name = attraction.name,
+                                locationId = attraction.location_id,
+                                numReviews = attraction.num_reviews,
+                                locationString = attraction.location_string,
+                                image = attraction.photo?.images?.large?.url,
+                                website = attraction.website,
+                                address = attraction.address,
+                                tripAdvisorLink = attraction.web_url,
+                                subCategory = attraction.subcategory?.get(0)?.name
+                            )
+                        }
+                        return@withContext attractions
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("Error Retrieving attractions data", "Error: $e")
+            }
+
             return@withContext emptyList()
         }.toMutableList()
     }
