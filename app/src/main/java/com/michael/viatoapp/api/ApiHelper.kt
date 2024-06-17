@@ -6,7 +6,7 @@ import androidx.annotation.RequiresApi
 import com.michael.viatoapp.model.data.flights.Country
 import com.michael.viatoapp.model.data.flights.Itinerary
 import com.michael.viatoapp.model.data.stays.Hotel
-import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
+import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
@@ -65,7 +65,7 @@ class ApiHelper {
         return newIntinerary;
     }
 
-    fun filterHotel(hotels: MutableList<Hotel>, countrySearch: FlighCountriesSearch) : MutableList<Hotel> {
+    fun filterHotel(hotels: MutableList<Hotel>, countrySearch: FlightCountriesSearch) : MutableList<Hotel> {
         var filteredHotel = hotels;
 
         val numberOfDays = getNumberOfDays(countrySearch)
@@ -87,7 +87,7 @@ class ApiHelper {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getNumberOfDays(countrySearch: FlighCountriesSearch) : Int {
+    fun getNumberOfDays(countrySearch: FlightCountriesSearch) : Int {
         val formatter = DateTimeFormatter.ISO_DATE
         val departLocalDate = LocalDate.parse(countrySearch.departDate, formatter)
         val returnLocalDate = LocalDate.parse(countrySearch.returnDate, formatter)

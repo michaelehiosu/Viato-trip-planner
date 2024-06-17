@@ -7,6 +7,5 @@ data class Country(
     val skyId: String?,
     val name: String?,
     val cheapestPrice: String?,
-    val imageUrl: String?,
-    val continent: String?
+    val imageUrl: String?
 ) : Serializable

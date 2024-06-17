@@ -19,7 +19,7 @@ import com.michael.viatoapp.model.data.flights.City
 import com.michael.viatoapp.model.data.flights.Itinerary
 import com.michael.viatoapp.model.data.stays.Hotel
 import com.michael.viatoapp.model.request.flights.AllFlightsSearch
-import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
+import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
 import com.michael.viatoapp.model.request.stays.CitySearch
 import com.michael.viatoapp.model.request.stays.HotelsSearch
 import com.michael.viatoapp.userInterface.activities.MainNavigationActivity
@@ -34,7 +34,7 @@ class CityOverviewFragment : Fragment() {
     private lateinit var flightAdapter: FlightAdapter
     private lateinit var hotelAdapter: HotelAdapter
     private var city: City? = null
-    private var countrySearch : FlighCountriesSearch? = null
+    private var countrySearch : FlightCountriesSearch? = null
     private val apiClient = ApiClient()
     private val apiHelper = ApiHelper()
 
@@ -44,7 +44,7 @@ class CityOverviewFragment : Fragment() {
     ): View? {
         arguments?.let {
             city = it.getSerializable("city") as City?
-            countrySearch = it.getSerializable("countrySearch") as FlighCountriesSearch
+            countrySearch = it.getSerializable("countrySearch") as FlightCountriesSearch
         }
         binding = ActivityCityOverviewBinding.inflate(layoutInflater, container, false)
 
