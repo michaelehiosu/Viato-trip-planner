@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.michael.viatoapp.R
 import com.michael.viatoapp.api.ApiClient
@@ -37,6 +38,13 @@ class CityOverviewFragment : Fragment() {
     private var countrySearch : FlightCountriesSearch? = null
     private val apiClient = ApiClient()
     private val apiHelper = ApiHelper()
+    private var cheapestItinerary : Itinerary? = null
+    private var cheapestHotel : Hotel? = null
+    private var selectedItinerary : Itinerary? = null
+    private var selectedHotel : Hotel? = null
+    private var cheapestSelected : Boolean = true
+    private var onlyFlightSelected : Boolean = false
+    private var onlyHotelSelected : Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,8 +61,12 @@ class CityOverviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        flightAdapter = FlightAdapter(mutableListOf())
-        hotelAdapter = HotelAdapter(mutableListOf())
+        flightAdapter = FlightAdapter(mutableListOf()) { itinerary ->
+            handleFlightSelection(itinerary)
+        }
+        hotelAdapter = HotelAdapter(mutableListOf()){ hotel ->
+            handleHotelSelection(hotel)
+        }
 
         binding.recyclerViewFlights.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewFlights.adapter = flightAdapter
@@ -69,11 +81,8 @@ class CityOverviewFragment : Fragment() {
             }
         }
 
-        binding.buttonGoTo.setOnClickListener {
-            val context = activity
-            if (context is MainNavigationActivity) {
-                context.navigateToMoreInfoFragment()
-            }
+        binding.llCheapest.setOnClickListener {
+            toggleCheapestSelected()
         }
 
         if(city != null && countrySearch != null) {
@@ -82,10 +91,22 @@ class CityOverviewFragment : Fragment() {
 
         Glide.with(this)
             .load(city?.imageUrl)
-            .placeholder(R.drawable.rio_pic) // Optional placeholder
+            .placeholder(R.drawable.rio_pic)
             .into(binding.cityImage)
 
         binding.cityTextview.text = city?.name
+
+        binding.buttonGoTo.setOnClickListener {
+            if (cheapestSelected && !onlyFlightSelected && !onlyHotelSelected) {
+                // TODO: Send selected hotel and selected itinerary to the more info page
+            }
+        }
+
+        binding.buttonGo.setOnClickListener {
+            if (onlyHotelSelected || onlyFlightSelected && !cheapestSelected) {
+                // TODO: Send selected hotel and selected itinerary to the more info page
+            }
+        }
     }
 
     private fun fetchFlightsAndHotels() {
@@ -122,10 +143,13 @@ class CityOverviewFragment : Fragment() {
                 Log.d("hotels", "$hotelList")
                 Log.d("itinerary", "$flightList")
 
-                val cheapestItinerary : Itinerary? = apiHelper.getCheapestItinerary(flightList)
-                val cheapestHotel : Hotel? = apiHelper.getCheapestHotel(hotelList)
+                cheapestItinerary  = apiHelper.getCheapestItinerary(flightList)
+                cheapestHotel = apiHelper.getCheapestHotel(hotelList)
                 val filteredItinerary = apiHelper.filterItinerary(flightList, cheapestItinerary!!)
                 val filteredHotel = apiHelper.filterHotel(hotelList, countrySearch!!)
+
+                setSelectedHotel(cheapestHotel)
+                setSelectedItinerary(cheapestItinerary)
 
                 updateCheapestFLightsAndHotel(cheapestItinerary, cheapestHotel)
                 updateFlightsRecyclerView(filteredItinerary)
@@ -138,13 +162,17 @@ class CityOverviewFragment : Fragment() {
 
     private fun updateFlightsRecyclerView(flights: MutableList<Itinerary>) {
         flights.map {
-            binding.recyclerViewFlights.adapter = FlightAdapter(flights)
+            binding.recyclerViewFlights.adapter = FlightAdapter(flights){ itinerary ->
+                handleFlightSelection(itinerary)
+            }
         }
     }
 
     private fun updateHotelsRecyclerView(hotels: MutableList<Hotel>) {
         hotels.map {
-            binding.recyclerViewHotels.adapter = HotelAdapter(hotels)
+            binding.recyclerViewHotels.adapter = HotelAdapter(hotels) { hotel ->
+                handleHotelSelection(hotel)
+            }
         }
     }
 
@@ -200,4 +228,72 @@ class CityOverviewFragment : Fragment() {
         return string
     }
 
+    private fun setSelectedItinerary(itinerary: Itinerary?) {
+        selectedItinerary = itinerary
+    }
+
+    private fun setSelectedHotel(hotel: Hotel?) {
+        selectedHotel = hotel
+    }
+
+    private fun toggleCheapestSelected() {
+        val cheap = !cheapestSelected
+        if (cheap) {
+            binding.llCheapest.setBackgroundResource(R.drawable.cheapest_bg)
+            cheapestSelected = !cheapestSelected
+            selectedHotel = cheapestHotel
+            selectedItinerary = cheapestItinerary
+            flightAdapter.clearSelection()
+            hotelAdapter.clearSelection()
+            resetBackgroundsInRecyclerView(binding.recyclerViewFlights, binding.recyclerViewHotels)
+            onlyHotelSelected = false
+            onlyFlightSelected = false
+        } else {
+            binding.llCheapest.background = null
+            cheapestSelected = !cheapestSelected
+            selectedHotel = null
+            selectedItinerary = null
+        }
+    }
+
+    private fun handleFlightSelection(itinerary: Itinerary?) {
+        if (itinerary == null) {
+            // Deselecting the item
+            selectedItinerary = null
+            onlyFlightSelected = false
+        } else {
+            // Selecting the item
+            selectedItinerary = itinerary
+            onlyFlightSelected = true
+            binding.llCheapest.background = null
+            cheapestSelected = false
+        }
+    }
+
+    private fun handleHotelSelection(hotel: Hotel?) {
+        if (hotel == null) {
+            // Deselecting the item
+            selectedHotel = null
+            onlyHotelSelected = false
+        } else {
+            // Selecting the item
+            selectedHotel = hotel
+            onlyHotelSelected = true
+            binding.llCheapest.background = null
+            cheapestSelected = false
+        }
+    }
+
+    private fun resetBackgroundsInRecyclerView(recyclerView: RecyclerView, recyclerViewHotel: RecyclerView) {
+        for (i in 0 until recyclerView.childCount) {
+            val viewHolder = recyclerView.findViewHolderForAdapterPosition(i) as? FlightAdapter.ViewHolder
+            viewHolder?.linearView?.background = null
+        }
+
+        for (i in 0 until recyclerViewHotel.childCount) {
+            val viewHolder = recyclerViewHotel.findViewHolderForAdapterPosition(i) as? HotelAdapter.HotelViewHolder
+            viewHolder?.linearView?.background = null
+        }
+
+    }
 }
