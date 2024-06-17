@@ -175,9 +175,7 @@ class TripsFragment : Fragment() {
             }
         }
 
-        fetchAirports {
-            fetchUserData()
-        }
+        fetchAirports()
     }
 
     private fun hideKeyboard() {
@@ -222,13 +220,14 @@ class TripsFragment : Fragment() {
         datePickerDialog.show()
     }
 
-    private fun fetchAirports(function: () -> Unit) {
+    private fun fetchAirports() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val airports = apiClient.getAllAirport()
 
                 withContext(Dispatchers.Main) {
                     allAirports = airports
+                    fetchUserData()
                     updateAutoCompleteTextViewWithAirports(airports)
                 }
             } catch (e: Exception) {
