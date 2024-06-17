@@ -65,23 +65,6 @@ class TripsFragment : Fragment() {
         return binding.root
     }
 
-    private fun fetchAirports(onAirportsFetched: () -> Unit) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            try {
-                val airports = apiClient.getAllAirport()
-
-                withContext(Dispatchers.Main) {
-                    allAirports = airports
-                    updateAutoCompleteTextViewWithAirports(airports)
-                    onAirportsFetched()  // Call the callback after fetching airports
-                }
-            } catch (e: Exception) {
-                // Handle any exceptions, e.g., network errors
-                Log.e("fetchAirport", "Error: $e")
-            }
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         apiClient = ApiClient()
@@ -140,10 +123,12 @@ class TripsFragment : Fragment() {
                     dummy = true
                 )
                 fetchCountries(countrySearch)
+
             } else {
                 Toast.makeText(requireContext(), "Please ensure all fields are filled correctly", Toast.LENGTH_SHORT).show()
             }
         }
+
 
         // Spinner
         val filterItems = arrayOf("EUR", "USD")
@@ -237,6 +222,22 @@ class TripsFragment : Fragment() {
         datePickerDialog.show()
     }
 
+    private fun fetchAirports(function: () -> Unit) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val airports = apiClient.getAllAirport()
+
+                withContext(Dispatchers.Main) {
+                    allAirports = airports
+                    updateAutoCompleteTextViewWithAirports(airports)
+                }
+            } catch (e: Exception) {
+                // Handle any exceptions, e.g., network errors
+                Log.e("fetchAirport", "Error: $e")
+            }
+        }
+    }
+
     private fun fetchCountries(countriesSearch: FlightCountriesSearch) {
         val budget = binding.budget.text.toString()
         val continent = binding.secondSpinner.selectedItem.toString()
@@ -276,11 +277,13 @@ class TripsFragment : Fragment() {
         }
     }
 
-    private fun toggleButtonPressed(isPressed: Boolean, button: View) {
-        if (!isPressed) {
-            button.setBackgroundColor(resources.getColor(R.color.orange))
+    private fun toggleButtonPressed(condition : Boolean, button : Button) {
+        if (condition) {
+            button.setBackgroundColor(resources.getColor(R.color.light_orange))
+            button.setTextColor(resources.getColor(R.color.black))
         } else {
-            button.setBackgroundColor(resources.getColor(R.color.white))
+            button.setBackgroundColor(resources.getColor(R.color.orange))
+            button.setTextColor(resources.getColor(R.color.white))
         }
     }
 
