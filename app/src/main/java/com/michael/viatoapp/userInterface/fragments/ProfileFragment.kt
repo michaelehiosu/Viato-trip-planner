@@ -10,7 +10,9 @@ import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.Spinner
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
@@ -57,8 +59,21 @@ class ProfileFragment : Fragment() {
                 binding.nameText.setText(fullName)
                 binding.tvEmail.setText(email)
                 binding.tvAirport.setText(airport)
-                binding.tvCurrency.setText(currency)
-                binding.tvFavDestination.setText(destination)
+
+                val currencyItems = arrayOf("Euro", "USD")
+                val currencyAdapter = ArrayAdapter(
+                    requireContext(), R.layout.spinner_item, currencyItems
+                )
+                currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.tvCurrency.adapter = currencyAdapter
+
+                val continentItems = arrayOf("Europe", "Africa", "Asia", "Oceania", "North America", "South America")
+                val continentAdapter = ArrayAdapter(
+                    requireContext(), R.layout.spinner_item, continentItems
+                )
+                continentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.tvFavDestination.adapter = continentAdapter
+
             }
 
             binding.buttonLogout.setOnClickListener {
@@ -76,7 +91,7 @@ class ProfileFragment : Fragment() {
                     }
                     val intent = Intent(context, LoginActivity::class.java)
                     startActivity(intent)
-                    requireActivity().finish() // Optional: close the current activity
+                    requireActivity().finish()
                     alertDialog.dismiss()
                 }
 
@@ -86,6 +101,43 @@ class ProfileFragment : Fragment() {
 
                 alertDialog.show()
             }
+
+            binding.buttonEditPassword.setOnClickListener {
+                binding.tvPassword.isEnabled = true
+                binding.buttonSave.visibility = View.VISIBLE
+            }
+
+            binding.buttonEditPreferences.setOnClickListener {
+                binding.tvCurrency.isEnabled = true
+                binding.tvAirport.isEnabled = true
+                binding.tvFavDestination.isEnabled = true
+                binding.buttonSave.visibility = View.VISIBLE
+            }
+
+            binding.buttonSave.setOnClickListener {
+                val newCurrency = binding.tvCurrency.selectedItem.toString()
+                val newAirport = binding.tvAirport.text.toString()
+                val newDestination = binding.tvFavDestination.selectedItem.toString()
+                val newPassword = binding.tvPassword.text.toString()
+
+                val updates = hashMapOf<String, Any>(
+                    "currency" to newCurrency,
+                    "airport" to newAirport,
+                    "destination" to newDestination
+                )
+
+                if (newPassword.isNotEmpty()) {
+                    updates["password"] = newPassword
+                }
+
+                document.update(updates).addOnSuccessListener {
+                    binding.tvCurrency.isEnabled = false
+                    binding.tvAirport.isEnabled = false
+                    binding.tvFavDestination.isEnabled = false
+                    binding.tvPassword.isEnabled = false
+                }
+            }
         }
     }
+
 }
