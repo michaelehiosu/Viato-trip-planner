@@ -74,13 +74,6 @@ class CityOverviewFragment : Fragment() {
         binding.recyclerViewHotels.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewHotels.adapter = hotelAdapter
 
-        binding.buttonGo.setOnClickListener {
-            val context = activity
-            if (context is MainNavigationActivity) {
-                context.navigateToMoreInfoFragment()
-            }
-        }
-
         binding.llCheapest.setOnClickListener {
             toggleCheapestSelected()
         }
@@ -99,12 +92,14 @@ class CityOverviewFragment : Fragment() {
         binding.buttonGoTo.setOnClickListener {
             if (cheapestSelected && !onlyFlightSelected && !onlyHotelSelected) {
                 // TODO: Send selected hotel and selected itinerary to the more info page
+                navigateToMoreInfoFragment()
             }
         }
 
         binding.buttonGo.setOnClickListener {
             if (onlyHotelSelected || onlyFlightSelected && !cheapestSelected) {
                 // TODO: Send selected hotel and selected itinerary to the more info page
+                navigateToMoreInfoFragment()
             }
         }
     }
@@ -295,5 +290,17 @@ class CityOverviewFragment : Fragment() {
             viewHolder?.linearView?.background = null
         }
 
+    }
+
+    private fun navigateToMoreInfoFragment() {
+        val context = activity
+        if (context is MainNavigationActivity) {
+            // Create a bundle to hold the selected data
+            val bundle = Bundle().apply {
+                putSerializable("selectedItinerary", selectedItinerary)
+                putSerializable("selectedHotel", selectedHotel)
+            }
+            context.navigateToMoreInfoFragment(bundle)
+        }
     }
 }
