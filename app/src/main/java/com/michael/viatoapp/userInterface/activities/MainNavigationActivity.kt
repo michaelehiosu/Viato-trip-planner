@@ -90,9 +90,12 @@ class MainNavigationActivity : AppCompatActivity(), OnItemSelectedListener {
         }
     }
 
-    fun navigateToMoreInfoFragment() {
+    fun navigateToMoreInfoFragment(bundle: Bundle) {
+        val moreInfoFragment = MoreInfoFragment().apply {
+            arguments = bundle
+        }
         supportFragmentManager.commit {
-            replace(R.id.fragment_content, MoreInfoFragment())
+            replace(R.id.fragment_content, moreInfoFragment)
             addToBackStack(null)
         }
     }
