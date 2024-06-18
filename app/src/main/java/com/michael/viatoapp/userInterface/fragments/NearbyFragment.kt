@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -32,6 +33,7 @@ import com.michael.viatoapp.model.request.attractions.AttractionsSearch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.math.log
 
 class NearbyFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: ActivityNearbyBinding
@@ -41,6 +43,7 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
     private val requestLocationPermissionCode = 1
     private lateinit var apiClient: ApiClient
     private lateinit var apiHelper: ApiHelper
+    private var kilometerRange = "15"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = ActivityNearbyBinding.inflate(inflater, container, false)
@@ -62,6 +65,28 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
 
         // Get current location and fetch attractions
         getLastKnownLocation()
+
+        val button5km = binding.button5km
+        val button10km = binding.button10km
+        val button15km = binding.button15km
+
+        binding.button5km.setOnClickListener{
+            toggleButtonPressed(button5km, button10km, button15km)
+            kilometerRange = "5"
+            changeAttractionsRange()
+        }
+
+        binding.button10km.setOnClickListener {
+            toggleButtonPressed(button10km, button5km, button15km)
+            kilometerRange = "10"
+            changeAttractionsRange()
+        }
+
+        binding.button15km.setOnClickListener {
+            toggleButtonPressed(button15km, button5km, button10km)
+            kilometerRange = "15"
+            changeAttractionsRange()
+        }
     }
 
     private fun getLastKnownLocation() {
@@ -85,7 +110,7 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
                 val attractionSearch = AttractionsSearch(
                     longitude = it.longitude.toString(),
                     latitude = it.latitude.toString(),
-                    distance = "14",
+                    distance = kilometerRange,
                     currency = "EUR",
                     dummy = false
                 )
@@ -194,6 +219,41 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
                     fetchLastKnownLocation()
                 }
             }
+        }
+    }
+
+    private fun changeAttractionsRange() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestLocationPermission()
+            return
+        }
+
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            location?.let {
+                    val attractionSearch = AttractionsSearch(
+                    longitude = it.longitude.toString(),
+                    latitude = it.latitude.toString(),
+                    distance = kilometerRange,
+                    currency = "EUR",
+                    dummy = false
+                )
+                getAttractions(attractionSearch)
+            }
+        }
+    }
+
+    private fun toggleButtonPressed(button : Button, vararg otherButtons : Button) {
+        button.setBackgroundColor(resources.getColor(R.color.orange))
+        button.setTextColor(resources.getColor(R.color.white))
+
+        for (button in otherButtons) {
+            button.setBackgroundColor(resources.getColor(R.color.light_gray))
+            button.setTextColor(resources.getColor(R.color.white))
         }
     }
 }
