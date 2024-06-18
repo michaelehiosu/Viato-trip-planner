@@ -1,5 +1,7 @@
 package com.michael.viatoapp.model.data.flights
 
+import java.io.Serializable
+
 data class Itinerary (
     var token : String?,
     var id : String?,
@@ -21,4 +23,4 @@ data class Itinerary (
     val outboundArrivalTime : String?,
     val inboundDepartureTime : String?,
     val inboundArrivalTime: String?
-)
+): Serializable

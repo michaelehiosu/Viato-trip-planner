@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +20,7 @@ import com.michael.viatoapp.model.data.flights.City
 import com.michael.viatoapp.model.data.flights.Itinerary
 import com.michael.viatoapp.model.data.stays.Hotel
 import com.michael.viatoapp.model.request.flights.AllFlightsSearch
-import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
+import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
 import com.michael.viatoapp.model.request.stays.CitySearch
 import com.michael.viatoapp.model.request.stays.HotelsSearch
 import com.michael.viatoapp.userInterface.activities.MainNavigationActivity
@@ -36,7 +35,7 @@ class CityOverviewFragment : Fragment() {
     private lateinit var flightAdapter: FlightAdapter
     private lateinit var hotelAdapter: HotelAdapter
     private var city: City? = null
-    private var countrySearch : FlighCountriesSearch? = null
+    private var countrySearch : FlightCountriesSearch? = null
     private val apiClient = ApiClient()
     private val apiHelper = ApiHelper()
     private var cheapestItinerary : Itinerary? = null
@@ -53,7 +52,7 @@ class CityOverviewFragment : Fragment() {
     ): View? {
         arguments?.let {
             city = it.getSerializable("city") as City?
-            countrySearch = it.getSerializable("countrySearch") as FlighCountriesSearch
+            countrySearch = it.getSerializable("countrySearch") as FlightCountriesSearch
         }
         binding = ActivityCityOverviewBinding.inflate(layoutInflater, container, false)
 
@@ -75,13 +74,6 @@ class CityOverviewFragment : Fragment() {
         binding.recyclerViewHotels.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewHotels.adapter = hotelAdapter
 
-        binding.buttonGo.setOnClickListener {
-            val context = activity
-            if (context is MainNavigationActivity) {
-                context.navigateToMoreInfoFragment()
-            }
-        }
-
         binding.llCheapest.setOnClickListener {
             toggleCheapestSelected()
         }
@@ -100,12 +92,14 @@ class CityOverviewFragment : Fragment() {
         binding.buttonGoTo.setOnClickListener {
             if (cheapestSelected && !onlyFlightSelected && !onlyHotelSelected) {
                 // TODO: Send selected hotel and selected itinerary to the more info page
+                navigateToMoreInfoFragment()
             }
         }
 
         binding.buttonGo.setOnClickListener {
             if (onlyHotelSelected || onlyFlightSelected && !cheapestSelected) {
                 // TODO: Send selected hotel and selected itinerary to the more info page
+                navigateToMoreInfoFragment()
             }
         }
     }
@@ -296,5 +290,17 @@ class CityOverviewFragment : Fragment() {
             viewHolder?.linearView?.background = null
         }
 
+    }
+
+    private fun navigateToMoreInfoFragment() {
+        val context = activity
+        if (context is MainNavigationActivity) {
+            // Create a bundle to hold the selected data
+            val bundle = Bundle().apply {
+                putSerializable("selectedItinerary", selectedItinerary)
+                putSerializable("selectedHotel", selectedHotel)
+            }
+            context.navigateToMoreInfoFragment(bundle)
+        }
     }
 }
