@@ -1,6 +1,5 @@
 package com.michael.viatoapp.userInterface.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +9,15 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.michael.viatoapp.R
+import com.michael.viatoapp.model.data.attraction.Attraction
 import com.michael.viatoapp.model.response.Activities
-import com.michael.viatoapp.userInterface.activities.NearbyDetailsActivity
+import com.michael.viatoapp.userInterface.activities.MainNavigationActivity
 
-class ActivityAdapter(private var activities: MutableList<Activities>) :
-    RecyclerView.Adapter<ActivityAdapter.viewHolder>() {
+class AttractionAdapter(private var attractions: MutableList<Attraction>) :
+    RecyclerView.Adapter<AttractionAdapter.viewHolder>() {
 
     override fun getItemCount(): Int {
-        return activities.size
+        return attractions.size
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
@@ -26,21 +26,22 @@ class ActivityAdapter(private var activities: MutableList<Activities>) :
     }
 
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
-        val activity = activities[position]
+        val attraction = attractions[position]
 
         // Use Glide to load the image from URL
         Glide.with(holder.itemView.context)
-            .load(activity.imageUrl)
+            .load(attraction.image)
             .placeholder(R.drawable.map) // Placeholder image
             .error(R.drawable.map) // Error image
             .into(holder.image)
 
-        holder.description.text = activity.description
-        holder.title.text = activity.name
+        holder.description.text = attraction.subCategory
+        holder.title.text = attraction.name
         holder.cardView.setOnClickListener {
             val context = holder.itemView.context
-            val intent = Intent(context, NearbyDetailsActivity::class.java)
-            context.startActivity(intent)
+            if (context is MainNavigationActivity) {
+                context.navigateToNearbyDetailsFragment(attraction)
+            }
         }
     }
 
