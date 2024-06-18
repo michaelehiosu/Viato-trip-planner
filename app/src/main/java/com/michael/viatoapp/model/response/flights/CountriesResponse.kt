@@ -28,6 +28,7 @@ data class Content (
 
 data class Location (
     var name : String,
+    val continent: String?
 )
 
 data class FlightQuotes (

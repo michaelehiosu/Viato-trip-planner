@@ -1,5 +1,7 @@
 package com.michael.viatoapp.model.data.stays
 
+import java.io.Serializable
+
 data class Hotel(
     var name: String?,
     var latitude: Double,
@@ -10,4 +12,4 @@ data class Hotel(
     var relevantPoi : String?,
     var scoreDesc : String?,
     var hotelId: String?
-)
+): Serializable

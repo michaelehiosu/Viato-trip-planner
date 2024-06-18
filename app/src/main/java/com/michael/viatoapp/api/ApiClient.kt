@@ -13,8 +13,8 @@ import com.michael.viatoapp.model.data.stays.HotelCity
 import com.michael.viatoapp.model.data.stays.HotelPrice
 import com.michael.viatoapp.model.request.attractions.AttractionsSearch
 import com.michael.viatoapp.model.request.flights.AllFlightsSearch
-import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
 import com.michael.viatoapp.model.request.flights.FlightCitiesSearch
+import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
 import com.michael.viatoapp.model.request.flights.FlightDetailsSearch
 import com.michael.viatoapp.model.request.stays.CitySearch
 import com.michael.viatoapp.model.request.stays.HotelPricesSearch
@@ -84,7 +84,7 @@ class ApiClient {
     }
 
 
-    suspend fun getAllCountries(flightCountriesSearch: FlighCountriesSearch): MutableList<Country> {
+    suspend fun getAllCountries(flightCountriesSearch: FlightCountriesSearch): MutableList<Country> {
         return withContext(Dispatchers.IO) {
             try {
                 val call: Call<CountriesResponse> = apiService.getAllCountries(flightCountriesSearch)

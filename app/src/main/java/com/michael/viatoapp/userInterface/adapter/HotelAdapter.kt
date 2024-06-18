@@ -6,19 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.michael.viatoapp.R
+import com.michael.viatoapp.model.data.flights.Itinerary
+import com.michael.viatoapp.model.data.stays.Hotel
 import java.io.IOException
 import java.util.Locale
 
-class HotelAdapter(private val hotelList: MutableList<com.michael.viatoapp.model.data.stays.Hotel>) : RecyclerView.Adapter<HotelAdapter.HotelViewHolder>() {
+class HotelAdapter(private val hotelList: MutableList<Hotel>, private val onItemSelected: (Hotel?) -> Unit ) : RecyclerView.Adapter<HotelAdapter.HotelViewHolder>() {
 
+    private var selectedItemPosition: Int = RecyclerView.NO_POSITION
     class HotelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val hotelName: TextView = itemView.findViewById(R.id.hotel_name)
         val address: TextView = itemView.findViewById(R.id.address)
         val gradeNumber: TextView = itemView.findViewById(R.id.grade_number)
         val gradeWord: TextView = itemView.findViewById(R.id.grade_word)
         val price: TextView = itemView.findViewById(R.id.price)
+        val linearView : View = itemView.findViewById(R.id.ll_hotels)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HotelViewHolder {
@@ -65,6 +70,27 @@ class HotelAdapter(private val hotelList: MutableList<com.michael.viatoapp.model
             holder.address.text = "Geocoding failed"
             e.printStackTrace()
         }
+
+        // Change background color based on selection
+        holder.linearView.background = (if (selectedItemPosition == position) {
+            ContextCompat.getDrawable(holder.itemView.context, R.drawable.cheapest_bg)
+        } else {
+            null
+        })
+
+        // Handle item click to toggle selection
+        holder.itemView.setOnClickListener {
+            if (selectedItemPosition == position) {
+                // Deselect the current item
+                selectedItemPosition = RecyclerView.NO_POSITION
+                onItemSelected(null)
+            } else {
+                // Select a new item
+                selectedItemPosition = position
+                onItemSelected(currentItem)
+            }
+            notifyDataSetChanged() // Refresh the entire list
+        }
     }
 
     fun truncateString(input: String?, maxLength: Int): String {
@@ -74,6 +100,10 @@ class HotelAdapter(private val hotelList: MutableList<com.michael.viatoapp.model
         } else {
             input
         }
+    }
+
+    fun clearSelection() {
+        selectedItemPosition = RecyclerView.NO_POSITION
     }
 
     override fun getItemCount() = hotelList.size

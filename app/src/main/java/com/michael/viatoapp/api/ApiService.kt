@@ -2,7 +2,7 @@ package com.michael.viatoapp.api
 
 import com.michael.viatoapp.model.request.attractions.AttractionsSearch
 import com.michael.viatoapp.model.request.flights.AllFlightsSearch
-import com.michael.viatoapp.model.request.flights.FlighCountriesSearch
+import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
 import com.michael.viatoapp.model.request.flights.FlightCitiesSearch
 import com.michael.viatoapp.model.request.flights.FlightDetailsSearch
 import com.michael.viatoapp.model.request.flights.FlightsSessionComplete
@@ -25,7 +25,7 @@ import retrofit2.http.POST
 
 interface ApiService {
     @POST("trips/flight/countries")
-    fun getAllCountries(@Body() countriesSearch: FlighCountriesSearch): Call<CountriesResponse>
+    fun getAllCountries(@Body() countriesSearch: FlightCountriesSearch): Call<CountriesResponse>
 
     @POST("trips/flight/cities")
     fun getAllCities(@Body() citiesSearch: FlightCitiesSearch): Call<CitiesResponse>

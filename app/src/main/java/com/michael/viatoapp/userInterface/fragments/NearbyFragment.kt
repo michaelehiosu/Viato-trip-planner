@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -27,10 +28,12 @@ import com.michael.viatoapp.api.ApiHelper
 import com.michael.viatoapp.model.response.Activities
 import com.michael.viatoapp.userInterface.adapter.ActivityAdapter
 import com.michael.viatoapp.databinding.ActivityNearbyBinding
+import com.michael.viatoapp.model.data.attraction.Attraction
 import com.michael.viatoapp.model.request.attractions.AttractionsSearch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.math.log
 
 class NearbyFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: ActivityNearbyBinding
@@ -40,6 +43,7 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
     private val requestLocationPermissionCode = 1
     private lateinit var apiClient: ApiClient
     private lateinit var apiHelper: ApiHelper
+    private var kilometerRange = "15"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = ActivityNearbyBinding.inflate(inflater, container, false)
@@ -59,68 +63,29 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-        val activities = mutableListOf(
-            Activities(R.drawable.redeemer, "Christ the Redeemer", "Type: Monuments and Memorials"),
-            Activities(R.drawable.redeemer, "Christ the Redeemer", "Type: Monuments and Memorials"),
-            Activities(R.drawable.redeemer, "Christ the Redeemer", "Type: Monuments and Memorials"),
-            Activities(R.drawable.redeemer, "Christ the Redeemer", "Type: Monuments and Memorials"),
-            Activities(R.drawable.redeemer, "Christ the Redeemer", "Type: Monuments and Memorials")
-        )
+        // Get current location and fetch attractions
+        getLastKnownLocation()
 
-        bind(activities)
+        val button5km = binding.button5km
+        val button10km = binding.button10km
+        val button15km = binding.button15km
 
-        //This is only a dummy to be replaced by longitude and latitude retrieved from user location.
-        val attractionSearch = AttractionsSearch(
-            longitude = "6.909470",
-            latitude = "52.778910",
-            distance = "14",
-            currency = "EUR",
-            dummy = true
-        )
-        getAttractions(attractionSearch)
-    }
-
-    fun getAttractions(attractionsSearch: AttractionsSearch) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            try {
-                val allAttractions = apiClient.getAttractions(attractionsSearch)
-                withContext(Dispatchers.Main) {
-                    Log.d("attractions", "$allAttractions")
-                }
-
-            }catch (e: Exception) {
-                Log.e("fetchAirport", "Error: $e")
-            }
+        binding.button5km.setOnClickListener{
+            toggleButtonPressed(button5km, button10km, button15km)
+            kilometerRange = "5"
+            changeAttractionsRange()
         }
-    }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-        mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
-        mMap.uiSettings.isZoomControlsEnabled = true
+        binding.button10km.setOnClickListener {
+            toggleButtonPressed(button10km, button5km, button15km)
+            kilometerRange = "10"
+            changeAttractionsRange()
+        }
 
-        if (isLocationPermissionGranted()) {
-            if (ActivityCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return
-            }
-            mMap.isMyLocationEnabled = true
-            getLastKnownLocation()
-        } else {
-            requestLocationPermission()
+        binding.button15km.setOnClickListener {
+            toggleButtonPressed(button15km, button5km, button10km)
+            kilometerRange = "15"
+            changeAttractionsRange()
         }
     }
 
@@ -140,13 +105,94 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
                 val currentLatLng = LatLng(it.latitude, it.longitude)
                 mMap.addMarker(MarkerOptions().position(currentLatLng).title("You are here"))
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
+
+                // Use real location data
+                val attractionSearch = AttractionsSearch(
+                    longitude = it.longitude.toString(),
+                    latitude = it.latitude.toString(),
+                    distance = kilometerRange,
+                    currency = "EUR",
+                    dummy = false
+                )
+                getAttractions(attractionSearch)
             }
         }
     }
 
+    fun getAttractions(attractionsSearch: AttractionsSearch) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val allAttractions = apiClient.getAttractions(attractionsSearch)
+                withContext(Dispatchers.Main) {
+                    updateUIWithAttractions(allAttractions)
+                }
+            } catch (e: Exception) {
+                Log.e("fetchAttractions", "Error: $e")
+            }
+        }
+    }
+
+    private fun updateUIWithAttractions(attractions: List<Attraction>) {
+        // Update RecyclerView
+        val activities = attractions.map {
+            Activities(imageUrl = it.image, it.name ?: "Unknown", "Type: ${it.subCategory ?: "Unknown"}")
+        }
+        bind(activities.toMutableList())
+
+        // Add markers to Google Map
+//    for (attraction in attractions) {
+//        val latLng = LatLng(attraction.latitude?.toDouble() ?: 0.0, attraction.longitude?.toDouble() ?: 0.0)
+//        mMap.addMarker(MarkerOptions().position(latLng).title(attraction.name))
+//    }
+    }
+
+
     private fun bind(activities: MutableList<Activities>) {
         val adapter = ActivityAdapter(activities)
         binding.recyclerViewActivities.adapter = adapter
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+        mMap.uiSettings.isZoomControlsEnabled = true
+
+        if (isLocationPermissionGranted()) {
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
+            mMap.isMyLocationEnabled = true
+            fetchLastKnownLocation()
+        } else {
+            requestLocationPermission()
+        }
+    }
+
+    private fun fetchLastKnownLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestLocationPermission()
+            return
+        }
+
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            location?.let {
+                val currentLatLng = LatLng(it.latitude, it.longitude)
+                mMap.addMarker(MarkerOptions().position(currentLatLng).title("You are here"))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
+            }
+        }
     }
 
     private fun isLocationPermissionGranted(): Boolean {
@@ -170,9 +216,44 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
                 if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                     ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     mMap.isMyLocationEnabled = true
-                    getLastKnownLocation()
+                    fetchLastKnownLocation()
                 }
             }
+        }
+    }
+
+    private fun changeAttractionsRange() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestLocationPermission()
+            return
+        }
+
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            location?.let {
+                    val attractionSearch = AttractionsSearch(
+                    longitude = it.longitude.toString(),
+                    latitude = it.latitude.toString(),
+                    distance = kilometerRange,
+                    currency = "EUR",
+                    dummy = false
+                )
+                getAttractions(attractionSearch)
+            }
+        }
+    }
+
+    private fun toggleButtonPressed(button : Button, vararg otherButtons : Button) {
+        button.setBackgroundColor(resources.getColor(R.color.orange))
+        button.setTextColor(resources.getColor(R.color.white))
+
+        for (button in otherButtons) {
+            button.setBackgroundColor(resources.getColor(R.color.light_gray))
+            button.setTextColor(resources.getColor(R.color.white))
         }
     }
 }

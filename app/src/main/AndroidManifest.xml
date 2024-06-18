@@ -37,6 +37,9 @@
             android:name=".userInterface.activities.LoginActivity"
             android:exported="false" />
         <activity
+            android:name=".userInterface.activities.UserDataFetcherActivity"
+            android:exported="true" />
+        <activity
             android:name=".userInterface.activities.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
