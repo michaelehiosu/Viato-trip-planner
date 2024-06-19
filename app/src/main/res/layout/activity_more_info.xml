@@ -23,7 +23,6 @@
             android:id="@+id/tv_city_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rio De Janeiro"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="40dp"
@@ -48,158 +47,210 @@
             android:id="@+id/ll_flight_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:padding="10dp"
+            android:layout_margin="20dp"
+            android:padding="20dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/flight_info_bg"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/light_orange"
             app:layout_constraintTop_toBottomOf="@+id/tv_flight_info">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="10dp"
-                android:paddingBottom="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
 
-                    <TextView
-                        android:textColor="@color/black"
-                        android:id="@+id/dep_time"
-                        android:textSize="25dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginRight="5dp"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="7.30am"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:textColor="@color/black"
+                            android:id="@+id/dep_time"
+                            android:textSize="25dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:textColor="@color/dark_gray"
+                            android:id="@+id/dep_date"
+                            android:textSize="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp">
+
+                        <TextView
+                            android:id="@+id/flight_lenght"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/light_gray"
+                            android:textSize="12dp" />
+
+                        <View
+                            android:layout_width="100dp"
+                            android:layout_height="2dp"
+                            app:layout_constraintStart_toEndOf="@+id/dep_time"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:background="@drawable/gray_line" />
+
+                        <TextView
+                            android:id="@+id/layovers"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Direct"
+                            android:textColor="@color/light_gray"
+                            android:textSize="12dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:textColor="@color/black"
+                            android:id="@+id/arr_time"
+                            android:textSize="25dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:textColor="@color/dark_gray"
+                            android:id="@+id/arr_date"
+                            android:textSize="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            <View
+                android:layout_width="300dp"
+                android:layout_height="2dp"
+                android:background="@drawable/orange_line"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/dep_return_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="25dp" />
+
+                    <TextView
+                        android:textColor="@color/dark_gray"
+                        android:id="@+id/dep_return_date"
+                        android:textSize="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp">
+
+                    <TextView
+                        android:id="@+id/return_flight_lenght"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/light_gray"
+                        android:textSize="12dp" />
 
                     <View
-                        android:layout_width="120dp"
+                        android:layout_width="100dp"
                         android:layout_height="2dp"
-                        android:layout_marginTop="30dp"
                         app:layout_constraintStart_toEndOf="@+id/dep_time"
                         app:layout_constraintTop_toTopOf="parent"
                         android:background="@drawable/gray_line" />
 
                     <TextView
-                        android:textColor="@color/black"
-                        android:id="@+id/arr_time"
-                        android:textSize="25dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginLeft="5dp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/line"
+                        android:id="@+id/return_layovers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10.30pm" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/flight_lenght"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="140dp"
-                        android:layout_marginTop="15dp"
-                        android:text="13h 5m"
-                        android:textColor="@color/light_gray"
-                        android:textSize="10dp" />
-
-                    <TextView
-                        android:id="@+id/layovers"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="143dp"
-                        android:layout_marginTop="7dp"
                         android:text="Direct"
                         android:textColor="@color/light_gray"
-                        android:textSize="10dp" />
+                        android:textSize="12dp" />
+
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:textColor="@color/dark_gray"
-                        android:id="@+id/dep_date"
-                        android:textSize="10dp"
-                        android:layout_marginTop="40dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="LAX - May 04"/>
-
-                    <TextView
-                        android:textColor="@color/dark_gray"
-                        android:id="@+id/arr_date"
-                        android:textSize="10dp"
-                        android:layout_marginTop="40dp"
-                        android:layout_marginLeft="160dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="GIG - May 04"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayout3"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/carry_on" />
+                    android:orientation="vertical"
+                    android:gravity="center">
 
                     <TextView
+                        android:textColor="@color/black"
+                        android:id="@+id/arr_return_time"
+                        android:textSize="25dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:text="Baggage included: carry-on"
-                        android:textColor="@color/black" />
+                        android:layout_height="wrap_content"/>
 
-                    <RelativeLayout
+                    <TextView
+                        android:textColor="@color/dark_gray"
+                        android:id="@+id/arr_return_date"
+                        android:textSize="10dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$400.50"
-                            android:layout_alignParentEnd="true"
-                            android:textColor="@color/black"
-                            android:layout_marginRight="10dp"
-                            android:textSize="20dp"/>
-                    </RelativeLayout>
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
+
+            </LinearLayout>
+
+                <TextView
+                    android:id="@+id/flight_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@color/black"
+                    android:text="$0"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="20dp"
+                    android:textSize="20dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="10dp"
                     android:text="Total"
                     android:textColor="@color/dark_gray"
                     android:textSize="10dp"
-                    android:layout_marginRight="30dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
         <TextView
@@ -229,155 +280,173 @@
             android:id="@+id/ll_hotel_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:padding="10dp"
+            android:layout_margin="20dp"
+            android:padding="20dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/flight_info_bg"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/light_orange"
             app:layout_constraintTop_toBottomOf="@+id/tv_hotel_info">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="10dp"
-                android:paddingBottom="10dp">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:textColor="@color/black"
                         android:id="@+id/hotel_name"
-                        android:textSize="25dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="JANEIRO Hotel"/>
-
-                    <TextView
                         android:textColor="@color/black"
-                        android:id="@+id/grade_word"
-                        android:textSize="15dp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/hotel_name"
-                        android:text="Good: "/>
-
-                    <TextView
-                        android:textColor="@color/black"
-                        android:id="@+id/grade_number"
-                        android:textSize="20dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="8/10"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayout4"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:layout_editor_absoluteX="10dp">
+                        android:textSize="25dp" />
 
                     <TextView
                         android:id="@+id/address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="35dp"
-                        android:text="Avenida Delfim Moreira 696, Rio de Janeiro"
                         android:textColor="@color/dark_gray"
                         android:textSize="10dp" />
 
-                    <TextView
-                        android:id="@+id/review_nr"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="30dp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/address"
-                        android:text="3.455 reviews"
-                        android:textColor="@color/dark_gray"
-                        android:textSize="10dp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/linearLayout5"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/bed" />
+                    android:layout_marginBottom="10dp">
 
                     <TextView
+                        android:textColor="@color/black"
+                        android:id="@+id/grade_word"
+                        android:textSize="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1 Room"
-                        android:textColor="@color/black"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="-8dp"/>
+                        app:layout_constraintTop_toTopOf="parent"/>
 
-                    <RelativeLayout
+                    <TextView
+                        android:id="@+id/grade_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
+                        <TextView
+                            android:id="@+id/room_policies"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/bed"
+                            android:layout_marginEnd="5dp"/>
+
+                        <TextView
+                            android:id="@+id/room_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="4">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/price_per_night"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$0"
+                        android:textColor="@color/black"
+                        android:layout_gravity="end"
+                        android:textSize="20dp"/>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:text="$199.50"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"
-                        android:layout_marginRight="10dp"
-                        android:textSize="20dp" />
-                    </RelativeLayout>
+                        android:text="Price per night"
+                        android:textColor="@color/dark_gray"
+                        android:layout_gravity="end"
+                        android:textSize="10dp"/>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+                    android:layout_height="match_parent"
+                    android:layout_weight="2">
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/person" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/hotel_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$0"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2 guests"
-                        android:textColor="@color/black"
-                        android:layout_marginLeft="10dp"/>
+                        android:text="Total"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="10dp"/>
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Total"
-                    android:textColor="@color/dark_gray"
-                    android:textSize="10dp"
-                    android:layout_marginTop="-5dp"
-                    android:layout_marginRight="30dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+            </LinearLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
         <TextView
@@ -396,7 +465,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="20dp"
-            android:padding="10dp"
+            android:padding="15dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
             android:background="@drawable/flight_info_bg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -406,7 +477,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Total"
-            android:layout_marginLeft="30dp"
+            android:layout_gravity="center"
             android:textColor="@color/black"
             android:textSize="15dp" />
 
@@ -414,7 +485,7 @@
             android:id="@+id/total_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$600.00"
+            android:layout_gravity="center"
             android:textColor="@color/black"
             android:textSize="25dp" />
 

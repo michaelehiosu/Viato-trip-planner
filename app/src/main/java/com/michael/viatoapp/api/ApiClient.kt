@@ -299,7 +299,7 @@ class ApiClient {
                                 partnerLogo = rate.partnerLogo,
                                 roomType = rate.roomType,
                                 roomPolicies = rate.roomPolicies,
-                                deepLink = rate.deepLink,
+                                deeplink = rate.deeplink,
                                 rawPrice = rate.rawPrice,
                             )
                         }
