@@ -119,6 +119,7 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
     }
 
     fun getAttractions(attractionsSearch: AttractionsSearch) {
+        activateProgressBar()
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val allAttractions = apiClient.getAttractions(attractionsSearch)
@@ -131,26 +132,10 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-//    private fun updateUIWithAttractions(attractions: List<Attraction>) {
-//        // Update RecyclerView
-//        val activities = attractions.map {
-//            Attraction(
-//                ""
-//            )
-//        }
-//        bind(activities.toMutableList())
-//
-//        // Add markers to Google Map
-////    for (attraction in attractions) {
-////        val latLng = LatLng(attraction.latitude?.toDouble() ?: 0.0, attraction.longitude?.toDouble() ?: 0.0)
-////        mMap.addMarker(MarkerOptions().position(latLng).title(attraction.name))
-////    }
-//    }
-
-
     private fun bind(attractions: MutableList<Attraction>) {
         val adapter = AttractionAdapter(attractions)
         binding.recyclerViewActivities.adapter = adapter
+        deactivateProgressBar()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -256,5 +241,15 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
             button.setBackgroundColor(resources.getColor(R.color.light_gray))
             button.setTextColor(resources.getColor(R.color.white))
         }
+    }
+
+    private fun activateProgressBar() {
+        binding.recyclerViewActivities.visibility = View.GONE
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    private fun deactivateProgressBar() {
+        binding.recyclerViewActivities.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.GONE
     }
 }

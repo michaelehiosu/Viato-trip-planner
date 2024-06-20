@@ -240,7 +240,7 @@ class TripsFragment : Fragment() {
     private fun fetchCountries(countriesSearch: FlightCountriesSearch) {
         val budget = binding.budget.text.toString()
         val continent = binding.secondSpinner.selectedItem.toString()
-
+        activateProgressBar()
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val countries = apiClient.getAllCountries(countriesSearch)
@@ -274,6 +274,7 @@ class TripsFragment : Fragment() {
         countries.map {
             binding.recyclerViewActivities.adapter = CountryAdapter(countries, countriesSearch)
         }
+        deactivateProgressBar()
     }
 
     private fun toggleButtonPressed(condition : Boolean, button : Button) {
@@ -315,7 +316,7 @@ class TripsFragment : Fragment() {
             currency = currency,
             dummy = true
         )
-
+        activateProgressBar()
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val countries = apiClient.getAllCountries(countrySearch)
@@ -362,5 +363,16 @@ class TripsFragment : Fragment() {
             .addOnFailureListener { exception ->
                 Log.d("UserData", "get failed with ", exception)
             }
+    }
+
+
+    private fun activateProgressBar() {
+        binding.recyclerViewActivities.visibility = View.GONE
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    private fun deactivateProgressBar() {
+        binding.recyclerViewActivities.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.GONE
     }
 }

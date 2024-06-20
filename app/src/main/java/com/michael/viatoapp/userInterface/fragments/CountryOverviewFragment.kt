@@ -74,6 +74,7 @@ class CountryOverviewFragment : Fragment() {
     }
 
     private fun fetchCities(citiesSearch: FlightCitiesSearch) {
+        activateProgressBar()
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val cities = apiClient.getAllCities(citiesSearch)
@@ -83,7 +84,7 @@ class CountryOverviewFragment : Fragment() {
                     bind(cities)
                 }
             } catch (e: Exception) {
-                // Handle any exceptions, e.g., network errors
+                Log.e("error", "$e")
             }
         }
     }
@@ -93,8 +94,19 @@ class CountryOverviewFragment : Fragment() {
             val cityAdapter = CityAdapter(cities, countrySearch!!)
             binding.recyclerViewActivities.adapter = cityAdapter
             binding.recyclerViewActivities.layoutManager = LinearLayoutManager(requireContext())
+            deactivateProgressBar()
         } else {
             Log.d("bind", "No cities to display")
         }
+    }
+
+    private fun activateProgressBar() {
+        binding.recyclerViewActivities.visibility = View.GONE
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    private fun deactivateProgressBar() {
+        binding.recyclerViewActivities.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.GONE
     }
 }
