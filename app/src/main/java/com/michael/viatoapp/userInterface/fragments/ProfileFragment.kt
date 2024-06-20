@@ -84,7 +84,7 @@ class ProfileFragment : Fragment() {
                 binding.tvEmail.setText(email)
                 binding.tvAirport.setText(airport)
 
-                val currencyItems = arrayOf("Euro", "USD")
+                val currencyItems = arrayOf("EUR", "USD")
                 val currencyAdapter = ArrayAdapter(
                     requireContext(), R.layout.spinner_item, currencyItems
                 )
