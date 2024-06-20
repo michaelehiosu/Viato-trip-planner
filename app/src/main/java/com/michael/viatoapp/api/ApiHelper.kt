@@ -44,43 +44,69 @@ class ApiHelper {
         return budgetFiltered
     }
 
-    fun getCheapestItinerary(itineraries : MutableList<Itinerary>) : Itinerary? {
+    fun getCheapestItinerary(itineraries : MutableList<Itinerary>, budget: Int) : Itinerary? {
         for (itinerary in itineraries) {
             if(leastPriceItinerary == null || itinerary.rawPrice!! < leastPriceItinerary?.rawPrice!!) {
                leastPriceItinerary = itinerary
             }
         }
-        return leastPriceItinerary
+
+        if (leastPriceItinerary?.rawPrice!! <= budget) {
+            return leastPriceItinerary
+        } else {
+            return null
+        }
     }
 
-    fun filterItinerary(itineraries : MutableList<Itinerary>, cheapestItinerary: Itinerary) : MutableList<Itinerary> {
-        var i = 0;
-        var newIntinerary = ArrayList<Itinerary>()
+    fun filterItinerary(itineraries: MutableList<Itinerary>, cheapestItinerary: Itinerary, flightBudget: Int): MutableList<Itinerary> {
+        val newItinerary = ArrayList<Itinerary>()
+        var i = 0
+
         for (itinerary in itineraries) {
-            if(i < 10) {
-                newIntinerary.add(itinerary)
+            if (i < 10 && itinerary.rawPrice!! <= flightBudget) {
+                newItinerary.add(itinerary)
                 i++
             }
         }
-        return newIntinerary;
+
+        return if (newItinerary.size > 0) {
+            newItinerary.toMutableList()
+        } else {
+            emptyList<Itinerary>().toMutableList()
+        }
     }
 
-    fun filterHotel(hotels: MutableList<Hotel>, countrySearch: FlightCountriesSearch) : MutableList<Hotel> {
+
+    fun filterHotel(hotels: MutableList<Hotel>, countrySearch: FlightCountriesSearch, hotelBudget: Int) : MutableList<Hotel> {
         var filteredHotel = hotels;
+        var newHotel = ArrayList<Hotel>()
 
         val numberOfDays = getNumberOfDays(countrySearch)
+        val dailyBudget = hotelBudget / numberOfDays
 
         for (hotel in filteredHotel) {
-            hotel.priceRaw = hotel.priceRaw?.toInt()?.times(numberOfDays)
+            if(hotel.priceRaw!! <= dailyBudget) {
+                hotel.priceRaw = hotel.priceRaw?.toInt()?.times(numberOfDays)
+                newHotel.add(hotel)
+            }
         }
 
-        return filteredHotel
+        if(newHotel.size > 0) {
+            return newHotel.toMutableList();
+        } else {
+            return emptyList<Hotel>().toMutableList()
+        }
     }
 
-    fun getCheapestHotel(hotels : MutableList<Hotel>) : Hotel? {
+    fun getCheapestHotel(hotels : MutableList<Hotel>, countrySearch: FlightCountriesSearch, budget: Int) : Hotel? {
+        val numberOfDays = getNumberOfDays(countrySearch)
+        val dailyBudget = budget / numberOfDays
+
         for (hotel in hotels) {
             if(leastPriceHotel == null || hotel.priceRaw!! < leastPriceHotel?.priceRaw!!) {
-                leastPriceHotel = hotel
+                if(hotel.priceRaw!! <= dailyBudget) {
+                    leastPriceHotel = hotel
+                }
             }
         }
         return leastPriceHotel

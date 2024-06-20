@@ -70,6 +70,12 @@ class TripsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         apiClient = ApiClient()
         apiHelper = ApiHelper()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isFlightPressed = false
+        isHotelPressed = false
 
         binding.recyclerViewActivities.layoutManager = LinearLayoutManager(requireContext())
         binding.textActivity.text = "Suggested Countries"
@@ -85,17 +91,19 @@ class TripsFragment : Fragment() {
         }
 
         binding.airplane.setOnClickListener {
+            isFlightPressed = !isFlightPressed
+            Log.d("flightchecked", "$isFlightPressed")
             val airplane = binding.airplane
             toggleButtonPressed(isFlightPressed, airplane)
             // Toggle the state
-            isFlightPressed = !isFlightPressed
         }
 
         binding.hotel.setOnClickListener {
+            isHotelPressed = !isHotelPressed
+            Log.d("hotelchecked", "$isHotelPressed")
             val hotel = binding.hotel
             toggleButtonPressed(isHotelPressed, hotel)
-            // Toggle the state
-            isHotelPressed = !isHotelPressed
+
         }
 
         binding.search.setOnClickListener {
@@ -241,7 +249,7 @@ class TripsFragment : Fragment() {
     private fun fetchCountries(countriesSearch: FlightCountriesSearch) {
         val budget = binding.budget.text.toString()
         val continent = binding.secondSpinner.selectedItem.toString()
-
+        activateProgressBar()
         val searchData = SearchData(
             budget = budget,
             isHotelPressed = isHotelPressed,
@@ -281,15 +289,16 @@ class TripsFragment : Fragment() {
         countries.map {
             binding.recyclerViewActivities.adapter = CountryAdapter(countries, countriesSearch, searchData)
         }
+        deactivateProgressBar()
     }
 
     private fun toggleButtonPressed(condition : Boolean, button : Button) {
         if (condition) {
-            button.setBackgroundColor(resources.getColor(R.color.white))
-            button.setTextColor(resources.getColor(R.color.black))
-        } else {
             button.setBackgroundColor(resources.getColor(R.color.orange))
             button.setTextColor(resources.getColor(R.color.white))
+        } else {
+            button.setBackgroundColor(resources.getColor(R.color.white))
+            button.setTextColor(resources.getColor(R.color.black))
         }
     }
 
@@ -329,15 +338,14 @@ class TripsFragment : Fragment() {
             isFlightPressed = isFlightPressed
         )
 
+        activateProgressBar()
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val countries = apiClient.getAllCountries(countrySearch)
-                Log.d("Countries", "$countries")
 
                 withContext(Dispatchers.Main) {
                     allCountries = countries
                     val filterCountries = apiHelper.filterCountry(countries, budget, continent)
-                    Log.d("FilteredCountries", "$filterCountries")
                     updateCountriesRecyclerView(filterCountries, countrySearch, searchData)
                 }
             } catch (e: Exception) {
@@ -359,11 +367,6 @@ class TripsFragment : Fragment() {
                 val airport = documentSnapshot.getString("airport")
                 val name = documentSnapshot.getString("lastName")
 
-                Log.d("UserData", "Destination: $destination")
-                Log.d("UserData", "Currency: $currency")
-                Log.d("UserData", "Airport: $airport")
-                Log.d("UserData", "Name: $name")
-
                 // Fetch stored countries after user data has been fetched
                 if (destination != null && currency != null && airport !=null) {
                     fetchStoredCountries(destination,currency,airport)
@@ -375,5 +378,16 @@ class TripsFragment : Fragment() {
             .addOnFailureListener { exception ->
                 Log.d("UserData", "get failed with ", exception)
             }
+    }
+
+
+    private fun activateProgressBar() {
+        binding.recyclerViewActivities.visibility = View.GONE
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    private fun deactivateProgressBar() {
+        binding.recyclerViewActivities.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.GONE
     }
 }
