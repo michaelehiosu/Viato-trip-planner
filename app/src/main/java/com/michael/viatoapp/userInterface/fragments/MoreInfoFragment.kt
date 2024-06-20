@@ -1,8 +1,14 @@
 package com.michael.viatoapp.userInterface.fragments
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -25,6 +31,8 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import android.text.util.Linkify
+import android.widget.TextView
 
 class MoreInfoFragment : Fragment() {
     private lateinit var binding: ActivityMoreInfoBinding
@@ -66,6 +74,7 @@ class MoreInfoFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setFlightInformation(flightDetails: ItineraryDetails?) {
+        Log.d("d", "$flightDetails")
         departure = selectedItinerary?.outboundDepartureTime?.let { separateDateTime(it) }
         arrival = selectedItinerary?.outboundArrivalTime?.let { separateDateTime(it) }
         inboundDeparture = selectedItinerary?.inboundDepartureTime?.let { separateDateTime(it) }
@@ -89,7 +98,16 @@ class MoreInfoFragment : Fragment() {
         binding.flightLenght.setText(selectedItinerary?.durationOutbound?.let { formatDuration(it) })
         binding.returnFlightLenght.setText(selectedItinerary?.durationInbound?.let { formatDuration(it) })
 
-        // TODO send user to deeplink
+        val bookingUrl = flightDetails?.bookingUrl
+        binding.tvTicketLink.text = "Buy your tickets here"
+
+        Linkify.addLinks(binding.tvTicketLink, Linkify.WEB_URLS)
+
+        val textView = binding.tvTicketLink
+        textView.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(bookingUrl))
+            startActivity(intent)
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -108,7 +126,16 @@ class MoreInfoFragment : Fragment() {
         binding.hotelPrice.setText("€" + selectedHotel?.priceRaw.toString())
         binding.pricePerNight.setText("€" + prices[0].rawPrice.toString())
 
-        // TODO send user to deeplink
+        val stayUrl = "https://" + prices[0].deeplink
+        binding.tvStayLink.text = "Book your stay here"
+
+        Linkify.addLinks(binding.tvStayLink, Linkify.WEB_URLS)
+
+        val textView = binding.tvStayLink
+        textView.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(stayUrl))
+            startActivity(intent)
+        }
     }
 
     private fun fetchFlightDetails() {

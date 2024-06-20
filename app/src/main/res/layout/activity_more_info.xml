@@ -258,9 +258,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Buy your tickets here"
-            android:textColor="@color/black"
+            android:textColor="@color/orange"
             android:layout_marginRight="25dp"
             android:layout_marginTop="5dp"
+            android:autoLink="none"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ll_flight_info" />
 
@@ -454,9 +455,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Book your stay here"
-            android:textColor="@color/black"
+            android:textColor="@color/orange"
             android:layout_marginRight="25dp"
             android:layout_marginTop="5dp"
+            android:autoLink="none"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ll_hotel_info" />
 
