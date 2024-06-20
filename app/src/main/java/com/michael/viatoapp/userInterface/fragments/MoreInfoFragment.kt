@@ -5,10 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,7 +14,6 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import com.michael.viatoapp.R
 import com.michael.viatoapp.api.ApiClient
-import com.michael.viatoapp.api.ApiHelper
 import com.michael.viatoapp.databinding.ActivityMoreInfoBinding
 import com.michael.viatoapp.model.data.flights.City
 import com.michael.viatoapp.model.data.flights.Itinerary
@@ -32,12 +27,13 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 import android.text.util.Linkify
-import android.widget.TextView
+import com.bumptech.glide.Glide
 
 class MoreInfoFragment : Fragment() {
     private lateinit var binding: ActivityMoreInfoBinding
     private var selectedHotel: Hotel? = null
     private var selectedItinerary: Itinerary? = null
+    private var cityInfo: City? = null
     private val apiClient = ApiClient()
     private var departure : Map<String, String>? = null
     private var arrival : Map<String, String>? = null
@@ -53,6 +49,7 @@ class MoreInfoFragment : Fragment() {
         arguments?.let {
             selectedItinerary = it.getSerializable("selectedItinerary") as? Itinerary
             selectedHotel = it.getSerializable("selectedHotel") as? Hotel
+            cityInfo = it.getSerializable("cityInfo") as? City
         }
         Log.d("hotel info:", "$selectedHotel")
         Log.d("flight info:", "$selectedItinerary")
@@ -65,11 +62,14 @@ class MoreInfoFragment : Fragment() {
         fetchFlightDetails()
         fetchHotelPrices()
 
-        // TODO set city image to an actual image of the city and get actual name of the city
-
         totalPrice = "€" + ((selectedItinerary?.rawPrice?.toInt() ?: 0) + selectedHotel?.priceRaw!!).toString()
-        binding.tvCityName.setText(selectedItinerary?.destinationName)
+        binding.tvCityName.setText(cityInfo?.name)
         binding.totalPrice.setText(totalPrice.toString())
+
+        Glide.with(this)
+            .load(cityInfo?.imageUrl)
+            .placeholder(R.drawable.rio_pic)
+            .into(binding.cityPic)
     }
 
     @SuppressLint("SetTextI18n")
