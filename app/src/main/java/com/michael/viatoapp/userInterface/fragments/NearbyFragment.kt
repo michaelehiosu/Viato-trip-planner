@@ -16,23 +16,22 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.michael.viatoapp.R
 import com.michael.viatoapp.api.ApiClient
 import com.michael.viatoapp.api.ApiHelper
-import com.michael.viatoapp.userInterface.adapter.AttractionAdapter
 import com.michael.viatoapp.databinding.ActivityNearbyBinding
 import com.michael.viatoapp.model.data.attraction.Attraction
 import com.michael.viatoapp.model.request.attractions.AttractionsSearch
+import com.michael.viatoapp.userInterface.adapter.AttractionAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.math.log
 
 class NearbyFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: ActivityNearbyBinding
@@ -44,7 +43,11 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
     private lateinit var apiHelper: ApiHelper
     private var kilometerRange = "15"
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = ActivityNearbyBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -69,7 +72,7 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
         val button10km = binding.button10km
         val button15km = binding.button15km
 
-        binding.button5km.setOnClickListener{
+        binding.button5km.setOnClickListener {
             toggleButtonPressed(button5km, button10km, button15km)
             kilometerRange = "5"
             changeAttractionsRange()
@@ -198,24 +201,44 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
 
     private fun isLocationPermissionGranted(): Boolean {
         val context = requireContext()
-        return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        return ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun requestLocationPermission() {
         ActivityCompat.requestPermissions(
             requireActivity(),
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ),
             requestLocationPermissionCode
         )
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == requestLocationPermissionCode) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-                    ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED ||
+                    ActivityCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
                     mMap.isMyLocationEnabled = true
                     fetchLastKnownLocation()
                 }
@@ -236,7 +259,7 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
 
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
             location?.let {
-                    val attractionSearch = AttractionsSearch(
+                val attractionSearch = AttractionsSearch(
                     longitude = it.longitude.toString(),
                     latitude = it.latitude.toString(),
                     distance = kilometerRange,
@@ -248,7 +271,7 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun toggleButtonPressed(button : Button, vararg otherButtons : Button) {
+    private fun toggleButtonPressed(button: Button, vararg otherButtons: Button) {
         button.setBackgroundColor(resources.getColor(R.color.orange))
         button.setTextColor(resources.getColor(R.color.white))
 

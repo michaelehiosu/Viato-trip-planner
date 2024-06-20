@@ -12,11 +12,15 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 class ApiHelper {
-    private var leastPriceItinerary : Itinerary? = null
-    private var leastPriceHotel : Hotel? = null
-    public fun filterCountry(countries : MutableList<Country>, budget : String, continent : String) : MutableList<Country> {
+    private var leastPriceItinerary: Itinerary? = null
+    private var leastPriceHotel: Hotel? = null
+    public fun filterCountry(
+        countries: MutableList<Country>,
+        budget: String,
+        continent: String
+    ): MutableList<Country> {
         var flightbudget = budget.toInt() * 60 / 100
-        var selectedContinent : List<String>
+        var selectedContinent: List<String>
 
         Log.d("flightbudget", "$flightbudget")
 
@@ -29,13 +33,13 @@ class ApiHelper {
             else -> selectedContinent = europe
         }
 
-        val continentFiltered : MutableList<Country> = countries.filter { country ->
+        val continentFiltered: MutableList<Country> = countries.filter { country ->
             country.name in selectedContinent
         }.toMutableList()
 
         Log.d("FilteredContinent", "$continentFiltered")
 
-        val budgetFiltered : MutableList<Country> = continentFiltered.filter { country ->
+        val budgetFiltered: MutableList<Country> = continentFiltered.filter { country ->
             country.cheapestPrice == null || country.cheapestPrice.toInt() <= flightbudget
         }.toMutableList()
 
@@ -44,20 +48,23 @@ class ApiHelper {
         return budgetFiltered
     }
 
-    fun getCheapestItinerary(itineraries : MutableList<Itinerary>) : Itinerary? {
+    fun getCheapestItinerary(itineraries: MutableList<Itinerary>): Itinerary? {
         for (itinerary in itineraries) {
-            if(leastPriceItinerary == null || itinerary.rawPrice!! < leastPriceItinerary?.rawPrice!!) {
-               leastPriceItinerary = itinerary
+            if (leastPriceItinerary == null || itinerary.rawPrice!! < leastPriceItinerary?.rawPrice!!) {
+                leastPriceItinerary = itinerary
             }
         }
         return leastPriceItinerary
     }
 
-    fun filterItinerary(itineraries : MutableList<Itinerary>, cheapestItinerary: Itinerary) : MutableList<Itinerary> {
+    fun filterItinerary(
+        itineraries: MutableList<Itinerary>,
+        cheapestItinerary: Itinerary
+    ): MutableList<Itinerary> {
         var i = 0;
         var newIntinerary = ArrayList<Itinerary>()
         for (itinerary in itineraries) {
-            if(i < 10) {
+            if (i < 10) {
                 newIntinerary.add(itinerary)
                 i++
             }
@@ -65,7 +72,10 @@ class ApiHelper {
         return newIntinerary;
     }
 
-    fun filterHotel(hotels: MutableList<Hotel>, countrySearch: FlightCountriesSearch) : MutableList<Hotel> {
+    fun filterHotel(
+        hotels: MutableList<Hotel>,
+        countrySearch: FlightCountriesSearch
+    ): MutableList<Hotel> {
         var filteredHotel = hotels;
 
         val numberOfDays = getNumberOfDays(countrySearch)
@@ -77,9 +87,9 @@ class ApiHelper {
         return filteredHotel
     }
 
-    fun getCheapestHotel(hotels : MutableList<Hotel>) : Hotel? {
+    fun getCheapestHotel(hotels: MutableList<Hotel>): Hotel? {
         for (hotel in hotels) {
-            if(leastPriceHotel == null || hotel.priceRaw!! < leastPriceHotel?.priceRaw!!) {
+            if (leastPriceHotel == null || hotel.priceRaw!! < leastPriceHotel?.priceRaw!!) {
                 leastPriceHotel = hotel
             }
         }
@@ -87,7 +97,7 @@ class ApiHelper {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getNumberOfDays(countrySearch: FlightCountriesSearch) : Int {
+    fun getNumberOfDays(countrySearch: FlightCountriesSearch): Int {
         val formatter = DateTimeFormatter.ISO_DATE
         val departLocalDate = LocalDate.parse(countrySearch.departDate, formatter)
         val returnLocalDate = LocalDate.parse(countrySearch.returnDate, formatter)
@@ -97,8 +107,8 @@ class ApiHelper {
     }
 
 
-
-    val africa = arrayListOf("Algeria",
+    val africa = arrayListOf(
+        "Algeria",
         "Angola",
         "Benin",
         "Botswana",
@@ -151,9 +161,10 @@ class ApiHelper {
         "Tunisia",
         "Uganda",
         "Zambia",
-        "Zimbabwe")
+        "Zimbabwe"
+    )
 
-    val europe =  arrayListOf(
+    val europe = arrayListOf(
         "Albania",
         "Andorra",
         "Armenia",
@@ -240,29 +251,29 @@ class ApiHelper {
     )
 
     val northAmerica = arrayListOf(
-    "Antigua and Barbuda",
-    "Bahamas",
-    "Barbados",
-    "Belize",
-    "Canada",
-    "Costa Rica",
-    "Cuba",
-    "Dominica",
-    "Dominican Republic",
-    "El Salvador",
-    "Grenada",
-    "Guatemala",
-    "Haiti",
-    "Honduras",
-    "Jamaica",
-    "Mexico",
-    "Nicaragua",
-    "Panama",
-    "Saint Kitts and Nevis",
-    "Saint Lucia",
-    "Saint Vincent and the Grenadines",
-    "Trinidad and Tobago",
-    "United States"
+        "Antigua and Barbuda",
+        "Bahamas",
+        "Barbados",
+        "Belize",
+        "Canada",
+        "Costa Rica",
+        "Cuba",
+        "Dominica",
+        "Dominican Republic",
+        "El Salvador",
+        "Grenada",
+        "Guatemala",
+        "Haiti",
+        "Honduras",
+        "Jamaica",
+        "Mexico",
+        "Nicaragua",
+        "Panama",
+        "Saint Kitts and Nevis",
+        "Saint Lucia",
+        "Saint Vincent and the Grenadines",
+        "Trinidad and Tobago",
+        "United States"
     )
 
     val asia = arrayListOf(

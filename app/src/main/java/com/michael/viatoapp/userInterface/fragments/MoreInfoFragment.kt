@@ -2,13 +2,11 @@ package com.michael.viatoapp.userInterface.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.michael.viatoapp.R
+import androidx.fragment.app.Fragment
 import com.michael.viatoapp.databinding.ActivityMoreInfoBinding
-import com.michael.viatoapp.model.data.flights.City
 import com.michael.viatoapp.model.data.flights.Itinerary
 import com.michael.viatoapp.model.data.stays.Hotel
 

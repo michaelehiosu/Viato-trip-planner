@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FAF2E6">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -10,199 +10,199 @@
         android:layout_height="match_parent">
 
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/map_view"
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/linear"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/map_view"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="30dp">
-
-        <TextView
-            android:id="@+id/attraction_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:fontFamily="@font/athitimedium"
-            android:textColor="@color/black"
-            android:layout_marginBottom="10dp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="Christ the Redeemer"/>
-
-        <ImageView
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map_view"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:id="@+id/attraction_image"
-            android:layout_marginBottom="15dp"
-            app:layout_constraintTop_toBottomOf="@+id/attraction_name"/>
+            android:layout_height="220dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/map_view">
+
+            <TextView
+                android:id="@+id/attraction_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/athitimedium"
+                android:text="Christ the Redeemer"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/attraction_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/attraction_name" />
 
 
-        <androidx.cardview.widget.CardView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:backgroundTint="#DDD2C4"
-          app:cardCornerRadius="10dp">
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#DDD2C4"
+                app:cardCornerRadius="10dp">
 
-          <androidx.appcompat.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-              <androidx.appcompat.widget.LinearLayoutCompat
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:padding="10dp">
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
 
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="Address:"
-                      android:fontFamily="@font/athitimedium"
-                      android:textSize="15sp"
-                      android:textColor="#2E1F08"
-                      android:layout_weight="1"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/athitimedium"
+                            android:text="Address:"
+                            android:textColor="#2E1F08"
+                            android:textSize="15sp" />
 
-                  <TextView
-                      android:id="@+id/attraction_address"
-                      android:gravity="end"
-                      android:fontFamily="@font/athitiregular"
-                      android:textSize="15sp"
-                      android:textColor="#2E1F08"
-                      android:layout_width="200dp"
-                      android:layout_height="wrap_content"
-                      android:text="Tijuca Forest National Park"/>
+                        <TextView
+                            android:id="@+id/attraction_address"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/athitiregular"
+                            android:gravity="end"
+                            android:text="Tijuca Forest National Park"
+                            android:textColor="#2E1F08"
+                            android:textSize="15sp" />
 
-              </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
-              <androidx.appcompat.widget.LinearLayoutCompat
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:padding="10dp">
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
 
-                  <TextView
-                      android:textColor="#2E1F08"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="Category"
-                      android:fontFamily="@font/athitimedium"
-                      android:textSize="15sp"
-                      android:layout_weight="1"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/athitimedium"
+                            android:text="Category"
+                            android:textColor="#2E1F08"
+                            android:textSize="15sp" />
 
-                  <TextView
-                      android:id="@+id/attraction_category"
-                      android:textColor="#2E1F08"
-                      android:gravity="end"
-                      android:fontFamily="@font/athitiregular"
-                      android:textSize="15sp"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="Varies"/>
+                        <TextView
+                            android:id="@+id/attraction_category"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/athitiregular"
+                            android:gravity="end"
+                            android:text="Varies"
+                            android:textColor="#2E1F08"
+                            android:textSize="15sp" />
 
-              </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
-              <androidx.appcompat.widget.LinearLayoutCompat
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:padding="10dp">
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
 
-                  <TextView
-                      android:textColor="#2E1F08"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="No of Reviews"
-                      android:fontFamily="@font/athitimedium"
-                      android:textSize="15sp"
-                      android:layout_weight="1"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/athitimedium"
+                            android:text="No of Reviews"
+                            android:textColor="#2E1F08"
+                            android:textSize="15sp" />
 
-                  <TextView
-                      android:id="@+id/attraction_review"
-                      android:textColor="#2E1F08"
-                      android:gravity="end"
-                      android:fontFamily="@font/athitiregular"
-                      android:textSize="15sp"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="8am - 6pm"/>
+                        <TextView
+                            android:id="@+id/attraction_review"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/athitiregular"
+                            android:gravity="end"
+                            android:text="8am - 6pm"
+                            android:textColor="#2E1F08"
+                            android:textSize="15sp" />
 
-              </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
-              <androidx.appcompat.widget.LinearLayoutCompat
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:padding="10dp">
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
 
-                  <TextView
-                      android:textColor="#2E1F08"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="Website"
-                      android:fontFamily="@font/athitimedium"
-                      android:textSize="15sp"
-                      android:layout_weight="1"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/athitimedium"
+                            android:text="Website"
+                            android:textColor="#2E1F08"
+                            android:textSize="15sp" />
 
-                  <TextView
-                      android:id="@+id/attraction_website"
-                      android:textColor="#2E1F08"
-                      android:gravity="end"
-                      android:fontFamily="@font/athitiregular"
-                      android:textSize="15sp"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="www"
-                      android:layout_weight="2"
-                      android:autoLink="web"
-                      android:textColorLink="@color/orange"/>
+                        <TextView
+                            android:id="@+id/attraction_website"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:autoLink="web"
+                            android:fontFamily="@font/athitiregular"
+                            android:gravity="end"
+                            android:text="www"
+                            android:textColor="#2E1F08"
+                            android:textColorLink="@color/orange"
+                            android:textSize="15sp" />
 
-              </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
-              <androidx.appcompat.widget.LinearLayoutCompat
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:padding="10dp">
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
 
-                  <TextView
-                      android:textColor="#2E1F08"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="More Information"
-                      android:fontFamily="@font/athitimedium"
-                      android:textSize="15sp"
-                      android:layout_weight="1"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/athitimedium"
+                            android:text="More Information"
+                            android:textColor="#2E1F08"
+                            android:textSize="15sp" />
 
-                  <TextView
-                      android:id="@+id/attraction_moreInfo"
-                      android:textColor="#2E1F08"
-                      android:gravity="end"
-                      android:layout_width="wrap_content"
-                      android:fontFamily="@font/athitiregular"
-                      android:textSize="15sp"
-                      android:textColorLink="@color/orange"
-                      android:layout_weight="3"
-                      android:layout_height="wrap_content"
-                      android:text="websitelink.com"
-                      android:autoLink="web"/>
+                        <TextView
+                            android:id="@+id/attraction_moreInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:autoLink="web"
+                            android:fontFamily="@font/athitiregular"
+                            android:gravity="end"
+                            android:text="websitelink.com"
+                            android:textColor="#2E1F08"
+                            android:textColorLink="@color/orange"
+                            android:textSize="15sp" />
 
-              </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
-          </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
-      </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,19 +3,19 @@ package com.michael.viatoapp.userInterface.activities
 
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.michael.viatoapp.databinding.ActivityLoginBinding
+import androidx.core.content.edit
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import android.content.SharedPreferences
-import android.util.Log
-import androidx.core.content.edit
+import com.michael.viatoapp.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityLoginBinding
-    private lateinit var auth : FirebaseAuth
+    private lateinit var binding: ActivityLoginBinding
+    private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private val myPreferences: SharedPreferences by lazy {
         getSharedPreferences("myPref", Context.MODE_PRIVATE)

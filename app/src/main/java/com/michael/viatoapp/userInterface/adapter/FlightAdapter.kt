@@ -1,19 +1,15 @@
 package com.michael.viatoapp.userInterface.adapter
+
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.michael.viatoapp.model.response.Flight
 import com.michael.viatoapp.R
 import com.michael.viatoapp.model.data.flights.Itinerary
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class FlightAdapter(
@@ -31,11 +27,13 @@ class FlightAdapter(
         val layovers: TextView = itemView.findViewById(R.id.layovers)
         val depDate: TextView = itemView.findViewById(R.id.dep_date)
         val arrDate: TextView = itemView.findViewById(R.id.arr_date)
-        val linearView: View = itemView.findViewById(R.id.ll_flights) // Ensure your layout has a CardView with this ID
+        val linearView: View =
+            itemView.findViewById(R.id.ll_flights) // Ensure your layout has a CardView with this ID
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.flight_recycler, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.flight_recycler, parent, false)
         return ViewHolder(itemView)
     }
 
@@ -47,7 +45,8 @@ class FlightAdapter(
         holder.flightLength.text = currentItem.durationOutbound.toString() + " min"
 
         val stopCountOutbound = currentItem.stopCountOutbound
-        holder.layovers.text = if (stopCountOutbound == 0) "Direct" else stopCountOutbound.toString()
+        holder.layovers.text =
+            if (stopCountOutbound == 0) "Direct" else stopCountOutbound.toString()
 
         val outputFormat = SimpleDateFormat("dd/MM/yy HH:mm", Locale.getDefault())
         val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())

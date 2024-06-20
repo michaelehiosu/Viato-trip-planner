@@ -13,7 +13,10 @@ import com.michael.viatoapp.model.data.flights.Country
 import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
 import com.michael.viatoapp.userInterface.activities.MainNavigationActivity
 
-class CountryAdapter(private var countries: List<Country>, private var countriesSearch: FlightCountriesSearch) :
+class CountryAdapter(
+    private var countries: List<Country>,
+    private var countriesSearch: FlightCountriesSearch
+) :
     RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
@@ -21,14 +24,16 @@ class CountryAdapter(private var countries: List<Country>, private var countries
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.nearby_activity_recycler, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.nearby_activity_recycler, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currency = "€";
         val country = countries[position]
-        holder.description.text = country.cheapestPrice?.let { "From $it$currency " } ?: "Click to see cities"
+        holder.description.text =
+            country.cheapestPrice?.let { "From $it$currency " } ?: "Click to see cities"
         holder.title.text = country.name
         holder.cardView.setOnClickListener {
             val context = holder.itemView.context

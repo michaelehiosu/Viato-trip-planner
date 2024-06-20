@@ -35,16 +35,16 @@ class CityOverviewFragment : Fragment() {
     private lateinit var flightAdapter: FlightAdapter
     private lateinit var hotelAdapter: HotelAdapter
     private var city: City? = null
-    private var countrySearch : FlightCountriesSearch? = null
+    private var countrySearch: FlightCountriesSearch? = null
     private val apiClient = ApiClient()
     private val apiHelper = ApiHelper()
-    private var cheapestItinerary : Itinerary? = null
-    private var cheapestHotel : Hotel? = null
-    private var selectedItinerary : Itinerary? = null
-    private var selectedHotel : Hotel? = null
-    private var cheapestSelected : Boolean = true
-    private var onlyFlightSelected : Boolean = false
-    private var onlyHotelSelected : Boolean = false
+    private var cheapestItinerary: Itinerary? = null
+    private var cheapestHotel: Hotel? = null
+    private var selectedItinerary: Itinerary? = null
+    private var selectedHotel: Hotel? = null
+    private var cheapestSelected: Boolean = true
+    private var onlyFlightSelected: Boolean = false
+    private var onlyHotelSelected: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,7 +64,7 @@ class CityOverviewFragment : Fragment() {
         flightAdapter = FlightAdapter(mutableListOf()) { itinerary ->
             handleFlightSelection(itinerary)
         }
-        hotelAdapter = HotelAdapter(mutableListOf()){ hotel ->
+        hotelAdapter = HotelAdapter(mutableListOf()) { hotel ->
             handleHotelSelection(hotel)
         }
 
@@ -78,7 +78,7 @@ class CityOverviewFragment : Fragment() {
             toggleCheapestSelected()
         }
 
-        if(city != null && countrySearch != null) {
+        if (city != null && countrySearch != null) {
             fetchFlightsAndHotels()
         }
 
@@ -138,7 +138,7 @@ class CityOverviewFragment : Fragment() {
                 Log.d("hotels", "$hotelList")
                 Log.d("itinerary", "$flightList")
 
-                cheapestItinerary  = apiHelper.getCheapestItinerary(flightList)
+                cheapestItinerary = apiHelper.getCheapestItinerary(flightList)
                 cheapestHotel = apiHelper.getCheapestHotel(hotelList)
                 val filteredItinerary = apiHelper.filterItinerary(flightList, cheapestItinerary!!)
                 val filteredHotel = apiHelper.filterHotel(hotelList, countrySearch!!)
@@ -157,7 +157,7 @@ class CityOverviewFragment : Fragment() {
 
     private fun updateFlightsRecyclerView(flights: MutableList<Itinerary>) {
         flights.map {
-            binding.recyclerViewFlights.adapter = FlightAdapter(flights){ itinerary ->
+            binding.recyclerViewFlights.adapter = FlightAdapter(flights) { itinerary ->
                 handleFlightSelection(itinerary)
             }
         }
@@ -201,7 +201,7 @@ class CityOverviewFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun convertDate(date : String?) : String {
+    private fun convertDate(date: String?): String {
         val dateTime = LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME)
         val formatter = DateTimeFormatter.ofPattern("h:mma - MMM dd")
         return dateTime.format(formatter)
@@ -213,8 +213,8 @@ class CityOverviewFragment : Fragment() {
         return "${hours}h ${minutes}m"
     }
 
-    private fun getLayoverText(stops : Int?) : String {
-        var string : String = ""
+    private fun getLayoverText(stops: Int?): String {
+        var string: String = ""
         if (stops!! > 0) {
             string = "$stops layovers"
         } else {
@@ -279,14 +279,19 @@ class CityOverviewFragment : Fragment() {
         }
     }
 
-    private fun resetBackgroundsInRecyclerView(recyclerView: RecyclerView, recyclerViewHotel: RecyclerView) {
+    private fun resetBackgroundsInRecyclerView(
+        recyclerView: RecyclerView,
+        recyclerViewHotel: RecyclerView
+    ) {
         for (i in 0 until recyclerView.childCount) {
-            val viewHolder = recyclerView.findViewHolderForAdapterPosition(i) as? FlightAdapter.ViewHolder
+            val viewHolder =
+                recyclerView.findViewHolderForAdapterPosition(i) as? FlightAdapter.ViewHolder
             viewHolder?.linearView?.background = null
         }
 
         for (i in 0 until recyclerViewHotel.childCount) {
-            val viewHolder = recyclerViewHotel.findViewHolderForAdapterPosition(i) as? HotelAdapter.HotelViewHolder
+            val viewHolder =
+                recyclerViewHotel.findViewHolderForAdapterPosition(i) as? HotelAdapter.HotelViewHolder
             viewHolder?.linearView?.background = null
         }
 

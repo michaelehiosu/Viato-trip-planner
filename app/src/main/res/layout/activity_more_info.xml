@@ -24,9 +24,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rio De Janeiro"
-            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="40dp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/rio_pic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,8 +36,8 @@
             android:id="@+id/tv_flight_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
             android:text="Flight Information"
             android:textColor="@color/black"
             android:textSize="20dp"
@@ -48,13 +48,13 @@
             android:id="@+id/ll_flight_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:padding="10dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
             android:background="@drawable/flight_info_bg"
+            android:orientation="vertical"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_flight_info">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -68,36 +68,36 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:textColor="@color/black"
                         android:id="@+id/dep_time"
-                        android:textSize="25dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginRight="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="5dp"
                         android:text="7.30am"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        android:textColor="@color/black"
+                        android:textSize="25dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <View
                         android:layout_width="120dp"
                         android:layout_height="2dp"
                         android:layout_marginTop="30dp"
+                        android:background="@drawable/gray_line"
                         app:layout_constraintStart_toEndOf="@+id/dep_time"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:background="@drawable/gray_line" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:textColor="@color/black"
                         android:id="@+id/arr_time"
-                        android:textSize="25dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginLeft="5dp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/line"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10.30pm" />
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="12dp"
+                        android:text="10.30pm"
+                        android:textColor="@color/black"
+                        android:textSize="25dp"
+                        app:layout_constraintStart_toEndOf="@+id/line"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -132,24 +132,24 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:textColor="@color/dark_gray"
                         android:id="@+id/dep_date"
-                        android:textSize="10dp"
-                        android:layout_marginTop="40dp"
-                        android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="LAX - May 04"/>
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="40dp"
+                        android:text="LAX - May 04"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="10dp" />
 
                     <TextView
-                        android:textColor="@color/dark_gray"
                         android:id="@+id/arr_date"
-                        android:textSize="10dp"
-                        android:layout_marginTop="40dp"
-                        android:layout_marginLeft="160dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="GIG - May 04"/>
+                        android:layout_marginLeft="160dp"
+                        android:layout_marginTop="40dp"
+                        android:text="GIG - May 04"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="10dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -157,9 +157,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-                    android:orientation="horizontal">
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -180,11 +180,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="$400.50"
                             android:layout_alignParentEnd="true"
-                            android:textColor="@color/black"
                             android:layout_marginRight="10dp"
-                            android:textSize="20dp"/>
+                            android:text="$400.50"
+                            android:textColor="@color/black"
+                            android:textSize="20dp" />
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -192,10 +192,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
                     android:text="Total"
                     android:textColor="@color/dark_gray"
                     android:textSize="10dp"
-                    android:layout_marginRight="30dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
@@ -206,10 +206,10 @@
             android:id="@+id/tv_ticket_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="25dp"
             android:text="Buy your tickets here"
             android:textColor="@color/black"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ll_flight_info" />
 
@@ -217,8 +217,8 @@
             android:id="@+id/tv_hotel_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
             android:text="Hotel Information"
             android:textColor="@color/black"
             android:textSize="20dp"
@@ -229,13 +229,13 @@
             android:id="@+id/ll_hotel_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:padding="10dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
             android:background="@drawable/flight_info_bg"
+            android:orientation="vertical"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_hotel_info">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -249,34 +249,34 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:textColor="@color/black"
                         android:id="@+id/hotel_name"
-                        android:textSize="25dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="15dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="JANEIRO Hotel"/>
+                        android:text="JANEIRO Hotel"
+                        android:textColor="@color/black"
+                        android:textSize="25dp" />
 
                     <TextView
-                        android:textColor="@color/black"
                         android:id="@+id/grade_word"
-                        android:textSize="15dp"
-                        android:layout_marginLeft="30dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginLeft="30dp"
+                        android:text="Good: "
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
                         app:layout_constraintStart_toEndOf="@+id/hotel_name"
-                        android:text="Good: "/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:textColor="@color/black"
                         android:id="@+id/grade_number"
-                        android:textSize="20dp"
-                        android:layout_marginTop="2dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="8/10"/>
+                        android:layout_marginTop="2dp"
+                        android:text="8/10"
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
 
                 </LinearLayout>
 
@@ -301,11 +301,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="40dp"
                         android:layout_marginTop="30dp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/address"
                         android:text="3.455 reviews"
                         android:textColor="@color/dark_gray"
-                        android:textSize="10dp" />
+                        android:textSize="10dp"
+                        app:layout_constraintStart_toEndOf="@+id/address"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -324,24 +324,24 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1 Room"
-                        android:textColor="@color/black"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="-8dp"/>
+                        android:layout_marginTop="-8dp"
+                        android:text="1 Room"
+                        android:textColor="@color/black" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:text="$199.50"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"
-                        android:layout_marginRight="10dp"
-                        android:textSize="20dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="10dp"
+                            android:text="$199.50"
+                            android:textColor="@color/black"
+                            android:textSize="20dp" />
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -360,20 +360,20 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:text="2 guests"
-                        android:textColor="@color/black"
-                        android:layout_marginLeft="10dp"/>
+                        android:textColor="@color/black" />
 
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="-5dp"
+                    android:layout_marginRight="30dp"
                     android:text="Total"
                     android:textColor="@color/dark_gray"
                     android:textSize="10dp"
-                    android:layout_marginTop="-5dp"
-                    android:layout_marginRight="30dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
@@ -384,39 +384,39 @@
             android:id="@+id/tv_stay_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="25dp"
             android:text="Book your stay here"
             android:textColor="@color/black"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ll_hotel_info" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginTop="20dp"
-            android:padding="10dp"
             android:background="@drawable/flight_info_bg"
+            android:orientation="vertical"
+            android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_stay_link">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Total"
-            android:layout_marginLeft="30dp"
-            android:textColor="@color/black"
-            android:textSize="15dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="Total"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
 
-        <TextView
-            android:id="@+id/total_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$600.00"
-            android:textColor="@color/black"
-            android:textSize="25dp" />
+            <TextView
+                android:id="@+id/total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$600.00"
+                android:textColor="@color/black"
+                android:textSize="25dp" />
 
         </LinearLayout>
 

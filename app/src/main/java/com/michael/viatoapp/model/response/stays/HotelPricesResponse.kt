@@ -1,9 +1,9 @@
 package com.michael.viatoapp.model.response.stays
 
 data class HotelPricesResponse(
-    var data : DataPrices,
-    var status : Boolean,
-    var message : String
+    var data: DataPrices,
+    var status: Boolean,
+    var message: String
 )
 
 data class DataPrices(
@@ -15,10 +15,10 @@ data class MetaInfo(
 )
 
 data class Rate(
-    var partnerName : String,
-    var partnerLogo : String,
-    var roomType : String,
-    var roomPolicies : String,
-    var deepLink : String,
-    var rawPrice : Int,
+    var partnerName: String,
+    var partnerLogo: String,
+    var roomType: String,
+    var roomPolicies: String,
+    var deepLink: String,
+    var rawPrice: Int,
 )

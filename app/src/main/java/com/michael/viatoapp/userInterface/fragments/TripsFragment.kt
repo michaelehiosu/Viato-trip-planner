@@ -99,7 +99,8 @@ class TripsFragment : Fragment() {
 
         binding.search.setOnClickListener {
             hideKeyboard()
-            val airportName = binding.airportAutoCompleteTextView.text.toString() ?: return@setOnClickListener
+            val airportName =
+                binding.airportAutoCompleteTextView.text.toString() ?: return@setOnClickListener
             var entityId: String? = null
 
             for (airport in allAirports) {
@@ -113,7 +114,8 @@ class TripsFragment : Fragment() {
                 binding.spinner.selectedItem.toString() != "Currency" &&
                 binding.secondSpinner.selectedItem != "Continent" &&
                 selectedStartDate != null &&
-                selectedEndDate != null) {
+                selectedEndDate != null
+            ) {
 
                 val countrySearch = FlightCountriesSearch(
                     fromEntityId = entityId,
@@ -125,7 +127,11 @@ class TripsFragment : Fragment() {
                 fetchCountries(countrySearch)
 
             } else {
-                Toast.makeText(requireContext(), "Please ensure all fields are filled correctly", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Please ensure all fields are filled correctly",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -153,7 +159,8 @@ class TripsFragment : Fragment() {
             }
         }
 
-        val continentItems = arrayOf("Europe", "Africa", "Asia", "Oceania", "North America", "South America")
+        val continentItems =
+            arrayOf("Europe", "Africa", "Asia", "Oceania", "North America", "South America")
         val continentAdapter = ArrayAdapter(
             requireContext(), R.layout.spinner_item, continentItems
         )
@@ -179,7 +186,8 @@ class TripsFragment : Fragment() {
     }
 
     private fun hideKeyboard() {
-        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm =
+            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
@@ -200,14 +208,21 @@ class TripsFragment : Fragment() {
                     targetTextView.setTextColor(resources.getColor(R.color.white))
                 } else {
                     val endDate = selectedDate.timeInMillis
-                    val startDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(selectedStartDate)?.time ?: 0
+                    val startDate = SimpleDateFormat(
+                        "yyyy-MM-dd",
+                        Locale.getDefault()
+                    ).parse(selectedStartDate)?.time ?: 0
                     if (endDate >= startDate) {
                         selectedEndDate = formattedDate
                         targetTextView.text = "To: $formattedDate"
                         targetTextView.setBackgroundColor(resources.getColor(R.color.orange))
                         targetTextView.setTextColor(resources.getColor(R.color.white))
                     } else {
-                        Toast.makeText(requireContext(), "End date must be after start date", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "End date must be after start date",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
 
                 }
@@ -267,16 +282,22 @@ class TripsFragment : Fragment() {
             requireContext(), android.R.layout.simple_dropdown_item_1line, airportNames
         )
         binding.airportAutoCompleteTextView.setAdapter(airportAdapter)
-        Log.d("updateAutoCompleteTextViewWithAirports", "AutoCompleteTextView updated with airports: $airportNames")
+        Log.d(
+            "updateAutoCompleteTextViewWithAirports",
+            "AutoCompleteTextView updated with airports: $airportNames"
+        )
     }
 
-    private fun updateCountriesRecyclerView(countries: MutableList<Country>, countriesSearch: FlightCountriesSearch) {
+    private fun updateCountriesRecyclerView(
+        countries: MutableList<Country>,
+        countriesSearch: FlightCountriesSearch
+    ) {
         countries.map {
             binding.recyclerViewActivities.adapter = CountryAdapter(countries, countriesSearch)
         }
     }
 
-    private fun toggleButtonPressed(condition : Boolean, button : Button) {
+    private fun toggleButtonPressed(condition: Boolean, button: Button) {
         if (condition) {
             button.setBackgroundColor(resources.getColor(R.color.light_orange))
             button.setTextColor(resources.getColor(R.color.black))
@@ -352,8 +373,8 @@ class TripsFragment : Fragment() {
                 Log.d("UserData", "Name: $name")
 
                 // Fetch stored countries after user data has been fetched
-                if (destination != null && currency != null && airport !=null) {
-                    fetchStoredCountries(destination,currency,airport)
+                if (destination != null && currency != null && airport != null) {
+                    fetchStoredCountries(destination, currency, airport)
                 }
             } else {
                 Log.d("UserData", "No such document")

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.michael.viatoapp.R
 import com.michael.viatoapp.model.data.attraction.Attraction
-import com.michael.viatoapp.model.response.Activities
 import com.michael.viatoapp.userInterface.activities.MainNavigationActivity
 
 class AttractionAdapter(private var attractions: MutableList<Attraction>) :
@@ -21,7 +20,8 @@ class AttractionAdapter(private var attractions: MutableList<Attraction>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.nearby_activity_recycler, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.nearby_activity_recycler, parent, false)
         return viewHolder(view)
     }
 

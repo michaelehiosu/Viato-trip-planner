@@ -1,210 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FAF2E6">
 
-  <androidx.constraintlayout.widget.ConstraintLayout
-      android:id="@+id/box"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:paddingTop="20dp"
-      android:paddingBottom="10dp"
-      android:paddingStart="40dp"
-      android:paddingEnd="40dp"
-      android:background="@drawable/trips_file"
-      app:layout_constraintTop_toTopOf="parent">
-
-    <LinearLayout
-        android:id="@+id/budgetLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:background="@drawable/trips_file"
+        android:paddingStart="40dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="40dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-      <EditText
-          android:id="@+id/budget"
-          android:layout_width="0dp"
-          android:layout_weight="2"
-          android:layout_height="30dp"
-          android:layout_gravity="start"
-          android:background="@drawable/home_overview"
-          android:backgroundTint="#FAF2E6"
-          android:hint="Budget"
-          android:textSize="14sp"
-          android:textColorHint="#A3A3A3"
-          android:inputType="number"
-          android:layout_marginRight="30dp"
-          android:paddingLeft="10dp"
-          android:textColor="#000000"
-          app:flow_verticalAlign="center"
-          app:boxStrokeColor="@color/orange"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="@+id/box" />
+        <LinearLayout
+            android:id="@+id/budgetLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-      <Spinner
-          android:id="@+id/spinner"
-          android:layout_width="0dp"
-          android:layout_height="30dp"
-          android:layout_weight="1"
-          android:background="@color/white"
-          android:spinnerMode="dropdown"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="@+id/box" />
-    </LinearLayout>
+            <EditText
+                android:id="@+id/budget"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_gravity="start"
+                android:layout_marginRight="30dp"
+                android:layout_weight="2"
+                android:background="@drawable/home_overview"
+                android:backgroundTint="#FAF2E6"
+                android:hint="Budget"
+                android:inputType="number"
+                android:paddingLeft="10dp"
+                android:textColor="#000000"
+                android:textColorHint="#A3A3A3"
+                android:textSize="14sp"
+                app:boxStrokeColor="@color/orange"
+                app:flow_verticalAlign="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/box" />
 
-    <Spinner
-        android:id="@+id/secondSpinner"
-        android:layout_width="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/home_overview"
-        android:backgroundTint="#FAF2E6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/budgetLayout" />
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:spinnerMode="dropdown"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/box" />
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/secondSpinner"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/home_overview"
+            android:backgroundTint="#FAF2E6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/budgetLayout" />
 
 
-    <LinearLayout
-        android:id="@+id/image_layout"
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
+        <LinearLayout
+            android:id="@+id/image_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/secondSpinner">
+
+            <Button
+                android:id="@+id/hotel"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="#FAF2E6"
+                android:text="Flights"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:cornerRadius="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/secondSpinner" />
+
+
+            <Button
+                android:id="@+id/airplane"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="#FAF2E6"
+                android:text="Hotels"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:cornerRadius="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/secondSpinner" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/date_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_layout">
+
+            <Button
+                android:id="@+id/startDatePickerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="#FAF2E6"
+                android:text="Select Start Date"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                app:cornerRadius="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hotel" />
+
+            <Button
+                android:id="@+id/endDatePickerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="#FAF2E6"
+                android:text="Select End Date"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                app:cornerRadius="5dp"
+                app:layout_constraintStart_toEndOf="@id/startDatePickerButton"
+                app:layout_constraintTop_toBottomOf="@id/airplane" />
+        </LinearLayout>
+
+        <AutoCompleteTextView
+            android:id="@+id/airportAutoCompleteTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:hint="Enter Departure Airport Name"
+            android:inputType="text"
+            android:padding="10sp"
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="#A3A3A3"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date_layout" />
+
+        <Button
+            android:id="@+id/search"
+            android:layout_width="0dp"
+            android:layout_height="37dp"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="#E5A13A"
+            android:text="Search"
+            android:textColor="#FFFFFF"
+            app:cornerRadius="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/airportAutoCompleteTextView" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/text_activity"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/secondSpinner"
-        app:layout_constraintStart_toStartOf="parent">
-
-      <Button
-          android:id="@+id/hotel"
-          android:layout_width="0dp"
-          android:layout_weight="1"
-          android:textSize="12sp"
-          app:cornerRadius="5dp"
-          android:layout_height="40dp"
-          android:layout_marginRight="5dp"
-          android:text="Flights"
-          android:textColor="@color/black"
-          android:backgroundTint="#FAF2E6"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/secondSpinner"/>
-
-
-      <Button
-          android:id="@+id/airplane"
-          android:layout_width="0dp"
-          android:layout_height="40dp"
-          android:textSize="12sp"
-          android:layout_marginLeft="5dp"
-          app:cornerRadius="5dp"
-          android:layout_weight="1"
-          android:text="Hotels"
-          android:textColor="@color/black"
-          android:backgroundTint="#FAF2E6"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/secondSpinner" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/date_layout"
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/image_layout"
-        app:layout_constraintStart_toStartOf="parent">
-
-      <Button
-          android:id="@+id/startDatePickerButton"
-          android:layout_width="wrap_content"
-          android:layout_marginRight="5dp"
-          android:layout_weight="1"
-          app:cornerRadius="5dp"
-          android:textSize="12sp"
-          android:layout_height="40dp"
-          android:backgroundTint="#FAF2E6"
-          android:text="Select Start Date"
-          android:textColor="#000000"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/hotel" />
-
-      <Button
-          android:id="@+id/endDatePickerButton"
-          android:layout_width="wrap_content"
-          android:layout_weight="1"
-          app:cornerRadius="5dp"
-          android:textSize="12sp"
-          android:layout_marginLeft="5dp"
-          android:layout_height="40dp"
-          android:backgroundTint="#FAF2E6"
-          android:text="Select End Date"
-          android:textColor="#000000"
-          app:layout_constraintStart_toEndOf="@id/startDatePickerButton"
-          app:layout_constraintTop_toBottomOf="@id/airplane" />
-    </LinearLayout>
-
-    <AutoCompleteTextView
-        android:id="@+id/airportAutoCompleteTextView"
-        android:layout_height="wrap_content"
-        android:textColorHint="#A3A3A3"
-        android:hint="Enter Departure Airport Name"
-        android:padding="10sp"
-        android:background="@color/white"
-        android:inputType="text"
-        android:textSize="13sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/athitimedium"
+        android:text="Countries"
         android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/box" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_activities"
         android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:paddingLeft="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date_layout"/>
-
-    <Button
-        android:id="@+id/search"
-        android:layout_width="0dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="5dp"
-        android:backgroundTint="#E5A13A"
-        android:text="Search"
-        android:textColor="#FFFFFF"
-        app:cornerRadius="5dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/airportAutoCompleteTextView" />
-
-
-  </androidx.constraintlayout.widget.ConstraintLayout>
-
-  <TextView
-      android:id="@+id/text_activity"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textColor="@color/black"
-      android:fontFamily="@font/athitimedium"
-      android:textSize="20sp"
-      android:textStyle="bold"
-      android:layout_marginTop="30dp"
-      android:layout_marginStart="20dp"
-      android:layout_marginBottom="10dp"
-      app:layout_constraintTop_toBottomOf="@+id/box"
-      app:layout_constraintStart_toStartOf="parent"
-      android:text="Countries"/>
-
-  <androidx.recyclerview.widget.RecyclerView
-      app:layout_constraintTop_toBottomOf="@+id/text_activity"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      android:layout_marginTop="10dp"
-      android:layout_marginStart="20dp"
-      android:layout_marginEnd="20dp"
-      android:id="@+id/recycler_view_activities"
-      android:layout_width="0dp"
-      android:layout_height="0dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/text_activity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

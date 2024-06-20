@@ -13,7 +13,10 @@ import com.michael.viatoapp.model.data.flights.City
 import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
 import com.michael.viatoapp.userInterface.activities.MainNavigationActivity
 
-class CityAdapter(private var cities: List<City>,private var countriesSearch: FlightCountriesSearch) :
+class CityAdapter(
+    private var cities: List<City>,
+    private var countriesSearch: FlightCountriesSearch
+) :
     RecyclerView.Adapter<CityAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
@@ -21,7 +24,8 @@ class CityAdapter(private var cities: List<City>,private var countriesSearch: Fl
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.nearby_activity_recycler, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.nearby_activity_recycler, parent, false)
         return ViewHolder(view)
     }
 
