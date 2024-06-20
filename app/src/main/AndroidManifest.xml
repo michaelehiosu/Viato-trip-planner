@@ -25,7 +25,7 @@
             android:value="AIzaSyCxX5FOxmBzVVqpNWK_xbg8hosePghZ5LY" />
 
         <activity
-            android:name=".userInterface.activities.NearbyDetailsActivity"
+            android:name=".userInterface.fragments.NearbyDetailsFragment"
             android:exported="false" />
         <activity
             android:name=".userInterface.activities.ResetPasswordActivity"

@@ -1,5 +1,7 @@
 package com.michael.viatoapp.model.data.attraction
 
+import java.io.Serializable
+
 data class Attraction(
     val name : String?,
     val locationId : String?,
@@ -9,5 +11,7 @@ data class Attraction(
     val website : String?,
     val address : String?,
     val tripAdvisorLink : String?,
-    val subCategory: String?
-)
+    val subCategory: String?,
+    val longitude : String?,
+    val latitude : String?
+) : Serializable

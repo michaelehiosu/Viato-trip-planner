@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide
 import com.michael.viatoapp.R
 import com.michael.viatoapp.model.data.flights.Country
 import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
-import com.michael.viatoapp.model.response.Activities
 import com.michael.viatoapp.userInterface.activities.MainNavigationActivity
 
 class CountryAdapter(private var countries: List<Country>, private var countriesSearch: FlightCountriesSearch) :

@@ -25,8 +25,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.michael.viatoapp.R
 import com.michael.viatoapp.api.ApiClient
 import com.michael.viatoapp.api.ApiHelper
-import com.michael.viatoapp.model.response.Activities
-import com.michael.viatoapp.userInterface.adapter.ActivityAdapter
+import com.michael.viatoapp.userInterface.adapter.AttractionAdapter
 import com.michael.viatoapp.databinding.ActivityNearbyBinding
 import com.michael.viatoapp.model.data.attraction.Attraction
 import com.michael.viatoapp.model.request.attractions.AttractionsSearch
@@ -124,7 +123,7 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
             try {
                 val allAttractions = apiClient.getAttractions(attractionsSearch)
                 withContext(Dispatchers.Main) {
-                    updateUIWithAttractions(allAttractions)
+                    bind(allAttractions)
                 }
             } catch (e: Exception) {
                 Log.e("fetchAttractions", "Error: $e")
@@ -132,23 +131,25 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun updateUIWithAttractions(attractions: List<Attraction>) {
-        // Update RecyclerView
-        val activities = attractions.map {
-            Activities(imageUrl = it.image, it.name ?: "Unknown", "Type: ${it.subCategory ?: "Unknown"}")
-        }
-        bind(activities.toMutableList())
-
-        // Add markers to Google Map
-//    for (attraction in attractions) {
-//        val latLng = LatLng(attraction.latitude?.toDouble() ?: 0.0, attraction.longitude?.toDouble() ?: 0.0)
-//        mMap.addMarker(MarkerOptions().position(latLng).title(attraction.name))
+//    private fun updateUIWithAttractions(attractions: List<Attraction>) {
+//        // Update RecyclerView
+//        val activities = attractions.map {
+//            Attraction(
+//                ""
+//            )
+//        }
+//        bind(activities.toMutableList())
+//
+//        // Add markers to Google Map
+////    for (attraction in attractions) {
+////        val latLng = LatLng(attraction.latitude?.toDouble() ?: 0.0, attraction.longitude?.toDouble() ?: 0.0)
+////        mMap.addMarker(MarkerOptions().position(latLng).title(attraction.name))
+////    }
 //    }
-    }
 
 
-    private fun bind(activities: MutableList<Activities>) {
-        val adapter = ActivityAdapter(activities)
+    private fun bind(attractions: MutableList<Attraction>) {
+        val adapter = AttractionAdapter(attractions)
         binding.recyclerViewActivities.adapter = adapter
     }
 
