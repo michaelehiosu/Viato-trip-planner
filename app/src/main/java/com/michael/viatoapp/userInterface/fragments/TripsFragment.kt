@@ -278,7 +278,7 @@ class TripsFragment : Fragment() {
 
     private fun toggleButtonPressed(condition : Boolean, button : Button) {
         if (condition) {
-            button.setBackgroundColor(resources.getColor(R.color.light_orange))
+            button.setBackgroundColor(resources.getColor(R.color.white))
             button.setTextColor(resources.getColor(R.color.black))
         } else {
             button.setBackgroundColor(resources.getColor(R.color.orange))
