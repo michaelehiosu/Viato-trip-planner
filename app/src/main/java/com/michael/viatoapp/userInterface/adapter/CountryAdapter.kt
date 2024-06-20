@@ -9,11 +9,12 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.michael.viatoapp.R
+import com.michael.viatoapp.model.data.SearchData
 import com.michael.viatoapp.model.data.flights.Country
 import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
 import com.michael.viatoapp.userInterface.activities.MainNavigationActivity
 
-class CountryAdapter(private var countries: List<Country>, private var countriesSearch: FlightCountriesSearch) :
+class CountryAdapter(private var countries: List<Country>, private var countriesSearch: FlightCountriesSearch, private var searchData: SearchData) :
     RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
@@ -33,7 +34,7 @@ class CountryAdapter(private var countries: List<Country>, private var countries
         holder.cardView.setOnClickListener {
             val context = holder.itemView.context
             if (context is MainNavigationActivity) {
-                context.navigateToCountryOverviewFragment(country, countriesSearch)
+                context.navigateToCountryOverviewFragment(country, countriesSearch, searchData)
             }
         }
         Glide.with(holder.itemView)

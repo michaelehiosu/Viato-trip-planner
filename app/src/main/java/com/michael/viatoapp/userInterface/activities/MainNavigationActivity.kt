@@ -8,6 +8,7 @@ import com.google.android.material.navigation.NavigationBarView.OnItemSelectedLi
 import com.michael.viatoapp.R
 import com.michael.viatoapp.databinding.ActivityMainNavigationBinding
 import com.michael.viatoapp.model.data.attraction.Attraction
+import com.michael.viatoapp.model.data.SearchData
 import com.michael.viatoapp.model.data.flights.City
 import com.michael.viatoapp.userInterface.fragments.CityOverviewFragment
 import com.michael.viatoapp.model.data.flights.Country
@@ -63,10 +64,11 @@ class MainNavigationActivity : AppCompatActivity(), OnItemSelectedListener {
         return true
     }
 
-    fun navigateToCityOverviewFragment(city: City, countrySearch: FlightCountriesSearch) {
+    fun navigateToCityOverviewFragment(city: City, countrySearch: FlightCountriesSearch, searchData: SearchData) {
         val bundle = Bundle().apply {
             putSerializable("city", city)
             putSerializable("countrySearch", countrySearch)
+            putSerializable("searchData", searchData)
         }
         val cityOverviewFragment = CityOverviewFragment().apply {
             arguments = bundle
@@ -77,11 +79,12 @@ class MainNavigationActivity : AppCompatActivity(), OnItemSelectedListener {
         }
     }
 
-    fun navigateToCountryOverviewFragment(country : Country, countrySearch: FlightCountriesSearch) {
+    fun navigateToCountryOverviewFragment(country : Country, countrySearch: FlightCountriesSearch, searchData: SearchData) {
 
         val bundle = Bundle().apply {
             putSerializable("country", country)
             putSerializable("countrySearch", countrySearch)
+            putSerializable("searchData", searchData)
         }
         val countryOverviewFragement = CountryOverviewFragment().apply {
             arguments = bundle
