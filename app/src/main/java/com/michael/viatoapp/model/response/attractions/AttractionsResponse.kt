@@ -13,7 +13,9 @@ data class Attractions (
     var web_url : String,
     var website : String,
     var address : String,
-    var subcategory: ArrayList<SubCategory>
+    var subcategory: ArrayList<SubCategory>,
+    var latitude : String,
+    var longitude : String
 )
 
 data class Photo(

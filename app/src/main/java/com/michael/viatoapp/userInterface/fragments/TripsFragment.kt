@@ -24,6 +24,7 @@ import com.michael.viatoapp.R
 import com.michael.viatoapp.api.ApiClient
 import com.michael.viatoapp.api.ApiHelper
 import com.michael.viatoapp.databinding.ActivityTripsBinding
+import com.michael.viatoapp.model.data.SearchData
 import com.michael.viatoapp.model.data.flights.Airport
 import com.michael.viatoapp.model.data.flights.Country
 import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
@@ -241,6 +242,12 @@ class TripsFragment : Fragment() {
         val budget = binding.budget.text.toString()
         val continent = binding.secondSpinner.selectedItem.toString()
 
+        val searchData = SearchData(
+            budget = budget,
+            isHotelPressed = isHotelPressed,
+            isFlightPressed = isFlightPressed
+        )
+
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val countries = apiClient.getAllCountries(countriesSearch)
@@ -250,7 +257,7 @@ class TripsFragment : Fragment() {
                     allCountries = countries
                     val filterCountries = apiHelper.filterCountry(countries, budget, continent)
                     Log.d("FilteredCountries", "$filterCountries")
-                    updateCountriesRecyclerView(filterCountries, countriesSearch)
+                    updateCountriesRecyclerView(filterCountries, countriesSearch, searchData)
 
                     binding.textActivity.text = "Resulted Countries"
                 }
@@ -270,9 +277,9 @@ class TripsFragment : Fragment() {
         Log.d("updateAutoCompleteTextViewWithAirports", "AutoCompleteTextView updated with airports: $airportNames")
     }
 
-    private fun updateCountriesRecyclerView(countries: MutableList<Country>, countriesSearch: FlightCountriesSearch) {
+    private fun updateCountriesRecyclerView(countries: MutableList<Country>, countriesSearch: FlightCountriesSearch, searchData: SearchData) {
         countries.map {
-            binding.recyclerViewActivities.adapter = CountryAdapter(countries, countriesSearch)
+            binding.recyclerViewActivities.adapter = CountryAdapter(countries, countriesSearch, searchData)
         }
     }
 
@@ -316,6 +323,12 @@ class TripsFragment : Fragment() {
             dummy = true
         )
 
+        val searchData = SearchData(
+            budget = budget,
+            isHotelPressed = isHotelPressed,
+            isFlightPressed = isFlightPressed
+        )
+
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val countries = apiClient.getAllCountries(countrySearch)
@@ -325,7 +338,7 @@ class TripsFragment : Fragment() {
                     allCountries = countries
                     val filterCountries = apiHelper.filterCountry(countries, budget, continent)
                     Log.d("FilteredCountries", "$filterCountries")
-                    updateCountriesRecyclerView(filterCountries, countrySearch)
+                    updateCountriesRecyclerView(filterCountries, countrySearch, searchData)
                 }
             } catch (e: Exception) {
                 // Handle any exceptions, e.g., network errors

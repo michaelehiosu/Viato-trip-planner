@@ -7,12 +7,15 @@ import androidx.fragment.app.commit
 import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
 import com.michael.viatoapp.R
 import com.michael.viatoapp.databinding.ActivityMainNavigationBinding
+import com.michael.viatoapp.model.data.attraction.Attraction
+import com.michael.viatoapp.model.data.SearchData
 import com.michael.viatoapp.model.data.flights.City
 import com.michael.viatoapp.userInterface.fragments.CityOverviewFragment
 import com.michael.viatoapp.model.data.flights.Country
 import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
 import com.michael.viatoapp.userInterface.fragments.CountryOverviewFragment
 import com.michael.viatoapp.userInterface.fragments.MoreInfoFragment
+import com.michael.viatoapp.userInterface.fragments.NearbyDetailsFragment
 import com.michael.viatoapp.userInterface.fragments.NearbyFragment
 import com.michael.viatoapp.userInterface.fragments.ProfileFragment
 import com.michael.viatoapp.userInterface.fragments.TripsFragment
@@ -61,10 +64,11 @@ class MainNavigationActivity : AppCompatActivity(), OnItemSelectedListener {
         return true
     }
 
-    fun navigateToCityOverviewFragment(city: City, countrySearch: FlightCountriesSearch) {
+    fun navigateToCityOverviewFragment(city: City, countrySearch: FlightCountriesSearch, searchData: SearchData) {
         val bundle = Bundle().apply {
             putSerializable("city", city)
             putSerializable("countrySearch", countrySearch)
+            putSerializable("searchData", searchData)
         }
         val cityOverviewFragment = CityOverviewFragment().apply {
             arguments = bundle
@@ -75,17 +79,32 @@ class MainNavigationActivity : AppCompatActivity(), OnItemSelectedListener {
         }
     }
 
-    fun navigateToCountryOverviewFragment(country : Country, countrySearch: FlightCountriesSearch) {
+    fun navigateToCountryOverviewFragment(country : Country, countrySearch: FlightCountriesSearch, searchData: SearchData) {
 
         val bundle = Bundle().apply {
             putSerializable("country", country)
             putSerializable("countrySearch", countrySearch)
+            putSerializable("searchData", searchData)
         }
         val countryOverviewFragement = CountryOverviewFragment().apply {
             arguments = bundle
         }
         supportFragmentManager.commit {
             replace(R.id.fragment_content, countryOverviewFragement)
+            addToBackStack(null)
+        }
+    }
+
+    fun navigateToNearbyDetailsFragment(attraction : Attraction) {
+
+        val bundle = Bundle().apply {
+            putSerializable("attraction", attraction)
+        }
+        val nearbyDetailsFragment = NearbyDetailsFragment().apply {
+            arguments = bundle
+        }
+        supportFragmentManager.commit {
+            replace(R.id.fragment_content, nearbyDetailsFragment)
             addToBackStack(null)
         }
     }

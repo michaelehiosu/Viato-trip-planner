@@ -13,6 +13,7 @@ import com.michael.viatoapp.R
 import com.michael.viatoapp.api.ApiClient
 import com.michael.viatoapp.api.ApiHelper
 import com.michael.viatoapp.databinding.ActivityCountryOverviewBinding
+import com.michael.viatoapp.model.data.SearchData
 import com.michael.viatoapp.model.data.flights.City
 import com.michael.viatoapp.model.data.flights.Country
 import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
@@ -29,6 +30,7 @@ class CountryOverviewFragment : Fragment() {
     private lateinit var allCities : List<City>
     private var country: Country? = null
     private var countrySearch : FlightCountriesSearch? = null
+    private var searchData: SearchData? =null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,6 +39,7 @@ class CountryOverviewFragment : Fragment() {
         arguments?.let {
             country = it.getSerializable("country") as Country?
             countrySearch = it.getSerializable("countrySearch") as FlightCountriesSearch
+            searchData = it.getSerializable("searchData") as SearchData
         }
         binding = ActivityCountryOverviewBinding.inflate(inflater, container, false)
         return binding.root
@@ -90,7 +93,7 @@ class CountryOverviewFragment : Fragment() {
 
     private fun bind(cities: List<City>) {
         if (cities.isNotEmpty()) {
-            val cityAdapter = CityAdapter(cities, countrySearch!!)
+            val cityAdapter = CityAdapter(cities, countrySearch!!, searchData!!)
             binding.recyclerViewActivities.adapter = cityAdapter
             binding.recyclerViewActivities.layoutManager = LinearLayoutManager(requireContext())
         } else {

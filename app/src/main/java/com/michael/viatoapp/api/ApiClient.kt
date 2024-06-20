@@ -333,7 +333,9 @@ class ApiClient {
                                 website = attraction.website,
                                 address = attraction.address,
                                 tripAdvisorLink = attraction.web_url,
-                                subCategory = attraction.subcategory?.get(0)?.name
+                                subCategory = attraction.subcategory?.get(0)?.name,
+                                latitude = attraction.latitude,
+                                longitude = attraction.longitude
                             )
                         }
                         return@withContext attractions

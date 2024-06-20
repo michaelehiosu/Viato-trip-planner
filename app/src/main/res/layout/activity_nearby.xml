@@ -28,6 +28,44 @@
             app:layout_constraintStart_toStartOf="parent"
             android:text="Activity Suggestions"/>
 
+    <LinearLayout
+        android:id="@+id/button_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_activity"
+        app:layout_constraintTop_toBottomOf="@+id/map_view">
+
+        <Button
+            android:id="@+id/button_5km"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/light_gray"
+            android:padding="0dp"
+            android:text="5km"
+            app:cornerRadius="1dp" />
+
+        <Button
+            android:id="@+id/button_10km"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/light_gray"
+            android:padding="0dp"
+            android:text="10km"
+            app:cornerRadius="1dp" />
+
+        <Button
+            android:id="@+id/button_15km"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/orange"
+            android:padding="0dp"
+            android:text="15km"
+            app:cornerRadius="1dp" />
+    </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             app:layout_constraintTop_toBottomOf="@+id/text_activity"
             app:layout_constraintStart_toStartOf="parent"

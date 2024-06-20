@@ -16,6 +16,7 @@ import com.michael.viatoapp.R
 import com.michael.viatoapp.api.ApiClient
 import com.michael.viatoapp.api.ApiHelper
 import com.michael.viatoapp.databinding.ActivityCityOverviewBinding
+import com.michael.viatoapp.model.data.SearchData
 import com.michael.viatoapp.model.data.flights.City
 import com.michael.viatoapp.model.data.flights.Itinerary
 import com.michael.viatoapp.model.data.stays.Hotel
@@ -45,6 +46,7 @@ class CityOverviewFragment : Fragment() {
     private var cheapestSelected : Boolean = true
     private var onlyFlightSelected : Boolean = false
     private var onlyHotelSelected : Boolean = false
+    private var searchData: SearchData? =null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +55,7 @@ class CityOverviewFragment : Fragment() {
         arguments?.let {
             city = it.getSerializable("city") as City?
             countrySearch = it.getSerializable("countrySearch") as FlightCountriesSearch
+            searchData = it.getSerializable("searchData") as SearchData
         }
         binding = ActivityCityOverviewBinding.inflate(layoutInflater, container, false)
 
@@ -67,6 +70,8 @@ class CityOverviewFragment : Fragment() {
         hotelAdapter = HotelAdapter(mutableListOf()){ hotel ->
             handleHotelSelection(hotel)
         }
+
+        Log.d("Search Data:", "Data: $searchData")
 
         binding.recyclerViewFlights.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewFlights.adapter = flightAdapter
