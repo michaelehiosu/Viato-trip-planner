@@ -388,6 +388,7 @@ class CityOverviewFragment : Fragment() {
             val bundle = Bundle().apply {
                 putSerializable("selectedItinerary", selectedItinerary)
                 putSerializable("selectedHotel", selectedHotel)
+                putSerializable("cityInfo", city)
             }
             context.navigateToMoreInfoFragment(bundle)
         }

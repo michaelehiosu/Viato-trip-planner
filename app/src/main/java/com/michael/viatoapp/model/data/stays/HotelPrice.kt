@@ -5,6 +5,6 @@ data class HotelPrice(
     var partnerLogo : String?,
     var roomType : String?,
     var roomPolicies : String?,
-    var deepLink : String?,
+    var deeplink : String?,
     var rawPrice : Int?,
 )

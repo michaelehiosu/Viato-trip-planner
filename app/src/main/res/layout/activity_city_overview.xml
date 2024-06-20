@@ -31,7 +31,7 @@
         android:id="@+id/city_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColorHint="#F4EEE6"
+        android:textColor="@color/white"
         android:textSize="40sp"
         android:fontFamily="@font/athitibold"
         tools:text="Frankfurt"
