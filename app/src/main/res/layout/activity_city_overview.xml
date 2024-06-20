@@ -72,7 +72,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Fetching Cheapest Flight and Hotel"/>
+        </LinearLayout>
 
+
+        <LinearLayout
+            android:id="@+id/no_itinerary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_margin="40dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/athitimedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Couldn't find Itinerary for your budget"/>
 
         </LinearLayout>
 
@@ -92,6 +110,7 @@
                 android:textSize="18sp"/>
 
             <LinearLayout
+                android:id="@+id/flight_only"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -192,6 +211,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:id="@+id/hotel_only"
                 android:layout_margin="10dp">
 
                 <LinearLayout
@@ -275,8 +295,6 @@
                 android:layout_gravity="end"/>
 
         </LinearLayout>
-
-
 
     </LinearLayout>
 

@@ -70,6 +70,12 @@ class TripsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         apiClient = ApiClient()
         apiHelper = ApiHelper()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isFlightPressed = false
+        isHotelPressed = false
 
         binding.recyclerViewActivities.layoutManager = LinearLayoutManager(requireContext())
         binding.textActivity.text = "Suggested Countries"
@@ -85,17 +91,19 @@ class TripsFragment : Fragment() {
         }
 
         binding.airplane.setOnClickListener {
+            isFlightPressed = !isFlightPressed
+            Log.d("flightchecked", "$isFlightPressed")
             val airplane = binding.airplane
             toggleButtonPressed(isFlightPressed, airplane)
             // Toggle the state
-            isFlightPressed = !isFlightPressed
         }
 
         binding.hotel.setOnClickListener {
+            isHotelPressed = !isHotelPressed
+            Log.d("hotelchecked", "$isHotelPressed")
             val hotel = binding.hotel
             toggleButtonPressed(isHotelPressed, hotel)
-            // Toggle the state
-            isHotelPressed = !isHotelPressed
+
         }
 
         binding.search.setOnClickListener {
@@ -285,11 +293,11 @@ class TripsFragment : Fragment() {
 
     private fun toggleButtonPressed(condition : Boolean, button : Button) {
         if (condition) {
-            button.setBackgroundColor(resources.getColor(R.color.light_orange))
-            button.setTextColor(resources.getColor(R.color.black))
-        } else {
             button.setBackgroundColor(resources.getColor(R.color.orange))
             button.setTextColor(resources.getColor(R.color.white))
+        } else {
+            button.setBackgroundColor(resources.getColor(R.color.white))
+            button.setTextColor(resources.getColor(R.color.black))
         }
     }
 
@@ -332,12 +340,10 @@ class TripsFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val countries = apiClient.getAllCountries(countrySearch)
-                Log.d("Countries", "$countries")
 
                 withContext(Dispatchers.Main) {
                     allCountries = countries
                     val filterCountries = apiHelper.filterCountry(countries, budget, continent)
-                    Log.d("FilteredCountries", "$filterCountries")
                     updateCountriesRecyclerView(filterCountries, countrySearch, searchData)
                 }
             } catch (e: Exception) {
@@ -358,11 +364,6 @@ class TripsFragment : Fragment() {
                 val currency = documentSnapshot.getString("currency")
                 val airport = documentSnapshot.getString("airport")
                 val name = documentSnapshot.getString("lastName")
-
-                Log.d("UserData", "Destination: $destination")
-                Log.d("UserData", "Currency: $currency")
-                Log.d("UserData", "Airport: $airport")
-                Log.d("UserData", "Name: $name")
 
                 // Fetch stored countries after user data has been fetched
                 if (destination != null && currency != null && airport !=null) {

@@ -28,8 +28,10 @@ import com.michael.viatoapp.userInterface.activities.MainNavigationActivity
 import com.michael.viatoapp.userInterface.adapter.FlightAdapter
 import com.michael.viatoapp.userInterface.adapter.HotelAdapter
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 class CityOverviewFragment : Fragment() {
     private lateinit var binding: ActivityCityOverviewBinding
@@ -64,6 +66,11 @@ class CityOverviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         flightAdapter = FlightAdapter(mutableListOf()) { itinerary ->
             handleFlightSelection(itinerary)
         }
@@ -96,20 +103,19 @@ class CityOverviewFragment : Fragment() {
 
         binding.buttonGoTo.setOnClickListener {
             if (cheapestSelected && !onlyFlightSelected && !onlyHotelSelected) {
-                // TODO: Send selected hotel and selected itinerary to the more info page
                 navigateToMoreInfoFragment()
             }
         }
 
         binding.buttonGo.setOnClickListener {
             if (onlyHotelSelected || onlyFlightSelected && !cheapestSelected) {
-                // TODO: Send selected hotel and selected itinerary to the more info page
                 navigateToMoreInfoFragment()
             }
         }
     }
 
     private fun fetchFlightsAndHotels() {
+        activateProgressBar()
         lifecycleScope.launch {
 
             val flightsSearch = AllFlightsSearch(
@@ -140,26 +146,99 @@ class CityOverviewFragment : Fragment() {
                 val flightList: MutableList<Itinerary> = apiClient.getAllFlights(flightsSearch)
                 val hotelList: MutableList<Hotel> = apiClient.getHotels(hotelsSearch)
 
-                Log.d("hotels", "$hotelList")
-                Log.d("itinerary", "$flightList")
+                val isbothFlightAndHotel = searchData?.isHotelPressed == searchData?.isFlightPressed
+                val onlyFlight = searchData?.isFlightPressed == true && searchData?.isHotelPressed == false
+                val onlyHotel = searchData?.isFlightPressed == false && searchData?.isHotelPressed == true
 
-                cheapestItinerary  = apiHelper.getCheapestItinerary(flightList)
-                cheapestHotel = apiHelper.getCheapestHotel(hotelList)
-                val filteredItinerary = apiHelper.filterItinerary(flightList, cheapestItinerary!!)
-                val filteredHotel = apiHelper.filterHotel(hotelList, countrySearch!!)
+                if(isbothFlightAndHotel) {
+                    val flightbudget = searchData?.budget!!.toInt() * 60 /100
+                    val hotelBudget = searchData?.budget!!.toInt() * 40 / 100
 
-                setSelectedHotel(cheapestHotel)
-                setSelectedItinerary(cheapestItinerary)
+                    cheapestItinerary  = apiHelper.getCheapestItinerary(flightList, flightbudget)
+                    cheapestHotel = apiHelper.getCheapestHotel(hotelList, countrySearch!!, hotelBudget)
 
-                updateCheapestFLightsAndHotel(cheapestItinerary, cheapestHotel)
-                updateFlightsRecyclerView(filteredItinerary)
-                updateHotelsRecyclerView(filteredHotel)
+
+                    if (cheapestHotel != null && cheapestItinerary !=null) {
+                        setSelectedHotel(cheapestHotel)
+                        setSelectedItinerary(cheapestItinerary)
+
+                        updateCheapestFlights(cheapestItinerary)
+                        updateCheapestHotel(cheapestItinerary, cheapestHotel)
+
+                        val filteredItinerary = apiHelper.filterItinerary(
+                            flightList,
+                            cheapestItinerary!!,
+                            flightbudget
+                        )
+                        val filteredHotel =
+                            apiHelper.filterHotel(hotelList, countrySearch!!, hotelBudget)
+
+                        updateFlightsRecyclerView(filteredItinerary)
+                        updateHotelsRecyclerView(filteredHotel)
+                        deactivateProgressBar()
+                    }
+
+                    if(cheapestHotel == null && cheapestItinerary == null) {
+                        noItinerary()
+                    }
+
+
+                } else if (onlyFlight) {
+                    val budget = searchData?.budget!!.toInt()
+                    cheapestItinerary  = apiHelper.getCheapestItinerary(flightList,budget)
+
+                    if(cheapestItinerary != null) {
+                        setSelectedItinerary(cheapestItinerary)
+                        updateCheapestFlights(cheapestItinerary, true)
+
+                        val filteredItinerary = apiHelper.filterItinerary(
+                            flightList,
+                            cheapestItinerary!!,
+                            budget
+                        )
+                        updateFlightsRecyclerView(filteredItinerary)
+                        binding.hotelOnly.visibility = View.GONE
+                        binding.recyclerViewHotels.visibility = View.GONE
+                        binding.alternativeHotels.visibility = View.GONE
+                        deactivateProgressBar()
+                    } else {
+                        noItinerary()
+                    }
+
+                } else if (onlyHotel) {
+                    val budget = searchData?.budget!!.toInt()
+                    cheapestHotel = apiHelper.getCheapestHotel(hotelList, countrySearch!!, budget)
+
+                    if(cheapestHotel != null) {
+                        setSelectedHotel(cheapestHotel)
+                        updateCheapestHotel(null, cheapestHotel)
+
+                        val filteredHotel =
+                            apiHelper.filterHotel(hotelList, countrySearch!!, budget)
+                        updateHotelsRecyclerView(filteredHotel)
+                        binding.flightOnly.visibility = View.GONE
+                        binding.recyclerViewFlights.visibility = View.GONE
+                        binding.alternativeFlights.visibility = View.GONE
+                        deactivateProgressBar()
+                    } else {
+                        noItinerary()
+                    }
+                }
             } catch (e: Exception) {
                 Log.e("CityOverviewFragment", "Error fetching data: ${e.message}")
             }
         }
     }
 
+    private fun noItinerary() {
+        binding.cheapestBox.visibility = View.GONE
+        binding.noItinerary.visibility = View.VISIBLE
+        binding.buttonGo.visibility = View.GONE
+        binding.tempBar.visibility = View.GONE
+        binding.buttonGoTo.visibility = View.GONE
+        binding.alternativeHotels.visibility = View.GONE
+        binding.alternativeFlights.visibility = View.GONE
+    }
     private fun updateFlightsRecyclerView(flights: MutableList<Itinerary>) {
         flights.map {
             binding.recyclerViewFlights.adapter = FlightAdapter(flights){ itinerary ->
@@ -177,15 +256,11 @@ class CityOverviewFragment : Fragment() {
     }
 
 
-    private fun updateCheapestFLightsAndHotel(itinerary: Itinerary?, hotel: Hotel?) {
-        Log.d("cheapestHotel", "$hotel")
-        Log.d("cheapestItinerary", "$itinerary")
-
+    private fun updateCheapestFlights(itinerary: Itinerary?, onlyFlight: Boolean = false) {
         val depDate = convertDate(itinerary?.outboundDepartureTime)
         val arrDate = convertDate(itinerary?.outboundArrivalTime)
         val hoursMinutes = convertMinutesToHoursAndMinutes(itinerary?.durationOutbound)
         val layover = getLayoverText(itinerary?.stopCountOutbound)
-        val totalPrice = itinerary?.rawPrice!! + hotel?.priceRaw!!
 
         binding.depAirport.text = itinerary?.originId.toString()
         binding.arrAirport.text = itinerary?.destinationId.toString()
@@ -194,15 +269,24 @@ class CityOverviewFragment : Fragment() {
         binding.flightLength.text = hoursMinutes
         binding.layovers.text = layover
 
+        if(onlyFlight == true) {
+            binding.cheapestTotal.text = "€" + itinerary?.rawPrice.toString()
+        }
+
+    }
+
+    private fun updateCheapestHotel(itinerary: Itinerary?, hotel: Hotel?) {
+        var duration = getNumberOfDays(countrySearch!!)
+        var totalPrice : Double? = hotel?.priceRaw?.toDouble()?.times(duration)
+
+        if(itinerary != null) {
+            totalPrice = itinerary?.rawPrice!! + hotel?.priceRaw!! * duration
+        }
         binding.hotelName.text = hotel?.name
         binding.address.text = hotel?.relevantPoi
         binding.gradeNumber.text = hotel?.reviewScore.toString()
         binding.gradeWord.text = hotel?.scoreDesc.toString()
         binding.cheapestTotal.text = "€" + totalPrice.toString()
-
-        binding.tempBar.visibility = View.GONE
-        binding.cheapestBox.visibility = View.VISIBLE
-
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -307,5 +391,25 @@ class CityOverviewFragment : Fragment() {
             }
             context.navigateToMoreInfoFragment(bundle)
         }
+    }
+
+    private fun activateProgressBar() {
+        binding.cheapestBox.visibility = View.GONE
+        binding.tempBar.visibility = View.VISIBLE
+    }
+
+    private fun deactivateProgressBar() {
+        binding.cheapestBox.visibility = View.VISIBLE
+        binding.tempBar.visibility = View.GONE
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getNumberOfDays(countrySearch: FlightCountriesSearch) : Int {
+        val formatter = DateTimeFormatter.ISO_DATE
+        val departLocalDate = LocalDate.parse(countrySearch.departDate, formatter)
+        val returnLocalDate = LocalDate.parse(countrySearch.returnDate, formatter)
+
+        val daysBetween = ChronoUnit.DAYS.between(departLocalDate, returnLocalDate)
+        return daysBetween.toInt()
     }
 }

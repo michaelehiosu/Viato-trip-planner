@@ -50,7 +50,11 @@ class CountryOverviewFragment : Fragment() {
         apiClient = ApiClient()
         apiHelper = ApiHelper()
 
+        Log.d("isHotel", "${searchData?.isHotelPressed}")
+        Log.d("isFlight", "${searchData?.isFlightPressed}")
         var citiesSearch : FlightCitiesSearch? = null
+
+        Log.d("CountryOverview", "$searchData")
 
         if(countrySearch != null && country != null) {
             citiesSearch = FlightCitiesSearch(
