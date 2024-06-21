@@ -54,12 +54,13 @@
         <androidx.cardview.widget.CardView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:backgroundTint="#DDD2C4"
-          app:cardCornerRadius="10dp">
+          app:cardCornerRadius="10dp"
+          android:layout_marginBottom="30dp">
 
           <androidx.appcompat.widget.LinearLayoutCompat
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:background="@drawable/activity_bg"
               android:orientation="vertical">
 
               <androidx.appcompat.widget.LinearLayoutCompat
@@ -120,7 +121,7 @@
                   android:padding="10dp">
 
                   <TextView
-                      android:textColor="#2E1F08"
+                      android:textColor="@color/black"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="No of Reviews"
@@ -146,26 +147,15 @@
                   android:padding="10dp">
 
                   <TextView
-                      android:textColor="#2E1F08"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="Website"
-                      android:fontFamily="@font/athitimedium"
-                      android:textSize="15sp"
-                      android:layout_weight="1"/>
-
-                  <TextView
                       android:id="@+id/attraction_website"
-                      android:textColor="#2E1F08"
                       android:gravity="end"
                       android:fontFamily="@font/athitiregular"
                       android:textSize="15sp"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="www"
-                      android:layout_weight="2"
-                      android:autoLink="web"
-                      android:textColorLink="@color/orange"/>
+                      android:text="Vist attraction's website"
+                      android:autoLink="none"
+                      android:textColor="@color/orange"/>
 
               </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -175,26 +165,15 @@
                   android:padding="10dp">
 
                   <TextView
-                      android:textColor="#2E1F08"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="More Information"
-                      android:fontFamily="@font/athitimedium"
-                      android:textSize="15sp"
-                      android:layout_weight="1"/>
-
-                  <TextView
                       android:id="@+id/attraction_moreInfo"
-                      android:textColor="#2E1F08"
                       android:gravity="end"
                       android:layout_width="wrap_content"
                       android:fontFamily="@font/athitiregular"
                       android:textSize="15sp"
-                      android:textColorLink="@color/orange"
-                      android:layout_weight="3"
+                      android:textColor="@color/orange"
                       android:layout_height="wrap_content"
-                      android:text="websitelink.com"
-                      android:autoLink="web"/>
+                      android:text="See more information"
+                      android:autoLink="none"/>
 
               </androidx.appcompat.widget.LinearLayoutCompat>
 
