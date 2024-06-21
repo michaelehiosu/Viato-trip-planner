@@ -20,10 +20,14 @@ class ResetPasswordActivity : AppCompatActivity() {
         binding.sendButton.setOnClickListener {
             val email = binding.emailEditText.text.toString()
 
-                auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+            if (email.isEmpty()) {
+                Toast.makeText(this, "Provide an email you want to reset", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Reset email sent", Toast.LENGTH_LONG).show()
-
                     val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
                 } else {
@@ -34,4 +38,5 @@ class ResetPasswordActivity : AppCompatActivity() {
             }
         }
     }
+
 }
