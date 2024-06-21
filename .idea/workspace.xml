@@ -87,90 +87,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f0ff5676-dffd-43d8-84cb-4dbd81abea4a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/8.6/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.6/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.6/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.6/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.6/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.6/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.6/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.6/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.6/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.6/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/config.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/com/michael/viatoapp/ExampleInstrumentedTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/androidTest/java/com/michael/viatoapp/ExampleInstrumentedTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/api/ApiClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/api/ApiClient.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/api/ApiHelper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/api/ApiHelper.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/data/flights/Airport.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/data/flights/Airport.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/data/flights/City.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/data/flights/City.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/data/flights/Itinerary.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/data/flights/Itinerary.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/data/flights/ItineraryDetails.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/data/flights/ItineraryDetails.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/data/stays/Hotel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/data/stays/Hotel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/data/stays/HotelCity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/data/stays/HotelCity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/data/stays/HotelPrice.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/data/stays/HotelPrice.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/request/flights/FlightCitiesSearch.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/request/flights/FlightCitiesSearch.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/request/flights/FlightCountriesSearch.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/request/flights/FlightCountriesSearch.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/request/flights/FlightDetailsSearch.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/request/flights/FlightDetailsSearch.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/request/flights/FlightsSessionComplete.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/request/flights/FlightsSessionComplete.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/request/stays/CitySearch.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/request/stays/CitySearch.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/Activities.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/Activities.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/Hotel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/Hotel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/attractions/AttractionsResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/attractions/AttractionsResponse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/flights/CitiesResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/flights/CitiesResponse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/flights/CountriesResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/flights/CountriesResponse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/flights/FlightDetailsResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/flights/FlightDetailsResponse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/flights/FlightsResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/flights/FlightsResponse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/stays/HotelPricesResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/stays/HotelPricesResponse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/stays/HotelsResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/model/response/stays/HotelsResponse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/activities/LoginActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/activities/LoginActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/activities/RegisterActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/activities/RegisterActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/activities/ResetPasswordActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/activities/ResetPasswordActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/adapter/AttractionAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/adapter/AttractionAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/adapter/CountryAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/adapter/CountryAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/adapter/FlightAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/adapter/FlightAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/adapter/HotelAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/adapter/HotelAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/CityOverviewFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/CityOverviewFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/CountryOverviewFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/CountryOverviewFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/MoreInfoFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/MoreInfoFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/NearbyDetailsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/NearbyDetailsFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/NearbyFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/NearbyFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/ProfileFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/ProfileFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/TripsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/michael/viatoapp/userInterface/fragments/TripsFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/cheapest_bg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/cheapest_bg.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/edittext_border.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/edittext_border.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/flight_info_bg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/flight_info_bg.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/home_overview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/home_overview.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/rounded_corner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rounded_corner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/toast_background.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/toast_background.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/myfont.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/font/myfont.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_city_overview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_city_overview.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_country_overview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_country_overview.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main_navigation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main_navigation.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_more_info.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_more_info.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_nearby.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_nearby.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_nearby_details.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_nearby_details.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_profile.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_reset_password.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_reset_password.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_splashscreen.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_splashscreen.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_toast_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_toast_layout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_toast_success.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_toast_success.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_trips.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_trips.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/cities_activity_recycler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/cities_activity_recycler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/flight_recycler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/flight_recycler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_city_overview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_city_overview.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/hotel_recycler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/hotel_recycler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/nearby_activity_recycler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/nearby_activity_recycler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/spinner_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/spinner_item.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/trips_activity_recycler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/trips_activity_recycler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/bottom_nav_bar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/bottom_nav_bar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-night/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values-night/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/michael/viatoapp/ExampleUnitTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/com/michael/viatoapp/ExampleUnitTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,7 +98,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=PhysicalDevice, isTemplate=false, identifier=serial=P11274000729)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\Caterina\.android\avd\Pixel_3a_API_34_extension_level_7_x86_64.avd)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -255,23 +173,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Android App.Viato App.Viato_App.app.executor": "Run",
-    "Android App.app.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "VAP-59-Refactor-entire-codebase-based-on-coding-convention",
-    "kotlin-language-version-configured": "true",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.17",
-    "project.structure.side.proportion": "0.2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Android App.Viato App.Viato_App.app.executor&quot;: &quot;Run&quot;,
+    &quot;Android App.app.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;VAP-59-Refactor-entire-codebase-based-on-coding-convention&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="com.michael.viatoapp.userInterface.fragments" />

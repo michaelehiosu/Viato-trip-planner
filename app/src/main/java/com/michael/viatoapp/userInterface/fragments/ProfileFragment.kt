@@ -138,11 +138,6 @@ class ProfileFragment : Fragment() {
                 alertDialog.show()
             }
 
-            binding.buttonEditPassword.setOnClickListener {
-                binding.tvPassword.isEnabled = true
-                binding.buttonSave.visibility = View.VISIBLE
-            }
-
             binding.buttonEditPreferences.setOnClickListener {
                 binding.tvCurrency.isEnabled = true
                 binding.tvAirport.isEnabled = true
@@ -154,7 +149,6 @@ class ProfileFragment : Fragment() {
                 val newCurrency = binding.tvCurrency.selectedItem.toString()
                 val newAirport = binding.tvAirport.text.toString()
                 val newDestination = binding.tvFavDestination.selectedItem.toString()
-                val newPassword = binding.tvPassword.text.toString()
 
                 val updates = hashMapOf<String, Any>(
                     "currency" to newCurrency,
@@ -162,15 +156,10 @@ class ProfileFragment : Fragment() {
                     "destination" to newDestination
                 )
 
-                if (newPassword.isNotEmpty()) {
-                    updates["password"] = newPassword
-                }
-
                 document.update(updates).addOnSuccessListener {
                     binding.tvCurrency.isEnabled = false
                     binding.tvAirport.isEnabled = false
                     binding.tvFavDestination.isEnabled = false
-                    binding.tvPassword.isEnabled = false
 
                     binding.buttonSave.visibility = View.GONE
                 }
