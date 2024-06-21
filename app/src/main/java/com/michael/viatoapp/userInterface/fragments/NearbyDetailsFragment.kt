@@ -1,9 +1,11 @@
 package com.michael.viatoapp.userInterface.fragments
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.util.Linkify
@@ -69,12 +71,38 @@ class NearbyDetailsFragment : Fragment(), OnMapReadyCallback {
         binding.attractionName.text = attraction?.name ?: "Nil"
         binding.attractionReview.text = attraction?.numReviews ?: "Nil"
         binding.attractionAddress.text = attraction?.address ?: "Nil"
-        binding.attractionWebsite.text = attraction?.website ?: "Nil"
         binding.attractionCategory.text = attraction?.subCategory ?: "Nil"
-        binding.attractionMoreInfo.text = attraction?.tripAdvisorLink ?: "Nil"
 
-        Linkify.addLinks(binding.attractionMoreInfo, Linkify.WEB_URLS)
-        Linkify.addLinks(binding.attractionWebsite, Linkify.WEB_URLS)
+        val websiteUrl = attraction?.website
+        if (websiteUrl != null) {
+            val textViewWebsite = binding.attractionWebsite
+
+            Linkify.addLinks(binding.attractionWebsite, Linkify.WEB_URLS)
+
+            textViewWebsite.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(websiteUrl))
+                startActivity(intent)
+            }
+        } else {
+            binding.attractionWebsite.setText("Website not found for this attraction")
+            binding.attractionWebsite.setTextColor(Color.parseColor("#2E1F08"))
+        }
+
+
+        val tripAdvisorUrl = attraction?.tripAdvisorLink
+        if (tripAdvisorUrl != null) {
+            val textViewTripAdvisor = binding.attractionMoreInfo
+
+            Linkify.addLinks(binding.attractionMoreInfo, Linkify.WEB_URLS)
+
+            textViewTripAdvisor.setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(tripAdvisorUrl))
+                startActivity(intent)
+            }
+        } else {
+            binding.attractionMoreInfo.setText("Link to more information not found")
+            binding.attractionMoreInfo.setTextColor(Color.parseColor("#2E1F08"))
+        }
 
         Glide.with(this)
             .load(attraction?.image)
