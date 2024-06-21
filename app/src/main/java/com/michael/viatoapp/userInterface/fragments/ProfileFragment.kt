@@ -1,7 +1,6 @@
 package com.michael.viatoapp.userInterface.fragments
 
 import android.app.AlertDialog
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -17,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -30,7 +30,6 @@ import com.michael.viatoapp.userInterface.activities.LoginActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import android.widget.Toast
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: ActivityProfileBinding
@@ -139,11 +138,6 @@ class ProfileFragment : Fragment() {
                 alertDialog.show()
             }
 
-            binding.buttonEditPassword.setOnClickListener {
-                binding.tvPassword.isEnabled = true
-                binding.buttonSave.visibility = View.VISIBLE
-            }
-
             binding.buttonEditPreferences.setOnClickListener {
                 binding.tvCurrency.isEnabled = true
                 binding.tvAirport.isEnabled = true
@@ -155,7 +149,6 @@ class ProfileFragment : Fragment() {
                 val newCurrency = binding.tvCurrency.selectedItem.toString()
                 val newAirport = binding.tvAirport.text.toString()
                 val newDestination = binding.tvFavDestination.selectedItem.toString()
-                val newPassword = binding.tvPassword.text.toString()
 
                 val updates = hashMapOf<String, Any>(
                     "currency" to newCurrency,
@@ -163,16 +156,10 @@ class ProfileFragment : Fragment() {
                     "destination" to newDestination
                 )
 
-                if (newPassword.isNotEmpty()) {
-                    updates["password"] = newPassword
-                }
-
                 document.update(updates).addOnSuccessListener {
                     binding.tvCurrency.isEnabled = false
                     binding.tvAirport.isEnabled = false
                     binding.tvFavDestination.isEnabled = false
-                    binding.tvPassword.isEnabled = false
-
                     binding.buttonSave.visibility = View.GONE
                 }
             }
@@ -195,7 +182,11 @@ class ProfileFragment : Fragment() {
 
     private fun setupAirportEditText() {
         val airportNames = allAirports.map { it.name }
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, airportNames)
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_dropdown_item_1line,
+            airportNames
+        )
         (binding.tvAirport as? AutoCompleteTextView)?.setAdapter(adapter)
 
         val handler = Handler(Looper.getMainLooper())
@@ -224,7 +215,11 @@ class ProfileFragment : Fragment() {
                         isTextChanging = true
                         binding.tvAirport.setText("") // Clear invalid input
                         binding.tvAirport.error = "Please select a valid airport"
-                        Toast.makeText(requireContext(), "Please select a valid airport", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "Please select a valid airport",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         isTextChanging = false
                     }
                     lastInput = enteredText

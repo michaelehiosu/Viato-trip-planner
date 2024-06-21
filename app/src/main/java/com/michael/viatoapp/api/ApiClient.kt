@@ -53,7 +53,7 @@ class ApiClient {
 
     public val apiService: ApiService = retrofit.create(ApiService::class.java)
 
-    suspend fun getAllAirport(): List<Airport>{
+    suspend fun getAllAirport(): List<Airport> {
         return withContext(Dispatchers.IO) {
             try {
                 val call: Call<AirportResponse> = apiService.getAllAirports()
@@ -87,24 +87,26 @@ class ApiClient {
     suspend fun getAllCountries(flightCountriesSearch: FlightCountriesSearch): MutableList<Country> {
         return withContext(Dispatchers.IO) {
             try {
-                val call: Call<CountriesResponse> = apiService.getAllCountries(flightCountriesSearch)
+                val call: Call<CountriesResponse> =
+                    apiService.getAllCountries(flightCountriesSearch)
                 val response = call.execute()
 
                 if (response.isSuccessful) {
                     val retrievedData = response.body()
                     if (retrievedData != null) {
-                        val countries = retrievedData.data.everywhereDestination.results.mapNotNull { result: Result ->
-                            val flightQuotes = result.content.flightQuotes
-                            val imageUrl = result.content.image?.url
-                            val cheapestPrice = flightQuotes?.cheapest?.rawPrice
-                            Country(
-                                entityId = result.entityId,
-                                skyId = result.skyId,
-                                name = result.content.location.name,
-                                cheapestPrice = cheapestPrice,
-                                imageUrl = imageUrl
-                            )
-                        }
+                        val countries =
+                            retrievedData.data.everywhereDestination.results.mapNotNull { result: Result ->
+                                val flightQuotes = result.content.flightQuotes
+                                val imageUrl = result.content.image?.url
+                                val cheapestPrice = flightQuotes?.cheapest?.rawPrice
+                                Country(
+                                    entityId = result.entityId,
+                                    skyId = result.skyId,
+                                    name = result.content.location.name,
+                                    cheapestPrice = cheapestPrice,
+                                    imageUrl = imageUrl
+                                )
+                            }
                         return@withContext countries
                     }
                 }
@@ -117,7 +119,7 @@ class ApiClient {
     }
 
 
-    suspend fun getAllCities(flightCitiesSearch: FlightCitiesSearch) : List<City> {
+    suspend fun getAllCities(flightCitiesSearch: FlightCitiesSearch): List<City> {
         return withContext(Dispatchers.IO) {
             try {
                 val call: Call<CitiesResponse> = apiService.getAllCities(flightCitiesSearch)
@@ -126,14 +128,15 @@ class ApiClient {
                 if (response.isSuccessful) {
                     val retrievedData = response.body()
                     if (retrievedData != null) {
-                        var cities = retrievedData.data.countryDestination.results.map { cityResult : CityResult ->
-                            City(
-                                entityId = cityResult.entityId,
-                                skyId = cityResult.skyId,
-                                name = cityResult.content.location.name,
-                                imageUrl = cityResult.content.image.url
-                            )
-                        }
+                        var cities =
+                            retrievedData.data.countryDestination.results.map { cityResult: CityResult ->
+                                City(
+                                    entityId = cityResult.entityId,
+                                    skyId = cityResult.skyId,
+                                    name = cityResult.content.location.name,
+                                    imageUrl = cityResult.content.image.url
+                                )
+                            }
                         return@withContext cities
                     }
                 }
@@ -145,7 +148,7 @@ class ApiClient {
         }
     }
 
-    suspend fun getAllFlights(flightsSearch: AllFlightsSearch) : MutableList<Itinerary> {
+    suspend fun getAllFlights(flightsSearch: AllFlightsSearch): MutableList<Itinerary> {
         return withContext(Dispatchers.IO) {
             try {
                 val call: Call<FlightsResponse> = apiService.getAllFlights(flightsSearch)
@@ -154,30 +157,31 @@ class ApiClient {
                 if (response.isSuccessful) {
                     val retrievedData = response.body()
                     if (retrievedData != null) {
-                        var itineraries = retrievedData.data.itineraries.map { itinerary : FlightItinerary ->
-                            Itinerary(
-                                token = "",
-                                id = itinerary.id,
-                                rawPrice = itinerary.price.raw,
-                                formattedPrice = itinerary.price.formatted,
-                                originId = itinerary.legs[0].origin.id,
-                                originName = itinerary.legs[0].origin.name,
-                                destinationId = itinerary.legs[0].destination.id,
-                                destinationName = itinerary.legs[0].destination.name,
-                                marketingCarrierName = itinerary.legs[0].carrier?.marketing?.name,
-                                marketingCarrierLogo = itinerary.legs[0].carrier?.marketing?.logoUrl,
-                                operatingCarrier = itinerary.legs[0].carrier?.operating?.name,
-                                operatingCarrierLogo = itinerary.legs[0].carrier?.operating?.logoUrl,
-                                durationOutbound = itinerary.legs[0].durationInMinutes,
-                                durationInbound = itinerary.legs[1].durationInMinutes,
-                                stopCountOutbound = itinerary.legs[0].stopCount,
-                                stopCountInbound = itinerary.legs[1].stopCount,
-                                outboundDepartureTime = itinerary.legs[0].departure,
-                                outboundArrivalTime = itinerary.legs[0].arrival,
-                                inboundDepartureTime = itinerary.legs[1].departure,
-                                inboundArrivalTime = itinerary.legs[1].arrival
-                            )
-                        }
+                        var itineraries =
+                            retrievedData.data.itineraries.map { itinerary: FlightItinerary ->
+                                Itinerary(
+                                    token = "",
+                                    id = itinerary.id,
+                                    rawPrice = itinerary.price.raw,
+                                    formattedPrice = itinerary.price.formatted,
+                                    originId = itinerary.legs[0].origin.id,
+                                    originName = itinerary.legs[0].origin.name,
+                                    destinationId = itinerary.legs[0].destination.id,
+                                    destinationName = itinerary.legs[0].destination.name,
+                                    marketingCarrierName = itinerary.legs[0].carrier?.marketing?.name,
+                                    marketingCarrierLogo = itinerary.legs[0].carrier?.marketing?.logoUrl,
+                                    operatingCarrier = itinerary.legs[0].carrier?.operating?.name,
+                                    operatingCarrierLogo = itinerary.legs[0].carrier?.operating?.logoUrl,
+                                    durationOutbound = itinerary.legs[0].durationInMinutes,
+                                    durationInbound = itinerary.legs[1].durationInMinutes,
+                                    stopCountOutbound = itinerary.legs[0].stopCount,
+                                    stopCountInbound = itinerary.legs[1].stopCount,
+                                    outboundDepartureTime = itinerary.legs[0].departure,
+                                    outboundArrivalTime = itinerary.legs[0].arrival,
+                                    inboundDepartureTime = itinerary.legs[1].departure,
+                                    inboundArrivalTime = itinerary.legs[1].arrival
+                                )
+                            }
                         return@withContext itineraries
                     }
                 }
@@ -192,7 +196,8 @@ class ApiClient {
     suspend fun getFlightDetails(flightsDetailsSearch: FlightDetailsSearch): ItineraryDetails? {
         return withContext(Dispatchers.IO) {
             try {
-                val call: Call<FlightDetailsResponse> = apiService.getFlightDetails(flightsDetailsSearch)
+                val call: Call<FlightDetailsResponse> =
+                    apiService.getFlightDetails(flightsDetailsSearch)
                 val response = call.execute()
 
                 if (response.isSuccessful) {
@@ -314,16 +319,17 @@ class ApiClient {
     }
 
 
-    suspend fun getAttractions(attractionsSearch: AttractionsSearch) : MutableList<Attraction> {
+    suspend fun getAttractions(attractionsSearch: AttractionsSearch): MutableList<Attraction> {
         return withContext(Dispatchers.IO) {
             try {
-                val call: Call<AttractionsResponse> = apiService.getAllAttractions(attractionsSearch)
+                val call: Call<AttractionsResponse> =
+                    apiService.getAllAttractions(attractionsSearch)
                 val response = call.execute()
 
                 if (response.isSuccessful) {
                     val retrievedData = response.body()
                     if (retrievedData != null) {
-                        var attractions = retrievedData.data.map { attraction : Attractions ->
+                        var attractions = retrievedData.data.map { attraction: Attractions ->
                             Attraction(
                                 name = attraction.name,
                                 locationId = attraction.location_id,

@@ -1,6 +1,6 @@
 package com.michael.viatoapp.model.response
 
-class Hotel (
+class Hotel(
     val hotelName: String,
     val gradeNumber: String,
     val price: String,

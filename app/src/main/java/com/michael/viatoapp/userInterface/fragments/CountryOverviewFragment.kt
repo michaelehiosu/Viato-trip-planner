@@ -16,21 +16,21 @@ import com.michael.viatoapp.databinding.ActivityCountryOverviewBinding
 import com.michael.viatoapp.model.data.SearchData
 import com.michael.viatoapp.model.data.flights.City
 import com.michael.viatoapp.model.data.flights.Country
-import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
 import com.michael.viatoapp.model.request.flights.FlightCitiesSearch
+import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
 import com.michael.viatoapp.userInterface.adapter.CityAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class CountryOverviewFragment : Fragment() {
-    private lateinit var binding : ActivityCountryOverviewBinding
+    private lateinit var binding: ActivityCountryOverviewBinding
     private lateinit var apiClient: ApiClient
     private lateinit var apiHelper: ApiHelper
-    private lateinit var allCities : List<City>
+    private lateinit var allCities: List<City>
     private var country: Country? = null
-    private var countrySearch : FlightCountriesSearch? = null
-    private var searchData: SearchData? =null
+    private var countrySearch: FlightCountriesSearch? = null
+    private var searchData: SearchData? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,14 +49,14 @@ class CountryOverviewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         apiClient = ApiClient()
         apiHelper = ApiHelper()
+    }
 
-        Log.d("isHotel", "${searchData?.isHotelPressed}")
-        Log.d("isFlight", "${searchData?.isFlightPressed}")
-        var citiesSearch : FlightCitiesSearch? = null
+    override fun onResume() {
+        super.onResume()
 
-        Log.d("CountryOverview", "$searchData")
+        var citiesSearch: FlightCitiesSearch? = null
 
-        if(countrySearch != null && country != null) {
+        if (countrySearch != null && country != null) {
             citiesSearch = FlightCitiesSearch(
                 fromEntityId = countrySearch!!.fromEntityId,
                 skyId = country!!.skyId,
@@ -67,17 +67,11 @@ class CountryOverviewFragment : Fragment() {
             )
         }
 
-        if(citiesSearch != null) {
+        if (citiesSearch != null) {
             fetchCities(citiesSearch)
         }
 
-
-        Glide.with(this)
-            .load(country?.imageUrl)
-            .placeholder(R.drawable.brazil) // Optional placeholder
-            .into(binding.countryImage)
-
-        binding.countryTextview.text = country?.name
+        updateTheTopSectionUi()
     }
 
     private fun fetchCities(citiesSearch: FlightCitiesSearch) {
@@ -88,7 +82,7 @@ class CountryOverviewFragment : Fragment() {
 
                 withContext(Dispatchers.Main) {
                     allCities = cities
-                    bind(cities)
+                    bindCitiesToAdapter(cities)
                 }
             } catch (e: Exception) {
                 Log.e("error", "$e")
@@ -96,7 +90,16 @@ class CountryOverviewFragment : Fragment() {
         }
     }
 
-    private fun bind(cities: List<City>) {
+    private fun updateTheTopSectionUi() {
+        Glide.with(this)
+            .load(country?.imageUrl)
+            .placeholder(R.drawable.brazil) // Optional placeholder
+            .into(binding.countryImage)
+
+        binding.countryTextview.text = country?.name
+    }
+
+    private fun bindCitiesToAdapter(cities: List<City>) {
         if (cities.isNotEmpty()) {
             val cityAdapter = CityAdapter(cities, countrySearch!!, searchData!!)
             binding.recyclerViewActivities.adapter = cityAdapter

@@ -1,6 +1,6 @@
 package com.michael.viatoapp.model.response
 
-class Flight (
+class Flight(
     val depAirport: String,
     val arrAirport: String,
     val price: String,

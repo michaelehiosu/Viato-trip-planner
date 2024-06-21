@@ -38,17 +38,17 @@ class CityOverviewFragment : Fragment() {
     private lateinit var flightAdapter: FlightAdapter
     private lateinit var hotelAdapter: HotelAdapter
     private var city: City? = null
-    private var countrySearch : FlightCountriesSearch? = null
+    private var countrySearch: FlightCountriesSearch? = null
     private val apiClient = ApiClient()
     private val apiHelper = ApiHelper()
-    private var cheapestItinerary : Itinerary? = null
-    private var cheapestHotel : Hotel? = null
-    private var selectedItinerary : Itinerary? = null
-    private var selectedHotel : Hotel? = null
-    private var cheapestSelected : Boolean = true
-    private var onlyFlightSelected : Boolean = false
-    private var onlyHotelSelected : Boolean = false
-    private var searchData: SearchData? =null
+    private var cheapestItinerary: Itinerary? = null
+    private var cheapestHotel: Hotel? = null
+    private var selectedItinerary: Itinerary? = null
+    private var selectedHotel: Hotel? = null
+    private var cheapestSelected: Boolean = true
+    private var onlyFlightSelected: Boolean = false
+    private var onlyHotelSelected: Boolean = false
+    private var searchData: SearchData? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,7 +74,7 @@ class CityOverviewFragment : Fragment() {
         flightAdapter = FlightAdapter(mutableListOf()) { itinerary ->
             handleFlightSelection(itinerary)
         }
-        hotelAdapter = HotelAdapter(mutableListOf()){ hotel ->
+        hotelAdapter = HotelAdapter(mutableListOf()) { hotel ->
             handleHotelSelection(hotel)
         }
 
@@ -90,7 +90,7 @@ class CityOverviewFragment : Fragment() {
             toggleCheapestSelected()
         }
 
-        if(city != null && countrySearch != null) {
+        if (city != null && countrySearch != null) {
             fetchFlightsAndHotels()
         }
 
@@ -147,18 +147,21 @@ class CityOverviewFragment : Fragment() {
                 val hotelList: MutableList<Hotel> = apiClient.getHotels(hotelsSearch)
 
                 val isbothFlightAndHotel = searchData?.isHotelPressed == searchData?.isFlightPressed
-                val onlyFlight = searchData?.isFlightPressed == true && searchData?.isHotelPressed == false
-                val onlyHotel = searchData?.isFlightPressed == false && searchData?.isHotelPressed == true
+                val onlyFlight =
+                    searchData?.isFlightPressed == true && searchData?.isHotelPressed == false
+                val onlyHotel =
+                    searchData?.isFlightPressed == false && searchData?.isHotelPressed == true
 
-                if(isbothFlightAndHotel) {
-                    val flightbudget = searchData?.budget!!.toInt() * 60 /100
+                if (isbothFlightAndHotel) {
+                    val flightbudget = searchData?.budget!!.toInt() * 60 / 100
                     val hotelBudget = searchData?.budget!!.toInt() * 40 / 100
 
-                    cheapestItinerary  = apiHelper.getCheapestItinerary(flightList, flightbudget)
-                    cheapestHotel = apiHelper.getCheapestHotel(hotelList, countrySearch!!, hotelBudget)
+                    cheapestItinerary = apiHelper.getCheapestItinerary(flightList, flightbudget)
+                    cheapestHotel =
+                        apiHelper.getCheapestHotel(hotelList, countrySearch!!, hotelBudget)
 
 
-                    if (cheapestHotel != null && cheapestItinerary !=null) {
+                    if (cheapestHotel != null && cheapestItinerary != null) {
                         setSelectedHotel(cheapestHotel)
                         setSelectedItinerary(cheapestItinerary)
 
@@ -178,16 +181,16 @@ class CityOverviewFragment : Fragment() {
                         deactivateProgressBar()
                     }
 
-                    if(cheapestHotel == null && cheapestItinerary == null) {
+                    if (cheapestHotel == null && cheapestItinerary == null) {
                         noItinerary()
                     }
 
 
                 } else if (onlyFlight) {
                     val budget = searchData?.budget!!.toInt()
-                    cheapestItinerary  = apiHelper.getCheapestItinerary(flightList,budget)
+                    cheapestItinerary = apiHelper.getCheapestItinerary(flightList, budget)
 
-                    if(cheapestItinerary != null) {
+                    if (cheapestItinerary != null) {
                         setSelectedItinerary(cheapestItinerary)
                         updateCheapestFlights(cheapestItinerary, true)
 
@@ -209,7 +212,7 @@ class CityOverviewFragment : Fragment() {
                     val budget = searchData?.budget!!.toInt()
                     cheapestHotel = apiHelper.getCheapestHotel(hotelList, countrySearch!!, budget)
 
-                    if(cheapestHotel != null) {
+                    if (cheapestHotel != null) {
                         setSelectedHotel(cheapestHotel)
                         updateCheapestHotel(null, cheapestHotel)
 
@@ -239,9 +242,10 @@ class CityOverviewFragment : Fragment() {
         binding.alternativeHotels.visibility = View.GONE
         binding.alternativeFlights.visibility = View.GONE
     }
+
     private fun updateFlightsRecyclerView(flights: MutableList<Itinerary>) {
         flights.map {
-            binding.recyclerViewFlights.adapter = FlightAdapter(flights){ itinerary ->
+            binding.recyclerViewFlights.adapter = FlightAdapter(flights) { itinerary ->
                 handleFlightSelection(itinerary)
             }
         }
@@ -269,7 +273,7 @@ class CityOverviewFragment : Fragment() {
         binding.flightLength.text = hoursMinutes
         binding.layovers.text = layover
 
-        if(onlyFlight == true) {
+        if (onlyFlight == true) {
             binding.cheapestTotal.text = "€" + itinerary?.rawPrice.toString()
         }
 
@@ -277,9 +281,9 @@ class CityOverviewFragment : Fragment() {
 
     private fun updateCheapestHotel(itinerary: Itinerary?, hotel: Hotel?) {
         var duration = getNumberOfDays(countrySearch!!)
-        var totalPrice : Double? = hotel?.priceRaw?.toDouble()?.times(duration)
+        var totalPrice: Double? = hotel?.priceRaw?.toDouble()?.times(duration)
 
-        if(itinerary != null) {
+        if (itinerary != null) {
             totalPrice = itinerary?.rawPrice!! + hotel?.priceRaw!! * duration
         }
         binding.hotelName.text = hotel?.name
@@ -290,7 +294,7 @@ class CityOverviewFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun convertDate(date : String?) : String {
+    private fun convertDate(date: String?): String {
         val dateTime = LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME)
         val formatter = DateTimeFormatter.ofPattern("h:mma - MMM dd")
         return dateTime.format(formatter)
@@ -302,8 +306,8 @@ class CityOverviewFragment : Fragment() {
         return "${hours}h ${minutes}m"
     }
 
-    private fun getLayoverText(stops : Int?) : String {
-        var string : String = ""
+    private fun getLayoverText(stops: Int?): String {
+        var string: String = ""
         if (stops!! > 0) {
             string = "$stops layovers"
         } else {
@@ -368,14 +372,19 @@ class CityOverviewFragment : Fragment() {
         }
     }
 
-    private fun resetBackgroundsInRecyclerView(recyclerView: RecyclerView, recyclerViewHotel: RecyclerView) {
+    private fun resetBackgroundsInRecyclerView(
+        recyclerView: RecyclerView,
+        recyclerViewHotel: RecyclerView
+    ) {
         for (i in 0 until recyclerView.childCount) {
-            val viewHolder = recyclerView.findViewHolderForAdapterPosition(i) as? FlightAdapter.ViewHolder
+            val viewHolder =
+                recyclerView.findViewHolderForAdapterPosition(i) as? FlightAdapter.ViewHolder
             viewHolder?.linearView?.background = null
         }
 
         for (i in 0 until recyclerViewHotel.childCount) {
-            val viewHolder = recyclerViewHotel.findViewHolderForAdapterPosition(i) as? HotelAdapter.HotelViewHolder
+            val viewHolder =
+                recyclerViewHotel.findViewHolderForAdapterPosition(i) as? HotelAdapter.HotelViewHolder
             viewHolder?.linearView?.background = null
         }
 
@@ -405,7 +414,7 @@ class CityOverviewFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getNumberOfDays(countrySearch: FlightCountriesSearch) : Int {
+    fun getNumberOfDays(countrySearch: FlightCountriesSearch): Int {
         val formatter = DateTimeFormatter.ISO_DATE
         val departLocalDate = LocalDate.parse(countrySearch.departDate, formatter)
         val returnLocalDate = LocalDate.parse(countrySearch.returnDate, formatter)

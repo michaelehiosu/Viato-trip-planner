@@ -9,25 +9,29 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.michael.viatoapp.R
-import com.michael.viatoapp.model.data.flights.Itinerary
 import com.michael.viatoapp.model.data.stays.Hotel
 import java.io.IOException
 import java.util.Locale
 
-class HotelAdapter(private val hotelList: MutableList<Hotel>, private val onItemSelected: (Hotel?) -> Unit ) : RecyclerView.Adapter<HotelAdapter.HotelViewHolder>() {
+class HotelAdapter(
+    private val hotelList: MutableList<Hotel>,
+    private val onItemSelected: (Hotel?) -> Unit
+) : RecyclerView.Adapter<HotelAdapter.HotelViewHolder>() {
 
     private var selectedItemPosition: Int = RecyclerView.NO_POSITION
+
     class HotelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val hotelName: TextView = itemView.findViewById(R.id.hotel_name)
         val address: TextView = itemView.findViewById(R.id.address)
         val gradeNumber: TextView = itemView.findViewById(R.id.grade_number)
         val gradeWord: TextView = itemView.findViewById(R.id.grade_word)
         val price: TextView = itemView.findViewById(R.id.price)
-        val linearView : View = itemView.findViewById(R.id.ll_hotels)
+        val linearView: View = itemView.findViewById(R.id.ll_hotels)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HotelViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.hotel_recycler, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.hotel_recycler, parent, false)
         return HotelViewHolder(itemView)
     }
 

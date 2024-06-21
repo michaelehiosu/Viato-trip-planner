@@ -9,14 +9,14 @@
 
     <item
         android:id="@+id/navigation_profile"
-        android:iconTint="#806F56"
         android:icon="@drawable/profile_navbar_button"
+        android:iconTint="#806F56"
         android:title="@string/profile" />
 
     <item
         android:id="@+id/navigation_near_me"
-        android:iconTint="#806F56"
         android:icon="@drawable/near_me_navbar_button"
+        android:iconTint="#806F56"
         android:title="@string/near_me" />
 
 </menu>
