@@ -59,12 +59,19 @@ class NearbyFragment : Fragment(), OnMapReadyCallback {
         mapView.onCreate(savedInstanceState)
         mapView.onResume()
         mapView.getMapAsync(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
         // Get current location and fetch attractions
         getLastKnownLocation()
+        setButtonClickListener()
+    }
 
+    private fun setButtonClickListener() {
         val button5km = binding.button5km
         val button10km = binding.button10km
         val button15km = binding.button15km

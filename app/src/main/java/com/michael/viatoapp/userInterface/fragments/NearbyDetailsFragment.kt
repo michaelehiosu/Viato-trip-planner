@@ -102,7 +102,6 @@ class NearbyDetailsFragment : Fragment(), OnMapReadyCallback {
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
             location?.let {
                 val currentLatLng = LatLng(it.latitude, it.longitude)
-//                val anotherLocation = LatLng(52.7798, 6.9208) // Another location
                 val anotherLocation = LatLng(attraction?.latitude?.toDouble()!!, attraction?.longitude?.toDouble()!!)
 
                 mMap.addMarker(MarkerOptions().position(currentLatLng).title("Your Location"))
@@ -115,14 +114,12 @@ class NearbyDetailsFragment : Fragment(), OnMapReadyCallback {
                 boundsBuilder.include(currentLatLng)
                 boundsBuilder.include(anotherLocation)
                 val bounds = boundsBuilder.build()
-                val padding = 100 // Padding in pixels
+                val padding = 100
                 val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding)
                 mMap.moveCamera(cameraUpdate)
 
-                // Add a line connecting the two markers
                 mMap.addPolyline(PolylineOptions().add(currentLatLng, anotherLocation).color(Color.BLUE))
 
-                // Calculate the distance between the two locations
                 val results = FloatArray(1)
                 Location.distanceBetween(
                     it.latitude, it.longitude,
@@ -168,7 +165,7 @@ class NearbyDetailsFragment : Fragment(), OnMapReadyCallback {
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
             location?.let {
                 val currentLatLng = LatLng(it.latitude, it.longitude)
-                val anotherLocation = LatLng(-22.9707, -43.1824) // Another location
+                val anotherLocation = LatLng(-22.9707, -43.1824)
 
                 mMap.addMarker(MarkerOptions().position(currentLatLng).title("Your Location"))
                 mMap.addMarker(
@@ -180,14 +177,12 @@ class NearbyDetailsFragment : Fragment(), OnMapReadyCallback {
                 boundsBuilder.include(currentLatLng)
                 boundsBuilder.include(anotherLocation)
                 val bounds = boundsBuilder.build()
-                val padding = 100 // Padding in pixels
+                val padding = 100
                 val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding)
                 mMap.moveCamera(cameraUpdate)
 
-                // Add a line connecting the two markers
                 mMap.addPolyline(PolylineOptions().add(currentLatLng, anotherLocation).color(Color.BLUE))
 
-                // Calculate the distance between the two locations
                 val results = FloatArray(1)
                 Location.distanceBetween(
                     it.latitude, it.longitude,
