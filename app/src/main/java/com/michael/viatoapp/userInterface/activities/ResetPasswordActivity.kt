@@ -17,29 +17,26 @@ class ResetPasswordActivity : AppCompatActivity() {
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
 
-        setCickListeners()
-    }
-
-    private fun setCickListeners() {
         binding.sendButton.setOnClickListener {
-            sendResetLink()
-        }
-    }
+            val email = binding.emailEditText.text.toString()
 
-    private fun sendResetLink() {
-        val email = binding.emailEditText.text.toString()
-
-        auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Toast.makeText(this, "Reset email sent", Toast.LENGTH_LONG).show()
-
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "Failed to send reset email", Toast.LENGTH_LONG).show()
+            if (email.isEmpty()) {
+                Toast.makeText(this, "Provide an email you want to reset", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
-        }.addOnFailureListener { exception ->
-            Toast.makeText(this, "Error Occurred: ${exception.message}", Toast.LENGTH_LONG).show()
+
+            auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Reset email sent", Toast.LENGTH_LONG).show()
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, "Failed to send reset email", Toast.LENGTH_LONG).show()
+                }
+            }.addOnFailureListener { exception ->
+                Toast.makeText(this, "Error Occurred: ${exception.message}", Toast.LENGTH_LONG).show()
+            }
         }
     }
+
 }
