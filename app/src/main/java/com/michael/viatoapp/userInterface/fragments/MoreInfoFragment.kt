@@ -58,11 +58,22 @@ class MoreInfoFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
-        fetchFlightDetails()
-        fetchHotelPrices()
+    override fun onResume() {
+        super.onResume()
 
-        totalPrice = "€" + ((selectedItinerary?.rawPrice?.toInt() ?: 0) + selectedHotel?.priceRaw!!).toString()
+        if(selectedItinerary != null) {
+            fetchFlightDetails()
+        }
+
+        if(selectedHotel != null) {
+            fetchHotelPrices()
+        }
+
+        manageHotelAndFlightView()
+
+        totalPrice = getTotalPrice()
         binding.tvCityName.setText(cityInfo?.name)
         binding.totalPrice.setText(totalPrice.toString())
 
@@ -70,6 +81,30 @@ class MoreInfoFragment : Fragment() {
             .load(cityInfo?.imageUrl)
             .placeholder(R.drawable.rio_pic)
             .into(binding.cityPic)
+    }
+
+    private fun getTotalPrice() : String {
+        if(selectedItinerary != null && selectedHotel != null) {
+            return  "€" + ((selectedItinerary?.rawPrice?.toInt() ?: 0) + selectedHotel?.priceRaw!!).toString();
+        } else if (selectedItinerary == null && selectedHotel != null) {
+            return "€" + (selectedHotel?.priceRaw!!).toString()
+        } else if (selectedItinerary != null && selectedHotel == null) {
+           return "€" + (selectedItinerary?.rawPrice?.toInt() ?: 0)
+        } else {
+            return ""
+        }
+    }
+
+    private fun manageHotelAndFlightView() {
+        if(selectedItinerary == null && selectedHotel != null) {
+            binding.llFlightInfo.visibility = View.GONE
+            binding.tvFlightInfo.visibility = View.GONE
+            binding.tvTicketLink.visibility = View.GONE
+        } else if (selectedHotel == null && selectedItinerary != null) {
+            binding.llHotelInfo.visibility = View.GONE
+            binding.tvHotelInfo.visibility= View.GONE
+            binding.tvStayLink.visibility = View.GONE
+        }
     }
 
     @SuppressLint("SetTextI18n")
