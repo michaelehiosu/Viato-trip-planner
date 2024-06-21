@@ -14,6 +14,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.DatePicker
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -58,11 +59,8 @@ class TripsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = ActivityTripsBinding.inflate(inflater, container, false)
-
-        // Initialize Firebase Auth and Firestore
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
-
         return binding.root
     }
 
@@ -74,117 +72,127 @@ class TripsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        isFlightPressed = false
-        isHotelPressed = false
-
+        setOptionButtonDefault()
+        setRecyclerViewLayoutAndDefaultText()
+        setOnClickListeners()
+        createSpinnerItems()
+        fetchAirports()
+    }
+    private fun setRecyclerViewLayoutAndDefaultText() {
         binding.recyclerViewActivities.layoutManager = LinearLayoutManager(requireContext())
         binding.textActivity.text = "Suggested Countries"
+    }
 
-        // Start Date Picker
+    private fun setOnClickListeners() {
         binding.startDatePickerButton.setOnClickListener {
             showDatePicker(binding.startDatePickerButton, true)
         }
 
-        // End Date Picker
         binding.endDatePickerButton.setOnClickListener {
             showDatePicker(binding.endDatePickerButton, false)
         }
 
         binding.airplane.setOnClickListener {
-            isFlightPressed = !isFlightPressed
-            Log.d("flightchecked", "$isFlightPressed")
-            val airplane = binding.airplane
-            toggleButtonPressed(isFlightPressed, airplane)
-            // Toggle the state
+            setAirplaneListener()
         }
 
         binding.hotel.setOnClickListener {
-            isHotelPressed = !isHotelPressed
-            Log.d("hotelchecked", "$isHotelPressed")
-            val hotel = binding.hotel
-            toggleButtonPressed(isHotelPressed, hotel)
-
+            setHotelListener()
         }
 
         binding.search.setOnClickListener {
-            hideKeyboard()
-            val airportName = binding.airportAutoCompleteTextView.text.toString() ?: return@setOnClickListener
-            var entityId: String? = null
+            setSearchListener()
+        }
+    }
 
-            for (airport in allAirports) {
-                if (airport.name == airportName) {
-                    entityId = airport.iata
-                    break
-                }
-            }
-            if (entityId != null &&
-                binding.budget.text != null &&
-                binding.spinner.selectedItem.toString() != "Currency" &&
-                binding.secondSpinner.selectedItem != "Continent" &&
-                selectedStartDate != null &&
-                selectedEndDate != null) {
+    private fun setAirplaneListener() {
+        isFlightPressed = !isFlightPressed
+        Log.d("flightchecked", "$isFlightPressed")
+        val airplane = binding.airplane
+        toggleButtonPressed(isFlightPressed, airplane)
+    }
 
-                val countrySearch = FlightCountriesSearch(
-                    fromEntityId = entityId,
-                    departDate = selectedStartDate.toString(),
-                    returnDate = selectedEndDate.toString(),
-                    currency = binding.spinner.selectedItem.toString(),
-                    dummy = true
-                )
-                fetchCountries(countrySearch)
+    private fun setHotelListener() {
+        isHotelPressed = !isHotelPressed
+        Log.d("hotelchecked", "$isHotelPressed")
+        val hotel = binding.hotel
+        toggleButtonPressed(isHotelPressed, hotel)
+    }
 
-            } else {
-                Toast.makeText(requireContext(), "Please ensure all fields are filled correctly", Toast.LENGTH_SHORT).show()
+    private fun setSearchListener() {
+        hideKeyboard()
+        val airportName = binding.airportAutoCompleteTextView.text.toString()
+        var entityId: String? = getEntityIdFromAirport(airportName)
+
+        searchForCountries(entityId)
+    }
+
+    private fun getEntityIdFromAirport(airportName : String) : String? {
+        var airportIata : String? = null
+        for (airport in allAirports) {
+            if (airport.name == airportName) {
+                airportIata = airport.iata
+                break
             }
         }
+        return airportIata
+    }
 
+    private fun searchForCountries(entityId : String?) {
+        if (entityId != null &&
+            binding.budget.text != null &&
+            binding.spinner.selectedItem.toString() != "Currency" &&
+            binding.secondSpinner.selectedItem != "Continent" &&
+            selectedStartDate != null &&
+            selectedEndDate != null) {
 
-        // Spinner
+            val countrySearch = FlightCountriesSearch(
+                fromEntityId = entityId,
+                departDate = selectedStartDate.toString(),
+                returnDate = selectedEndDate.toString(),
+                currency = binding.spinner.selectedItem.toString(),
+                dummy = true
+            )
+            fetchCountries(countrySearch)
+
+        } else {
+            Toast.makeText(requireContext(), "Please ensure all fields are filled correctly", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun createSpinnerItems() {
         val filterItems = arrayOf("EUR", "USD")
+        createASpinner(filterItems, binding.spinner)
+        val continentItems = arrayOf("Europe", "Africa", "Asia", "Oceania", "North America", "South America")
+        createASpinner(continentItems, binding.secondSpinner)
+    }
+
+    private fun createASpinner(filterItem : Array<String>, view: Spinner) {
         val filterAdapter = ArrayAdapter(
-            requireContext(), R.layout.spinner_item, filterItems
+            requireContext(), R.layout.spinner_item, filterItem
         )
         filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinner.adapter = filterAdapter
+        view.adapter = filterAdapter
 
-        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        view.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                filterItems
+                filterItem
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 // Do nothing
             }
         }
+    }
 
-        val continentItems = arrayOf("Europe", "Africa", "Asia", "Oceania", "North America", "South America")
-        val continentAdapter = ArrayAdapter(
-            requireContext(), R.layout.spinner_item, continentItems
-        )
-        continentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        binding.secondSpinner.adapter = continentAdapter
-        binding.secondSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                continentItems
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do nothing
-            }
-        }
-
-        fetchAirports()
+    private fun setOptionButtonDefault() {
+        isFlightPressed = false
+        isHotelPressed = false
     }
 
     private fun hideKeyboard() {
@@ -249,31 +257,12 @@ class TripsFragment : Fragment() {
     private fun fetchCountries(countriesSearch: FlightCountriesSearch) {
         val budget = binding.budget.text.toString()
         val continent = binding.secondSpinner.selectedItem.toString()
-        activateProgressBar()
         val searchData = SearchData(
             budget = budget,
             isHotelPressed = isHotelPressed,
             isFlightPressed = isFlightPressed
         )
-
-        lifecycleScope.launch(Dispatchers.IO) {
-            try {
-                val countries = apiClient.getAllCountries(countriesSearch)
-                Log.d("Countries", "$countries")
-
-                withContext(Dispatchers.Main) {
-                    allCountries = countries
-                    val filterCountries = apiHelper.filterCountry(countries, budget, continent)
-                    Log.d("FilteredCountries", "$filterCountries")
-                    updateCountriesRecyclerView(filterCountries, countriesSearch, searchData)
-
-                    binding.textActivity.text = "Resulted Countries"
-                }
-            } catch (e: Exception) {
-                // Handle any exceptions, e.g., network errors
-                Log.e("fetchAirport", "Error: $e")
-            }
-        }
+        retrieveAndDisplayCountriesFromAPI(countriesSearch, searchData, budget, continent)
     }
 
     private fun updateAutoCompleteTextViewWithAirports(airports: List<Airport>) {
@@ -305,27 +294,14 @@ class TripsFragment : Fragment() {
     private fun fetchStoredCountries(destination: String, currency: String, airport: String) {
         val budget = "1500"
         val continent = destination
-
         val airportName = airport
-        var entityId: String? = null
+        var entityId: String? = getEntityIdFromAirport(airportName)
 
-        for (airport in allAirports) {
-            if (airport.name == airportName) {
-                entityId = airport.iata
-                break
-            }
-        }
-
-        // Calculate dates
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.WEEK_OF_YEAR, 2)
-        val departDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
-
-        calendar.add(Calendar.WEEK_OF_YEAR, 1)
-        val returnDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
+        val departDate = fetchDateFromToday(1)
+        val returnDate = fetchDateFromToday(2)
 
         val countrySearch = FlightCountriesSearch(
-            fromEntityId = entityId.toString(), // Provide default values
+            fromEntityId = entityId.toString(),
             departDate = departDate,
             returnDate = returnDate,
             currency = currency,
@@ -338,6 +314,10 @@ class TripsFragment : Fragment() {
             isFlightPressed = isFlightPressed
         )
 
+        retrieveAndDisplayCountriesFromAPI(countrySearch, searchData, budget, continent)
+    }
+
+    private fun retrieveAndDisplayCountriesFromAPI(countrySearch: FlightCountriesSearch, searchData: SearchData, budget : String, continent : String) {
         activateProgressBar()
         lifecycleScope.launch(Dispatchers.IO) {
             try {
@@ -353,6 +333,12 @@ class TripsFragment : Fragment() {
                 Log.e("fetchAirport", "Error: $e")
             }
         }
+    }
+
+    private fun fetchDateFromToday(numberOfWeek : Int) : String {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.WEEK_OF_YEAR, numberOfWeek)
+        return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
     }
 
 
