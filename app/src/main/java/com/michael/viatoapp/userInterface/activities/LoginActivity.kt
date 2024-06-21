@@ -28,9 +28,12 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
-        Log.d("Lifecycle", "loginActivity" + " onCreate - ");
 
+        navigateToHomeIfLoginActive()
+        setOnClickListeners()
+    }
 
+    private fun navigateToHomeIfLoginActive() {
         val uid = myPreferences.getString("uid", null)
         if (uid != null) {
             val intent = Intent(this, MainNavigationActivity::class.java)
@@ -38,8 +41,6 @@ class LoginActivity : AppCompatActivity() {
             finish()
             return
         }
-
-        setOnClickListeners()
     }
 
     private fun setOnClickListeners() {
