@@ -1,0 +1,11 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ViatoApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:colorPrimaryDark">@color/orange</item>
+        <item name="colorPrimaryDark">@color/orange</item>
+        <item name="colorPrimary">@color/light_orange</item>
+        <item name="colorAccent">@color/orange</item>
+    </style>
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+    <font
+        android:font="@font/athitibold"
+        android:fontStyle="normal"
+        android:fontWeight="800" />
+
+    <font
+        android:font="@font/athitisemibold"
+        android:fontStyle="normal"
+        android:fontWeight="600" />
+
+    <font
+        android:font="@font/athitimedium"
+        android:fontStyle="normal"
+        android:fontWeight="500" />
+
+    <font
+        android:font="@font/athitiregular"
+        android:fontStyle="normal"
+        android:fontWeight="400" />
+
+    <font
+        android:font="@font/athitilight"
+        android:fontStyle="normal"
+        android:fontWeight="300" />
+
+    <font
+        android:font="@font/athitiextralight"
+        android:fontStyle="normal"
+        android:fontWeight="200" />
+</font-family>
