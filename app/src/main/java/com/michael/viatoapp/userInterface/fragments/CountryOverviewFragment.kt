@@ -49,12 +49,12 @@ class CountryOverviewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         apiClient = ApiClient()
         apiHelper = ApiHelper()
+    }
 
-        Log.d("isHotel", "${searchData?.isHotelPressed}")
-        Log.d("isFlight", "${searchData?.isFlightPressed}")
+    override fun onResume() {
+        super.onResume()
+
         var citiesSearch : FlightCitiesSearch? = null
-
-        Log.d("CountryOverview", "$searchData")
 
         if(countrySearch != null && country != null) {
             citiesSearch = FlightCitiesSearch(
@@ -71,13 +71,7 @@ class CountryOverviewFragment : Fragment() {
             fetchCities(citiesSearch)
         }
 
-
-        Glide.with(this)
-            .load(country?.imageUrl)
-            .placeholder(R.drawable.brazil) // Optional placeholder
-            .into(binding.countryImage)
-
-        binding.countryTextview.text = country?.name
+        updateTheTopSectionUi()
     }
 
     private fun fetchCities(citiesSearch: FlightCitiesSearch) {
@@ -88,7 +82,7 @@ class CountryOverviewFragment : Fragment() {
 
                 withContext(Dispatchers.Main) {
                     allCities = cities
-                    bind(cities)
+                    bindCitiesToAdapter(cities)
                 }
             } catch (e: Exception) {
                 Log.e("error", "$e")
@@ -96,7 +90,15 @@ class CountryOverviewFragment : Fragment() {
         }
     }
 
-    private fun bind(cities: List<City>) {
+    private fun updateTheTopSectionUi() {
+        Glide.with(this)
+            .load(country?.imageUrl)
+            .placeholder(R.drawable.brazil) // Optional placeholder
+            .into(binding.countryImage)
+
+        binding.countryTextview.text = country?.name
+    }
+    private fun bindCitiesToAdapter(cities: List<City>) {
         if (cities.isNotEmpty()) {
             val cityAdapter = CityAdapter(cities, countrySearch!!, searchData!!)
             binding.recyclerViewActivities.adapter = cityAdapter
