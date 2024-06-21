@@ -5,13 +5,15 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.util.Linkify
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.michael.viatoapp.R
 import com.michael.viatoapp.api.ApiClient
 import com.michael.viatoapp.databinding.ActivityMoreInfoBinding
@@ -26,8 +28,6 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
-import android.text.util.Linkify
-import com.bumptech.glide.Glide
 
 class MoreInfoFragment : Fragment() {
     private lateinit var binding: ActivityMoreInfoBinding
@@ -35,12 +35,12 @@ class MoreInfoFragment : Fragment() {
     private var selectedItinerary: Itinerary? = null
     private var cityInfo: City? = null
     private val apiClient = ApiClient()
-    private var departure : Map<String, String>? = null
-    private var arrival : Map<String, String>? = null
-    private var inboundDeparture : Map<String, String>? = null
-    private var inboundArrival : Map<String, String>? = null
-    private var flightPrice : String? = null
-    private var totalPrice : String? = null
+    private var departure: Map<String, String>? = null
+    private var arrival: Map<String, String>? = null
+    private var inboundDeparture: Map<String, String>? = null
+    private var inboundArrival: Map<String, String>? = null
+    private var flightPrice: String? = null
+    private var totalPrice: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,6 +56,7 @@ class MoreInfoFragment : Fragment() {
         binding = ActivityMoreInfoBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
@@ -63,11 +64,11 @@ class MoreInfoFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        if(selectedItinerary != null) {
+        if (selectedItinerary != null) {
             fetchFlightDetails()
         }
 
-        if(selectedHotel != null) {
+        if (selectedHotel != null) {
             fetchHotelPrices()
         }
 
@@ -83,26 +84,27 @@ class MoreInfoFragment : Fragment() {
             .into(binding.cityPic)
     }
 
-    private fun getTotalPrice() : String {
-        if(selectedItinerary != null && selectedHotel != null) {
-            return  "€" + ((selectedItinerary?.rawPrice?.toInt() ?: 0) + selectedHotel?.priceRaw!!).toString();
+    private fun getTotalPrice(): String {
+        if (selectedItinerary != null && selectedHotel != null) {
+            return "€" + ((selectedItinerary?.rawPrice?.toInt()
+                ?: 0) + selectedHotel?.priceRaw!!).toString();
         } else if (selectedItinerary == null && selectedHotel != null) {
             return "€" + (selectedHotel?.priceRaw!!).toString()
         } else if (selectedItinerary != null && selectedHotel == null) {
-           return "€" + (selectedItinerary?.rawPrice?.toInt() ?: 0)
+            return "€" + (selectedItinerary?.rawPrice?.toInt() ?: 0)
         } else {
             return ""
         }
     }
 
     private fun manageHotelAndFlightView() {
-        if(selectedItinerary == null && selectedHotel != null) {
+        if (selectedItinerary == null && selectedHotel != null) {
             binding.llFlightInfo.visibility = View.GONE
             binding.tvFlightInfo.visibility = View.GONE
             binding.tvTicketLink.visibility = View.GONE
         } else if (selectedHotel == null && selectedItinerary != null) {
             binding.llHotelInfo.visibility = View.GONE
-            binding.tvHotelInfo.visibility= View.GONE
+            binding.tvHotelInfo.visibility = View.GONE
             binding.tvStayLink.visibility = View.GONE
         }
     }
@@ -125,13 +127,21 @@ class MoreInfoFragment : Fragment() {
         binding.arrDate.setText(selectedItinerary?.destinationId + " - " + arrival?.get("date"))
 
         binding.depReturnTime.setText(inboundDeparture?.get("time"))
-        binding.depReturnDate.setText(selectedItinerary?.destinationId + " - " + inboundDeparture?.get("date"))
+        binding.depReturnDate.setText(
+            selectedItinerary?.destinationId + " - " + inboundDeparture?.get(
+                "date"
+            )
+        )
 
         binding.arrReturnTime.setText(inboundArrival?.get("time"))
         binding.arrReturnDate.setText(selectedItinerary?.originId + " - " + inboundArrival?.get("date"))
 
         binding.flightLenght.setText(selectedItinerary?.durationOutbound?.let { formatDuration(it) })
-        binding.returnFlightLenght.setText(selectedItinerary?.durationInbound?.let { formatDuration(it) })
+        binding.returnFlightLenght.setText(selectedItinerary?.durationInbound?.let {
+            formatDuration(
+                it
+            )
+        })
 
         val bookingUrl = flightDetails?.bookingUrl
         binding.tvTicketLink.text = "Buy your tickets here"
@@ -183,7 +193,8 @@ class MoreInfoFragment : Fragment() {
             )
 
             try {
-                val flightDetails: ItineraryDetails? = apiClient.getFlightDetails(flightDetailsSearch)
+                val flightDetails: ItineraryDetails? =
+                    apiClient.getFlightDetails(flightDetailsSearch)
 
                 setFlightInformation(flightDetails)
             } catch (e: Exception) {

@@ -16,21 +16,21 @@ import com.michael.viatoapp.databinding.ActivityCountryOverviewBinding
 import com.michael.viatoapp.model.data.SearchData
 import com.michael.viatoapp.model.data.flights.City
 import com.michael.viatoapp.model.data.flights.Country
-import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
 import com.michael.viatoapp.model.request.flights.FlightCitiesSearch
+import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
 import com.michael.viatoapp.userInterface.adapter.CityAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class CountryOverviewFragment : Fragment() {
-    private lateinit var binding : ActivityCountryOverviewBinding
+    private lateinit var binding: ActivityCountryOverviewBinding
     private lateinit var apiClient: ApiClient
     private lateinit var apiHelper: ApiHelper
-    private lateinit var allCities : List<City>
+    private lateinit var allCities: List<City>
     private var country: Country? = null
-    private var countrySearch : FlightCountriesSearch? = null
-    private var searchData: SearchData? =null
+    private var countrySearch: FlightCountriesSearch? = null
+    private var searchData: SearchData? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,9 +54,9 @@ class CountryOverviewFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        var citiesSearch : FlightCitiesSearch? = null
+        var citiesSearch: FlightCitiesSearch? = null
 
-        if(countrySearch != null && country != null) {
+        if (countrySearch != null && country != null) {
             citiesSearch = FlightCitiesSearch(
                 fromEntityId = countrySearch!!.fromEntityId,
                 skyId = country!!.skyId,
@@ -67,7 +67,7 @@ class CountryOverviewFragment : Fragment() {
             )
         }
 
-        if(citiesSearch != null) {
+        if (citiesSearch != null) {
             fetchCities(citiesSearch)
         }
 
@@ -98,6 +98,7 @@ class CountryOverviewFragment : Fragment() {
 
         binding.countryTextview.text = country?.name
     }
+
     private fun bindCitiesToAdapter(cities: List<City>) {
         if (cities.isNotEmpty()) {
             val cityAdapter = CityAdapter(cities, countrySearch!!, searchData!!)

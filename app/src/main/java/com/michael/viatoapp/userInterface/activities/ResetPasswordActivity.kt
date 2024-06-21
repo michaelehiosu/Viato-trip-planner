@@ -25,7 +25,7 @@ class ResetPasswordActivity : AppCompatActivity() {
             sendResetLink()
         }
     }
-    
+
     private fun sendResetLink() {
         val email = binding.emailEditText.text.toString()
 

@@ -9,7 +9,7 @@ data class Hotel(
     var images: String?,
     var reviewScore: Double?,
     var priceRaw: Int?,
-    var relevantPoi : String?,
-    var scoreDesc : String?,
+    var relevantPoi: String?,
+    var scoreDesc: String?,
     var hotelId: String?
-): Serializable
+) : Serializable

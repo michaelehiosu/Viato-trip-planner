@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#FAF2E6">
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/map_view"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/text_activity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/athitimedium"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/map_view"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="Activity Suggestions"/>
+    <TextView
+        android:id="@+id/text_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/athitimedium"
+        android:text="Activity Suggestions"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map_view" />
 
     <LinearLayout
         android:id="@+id/button_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="20dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/text_activity"
         app:layout_constraintTop_toBottomOf="@+id/map_view">
@@ -66,27 +66,27 @@
             app:cornerRadius="1dp" />
     </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            app:layout_constraintTop_toBottomOf="@+id/text_activity"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:visibility="gone"
-            android:id="@+id/recycler_view_activities"
-            android:layout_width="0dp"
-            android:layout_height="0dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_activities"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_activity" />
 
     <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:visibility="visible"
-        android:id="@+id/progressBar"
-        app:layout_constraintTop_toBottomOf="@+id/text_activity"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/text_activity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

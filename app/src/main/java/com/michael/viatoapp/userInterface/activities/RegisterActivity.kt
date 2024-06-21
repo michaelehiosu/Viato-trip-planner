@@ -1,15 +1,15 @@
 package com.michael.viatoapp.userInterface.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
-import com.michael.viatoapp.databinding.ActivityRegisterBinding
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.michael.viatoapp.R
+import com.michael.viatoapp.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -53,43 +53,42 @@ class RegisterActivity : AppCompatActivity() {
 
         if (validateInputData(firstName, lastName, email, password, confirmPassword)) {
             if (validateEmail(email)) {
-                if (password == confirmPassword){
-                    if (isPasswordValid(password)){
+                if (password == confirmPassword) {
+                    if (isPasswordValid(password)) {
                         auth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener() { task ->
-                            if (task.isSuccessful) {
-                                val user = auth.currentUser
-                                val  uid = user?.uid
+                            .addOnCompleteListener() { task ->
+                                if (task.isSuccessful) {
+                                    val user = auth.currentUser
+                                    val uid = user?.uid
 
-                                //Creating a document with UID
-                                val userDocument = firestore.collection("users").document(uid!!)
-                                val userData = hashMapOf(
-                                    "firstName" to firstName,
-                                    "lastName" to lastName,
-                                    "email" to email,
-                                    "currency" to defaultCurrency,
-                                    "airport" to defaultAirport,
-                                    "destination" to defaultDestination,
-                                    "profileUrl" to profileUrl
-                                )
+                                    //Creating a document with UID
+                                    val userDocument = firestore.collection("users").document(uid!!)
+                                    val userData = hashMapOf(
+                                        "firstName" to firstName,
+                                        "lastName" to lastName,
+                                        "email" to email,
+                                        "currency" to defaultCurrency,
+                                        "airport" to defaultAirport,
+                                        "destination" to defaultDestination,
+                                        "profileUrl" to profileUrl
+                                    )
 
-                                userDocument.set(userData)
-                                    .addOnSuccessListener {
-                                        showSuccessToast("Account Registered.")
-                                        val intent = Intent(this, LoginActivity::class.java)
-                                        startActivity(intent)
-                                    }.addOnFailureListener {
-                                        showErrorToast("Registration Failed.")
-                                    }
-                            } else {
-                                showErrorToast("Authentication failed")
+                                    userDocument.set(userData)
+                                        .addOnSuccessListener {
+                                            showSuccessToast("Account Registered.")
+                                            val intent = Intent(this, LoginActivity::class.java)
+                                            startActivity(intent)
+                                        }.addOnFailureListener {
+                                            showErrorToast("Registration Failed.")
+                                        }
+                                } else {
+                                    showErrorToast("Authentication failed")
+                                }
                             }
-                        }
-                    }
-                    else {
+                    } else {
                         showErrorToast("Password must be at least 8 characters long and contain at least one uppercase letter and one lowercase letter")
                     }
-                }else{
+                } else {
                     showErrorToast("Passwords do not match")
                 }
             } else {
@@ -102,7 +101,13 @@ class RegisterActivity : AppCompatActivity() {
         binding.registerButton.isEnabled = true
     }
 
-    private fun validateInputData(firstName: String, lastName: String, email: String, password: String, confirmPassword: String): Boolean {
+    private fun validateInputData(
+        firstName: String,
+        lastName: String,
+        email: String,
+        password: String,
+        confirmPassword: String
+    ): Boolean {
         return firstName.isNotEmpty() && lastName.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()
     }
 
@@ -118,7 +123,10 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun showErrorToast(message: String) {
         val inflater = layoutInflater
-        val layout = inflater.inflate(R.layout.activity_toast_layout, findViewById(R.id.custom_toast_container))
+        val layout = inflater.inflate(
+            R.layout.activity_toast_layout,
+            findViewById(R.id.custom_toast_container)
+        )
 
         val textView = layout.findViewById<TextView>(R.id.text_view_toast)
         textView.text = message
@@ -134,7 +142,10 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun showSuccessToast(message: String) {
         val inflater = layoutInflater
-        val layout = inflater.inflate(R.layout.activity_toast_success, findViewById(R.id.custom_toast_container))
+        val layout = inflater.inflate(
+            R.layout.activity_toast_success,
+            findViewById(R.id.custom_toast_container)
+        )
 
         val textView = layout.findViewById<TextView>(R.id.text_view_toast)
         textView.text = message

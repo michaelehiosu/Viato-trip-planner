@@ -4,10 +4,8 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.util.Linkify
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,11 +24,8 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.michael.viatoapp.R
-import com.michael.viatoapp.databinding.ActivityNearbyBinding
 import com.michael.viatoapp.databinding.ActivityNearbyDetailsBinding
 import com.michael.viatoapp.model.data.attraction.Attraction
-import com.michael.viatoapp.model.data.flights.City
-import com.michael.viatoapp.model.request.flights.FlightCountriesSearch
 
 class NearbyDetailsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: ActivityNearbyDetailsBinding
@@ -102,7 +97,8 @@ class NearbyDetailsFragment : Fragment(), OnMapReadyCallback {
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
             location?.let {
                 val currentLatLng = LatLng(it.latitude, it.longitude)
-                val anotherLocation = LatLng(attraction?.latitude?.toDouble()!!, attraction?.longitude?.toDouble()!!)
+                val anotherLocation =
+                    LatLng(attraction?.latitude?.toDouble()!!, attraction?.longitude?.toDouble()!!)
 
                 mMap.addMarker(MarkerOptions().position(currentLatLng).title("Your Location"))
                 mMap.addMarker(
@@ -118,7 +114,9 @@ class NearbyDetailsFragment : Fragment(), OnMapReadyCallback {
                 val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding)
                 mMap.moveCamera(cameraUpdate)
 
-                mMap.addPolyline(PolylineOptions().add(currentLatLng, anotherLocation).color(Color.BLUE))
+                mMap.addPolyline(
+                    PolylineOptions().add(currentLatLng, anotherLocation).color(Color.BLUE)
+                )
 
                 val results = FloatArray(1)
                 Location.distanceBetween(
@@ -133,17 +131,31 @@ class NearbyDetailsFragment : Fragment(), OnMapReadyCallback {
     private fun requestLocationPermission() {
         ActivityCompat.requestPermissions(
             requireActivity(),
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ),
             requestLocationPermissionCode
         )
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == requestLocationPermissionCode) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-                    ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED ||
+                    ActivityCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
                     mMap.isMyLocationEnabled = true
                     getLastKnownLocation()
                 }
@@ -181,7 +193,9 @@ class NearbyDetailsFragment : Fragment(), OnMapReadyCallback {
                 val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding)
                 mMap.moveCamera(cameraUpdate)
 
-                mMap.addPolyline(PolylineOptions().add(currentLatLng, anotherLocation).color(Color.BLUE))
+                mMap.addPolyline(
+                    PolylineOptions().add(currentLatLng, anotherLocation).color(Color.BLUE)
+                )
 
                 val results = FloatArray(1)
                 Location.distanceBetween(

@@ -78,6 +78,7 @@ class TripsFragment : Fragment() {
         createSpinnerItems()
         fetchAirports()
     }
+
     private fun setRecyclerViewLayoutAndDefaultText() {
         binding.recyclerViewActivities.layoutManager = LinearLayoutManager(requireContext())
         binding.textActivity.text = "Suggested Countries"
@@ -127,8 +128,8 @@ class TripsFragment : Fragment() {
         searchForCountries(entityId)
     }
 
-    private fun getEntityIdFromAirport(airportName : String) : String? {
-        var airportIata : String? = null
+    private fun getEntityIdFromAirport(airportName: String): String? {
+        var airportIata: String? = null
         for (airport in allAirports) {
             if (airport.name == airportName) {
                 airportIata = airport.iata
@@ -138,13 +139,14 @@ class TripsFragment : Fragment() {
         return airportIata
     }
 
-    private fun searchForCountries(entityId : String?) {
+    private fun searchForCountries(entityId: String?) {
         if (entityId != null &&
             binding.budget.text != null &&
             binding.spinner.selectedItem.toString() != "Currency" &&
             binding.secondSpinner.selectedItem != "Continent" &&
             selectedStartDate != null &&
-            selectedEndDate != null) {
+            selectedEndDate != null
+        ) {
 
             val countrySearch = FlightCountriesSearch(
                 fromEntityId = entityId,
@@ -156,18 +158,23 @@ class TripsFragment : Fragment() {
             fetchCountries(countrySearch)
 
         } else {
-            Toast.makeText(requireContext(), "Please ensure all fields are filled correctly", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                "Please ensure all fields are filled correctly",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
     private fun createSpinnerItems() {
         val filterItems = arrayOf("EUR", "USD")
         createASpinner(filterItems, binding.spinner)
-        val continentItems = arrayOf("Europe", "Africa", "Asia", "Oceania", "North America", "South America")
+        val continentItems =
+            arrayOf("Europe", "Africa", "Asia", "Oceania", "North America", "South America")
         createASpinner(continentItems, binding.secondSpinner)
     }
 
-    private fun createASpinner(filterItem : Array<String>, view: Spinner) {
+    private fun createASpinner(filterItem: Array<String>, view: Spinner) {
         val filterAdapter = ArrayAdapter(
             requireContext(), R.layout.spinner_item, filterItem
         )
@@ -196,7 +203,8 @@ class TripsFragment : Fragment() {
     }
 
     private fun hideKeyboard() {
-        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm =
+            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
@@ -217,14 +225,21 @@ class TripsFragment : Fragment() {
                     targetTextView.setTextColor(resources.getColor(R.color.white))
                 } else {
                     val endDate = selectedDate.timeInMillis
-                    val startDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(selectedStartDate)?.time ?: 0
+                    val startDate = SimpleDateFormat(
+                        "yyyy-MM-dd",
+                        Locale.getDefault()
+                    ).parse(selectedStartDate)?.time ?: 0
                     if (endDate >= startDate) {
                         selectedEndDate = formattedDate
                         targetTextView.text = "To: $formattedDate"
                         targetTextView.setBackgroundColor(resources.getColor(R.color.orange))
                         targetTextView.setTextColor(resources.getColor(R.color.white))
                     } else {
-                        Toast.makeText(requireContext(), "End date must be after start date", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "End date must be after start date",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
 
                 }
@@ -271,17 +286,25 @@ class TripsFragment : Fragment() {
             requireContext(), android.R.layout.simple_dropdown_item_1line, airportNames
         )
         binding.airportAutoCompleteTextView.setAdapter(airportAdapter)
-        Log.d("updateAutoCompleteTextViewWithAirports", "AutoCompleteTextView updated with airports: $airportNames")
+        Log.d(
+            "updateAutoCompleteTextViewWithAirports",
+            "AutoCompleteTextView updated with airports: $airportNames"
+        )
     }
 
-    private fun updateCountriesRecyclerView(countries: MutableList<Country>, countriesSearch: FlightCountriesSearch, searchData: SearchData) {
+    private fun updateCountriesRecyclerView(
+        countries: MutableList<Country>,
+        countriesSearch: FlightCountriesSearch,
+        searchData: SearchData
+    ) {
         countries.map {
-            binding.recyclerViewActivities.adapter = CountryAdapter(countries, countriesSearch, searchData)
+            binding.recyclerViewActivities.adapter =
+                CountryAdapter(countries, countriesSearch, searchData)
         }
         deactivateProgressBar()
     }
 
-    private fun toggleButtonPressed(condition : Boolean, button : Button) {
+    private fun toggleButtonPressed(condition: Boolean, button: Button) {
         if (condition) {
             button.setBackgroundColor(resources.getColor(R.color.orange))
             button.setTextColor(resources.getColor(R.color.white))
@@ -317,7 +340,12 @@ class TripsFragment : Fragment() {
         retrieveAndDisplayCountriesFromAPI(countrySearch, searchData, budget, continent)
     }
 
-    private fun retrieveAndDisplayCountriesFromAPI(countrySearch: FlightCountriesSearch, searchData: SearchData, budget : String, continent : String) {
+    private fun retrieveAndDisplayCountriesFromAPI(
+        countrySearch: FlightCountriesSearch,
+        searchData: SearchData,
+        budget: String,
+        continent: String
+    ) {
         activateProgressBar()
         lifecycleScope.launch(Dispatchers.IO) {
             try {
@@ -335,7 +363,7 @@ class TripsFragment : Fragment() {
         }
     }
 
-    private fun fetchDateFromToday(numberOfWeek : Int) : String {
+    private fun fetchDateFromToday(numberOfWeek: Int): String {
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.WEEK_OF_YEAR, numberOfWeek)
         return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
@@ -354,8 +382,8 @@ class TripsFragment : Fragment() {
                 val name = documentSnapshot.getString("lastName")
 
                 // Fetch stored countries after user data has been fetched
-                if (destination != null && currency != null && airport !=null) {
-                    fetchStoredCountries(destination,currency,airport)
+                if (destination != null && currency != null && airport != null) {
+                    fetchStoredCountries(destination, currency, airport)
                 }
             } else {
                 Log.d("UserData", "No such document")
